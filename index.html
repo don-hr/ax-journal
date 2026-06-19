@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AX Journal — AI×組織の知識ハブ</title>
+  <meta name="description" content="AI×組織・AX（AI Transformation）をテーマに、人事・経営層向けの最新トレンドと実務ノウハウを速報でお届けします。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ── tokens ── */
+    :root {
+      --bg:           #F7F7F7;
+      --bg-subtle:    #EFEFEF;
+      --bg-muted:     #E8E8E8;
+      --bg-card:      #FFFFFF;
+      --surface-dark: #1A1A1A;
+      --text:         #1A1A1A;
+      --text-muted:   #6B6B6B;
+      --text-faint:   #9B9B9B;
+      --accent:       #1A1A1A;
+      --accent-dark:  #000000;
+      --accent-light: #E8E8E8;
+      --red:          #B50000;
+      --red-light:    #F5EDED;
+      --border:       #DEDEDE;
+      --border-faint: #EBEBEB;
+      --radius:       4px;
+      --font-b: 'Inter', 'Noto Sans JP', sans-serif;
+      --font-m: 'DM Mono', 'Courier New', monospace;
+    }
+
+    /* ── reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-b);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── ticker ── */
+    .ticker {
+      background: var(--surface-dark);
+      height: 36px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .ticker-badge {
+      flex-shrink: 0;
+      background: var(--red);
+      color: #fff;
+      font-family: var(--font-m);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0 16px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+    .ticker-track {
+      display: flex;
+      animation: ticker-scroll 34s linear infinite;
+      padding-left: 28px;
+    }
+    .ticker-track:hover { animation-play-state: paused; }
+    .ticker-item {
+      font-family: var(--font-m);
+      font-size: 11px;
+      color: rgba(255,255,255,0.65);
+      white-space: nowrap;
+      padding-right: 56px;
+    }
+    .ticker-item::before { content: '» '; color: rgba(255,255,255,0.35); }
+    @keyframes ticker-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .ticker-track { animation: none; }
+    }
+
+    /* ── masthead ── */
+    .masthead {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+    }
+    .masthead-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .logo-name {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    .logo-name span { color: var(--text); }
+    .logo-edition {
+      font-family: var(--font-m);
+      font-size: 10px;
+      color: var(--text-faint);
+      letter-spacing: 0.06em;
+      border-left: 1px solid var(--border);
+      padding-left: 14px;
+    }
+    .mast-nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .mast-nav a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: var(--radius);
+      transition: background 0.15s, color 0.15s;
+    }
+    .mast-nav a:hover { background: var(--bg-muted); color: var(--text); }
+    .mast-nav .cta {
+      background: var(--accent);
+      color: #fff;
+      margin-left: 8px;
+    }
+    .mast-nav .cta:hover { background: var(--accent-dark); color: #fff; }
+
+    /* ── hero ── */
+    .hero {
+      border-bottom: 1px solid var(--border);
+      padding: 60px 24px 52px;
+    }
+    .hero-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 60px;
+      align-items: start;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0;
+      border-radius: 0;
+      margin-bottom: 22px;
+    }
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--red);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.75); }
+    }
+    .hero-title {
+      font-size: clamp(36px, 5.5vw, 58px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      margin-bottom: 18px;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--text);
+    }
+    .hero-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.75;
+      max-width: 460px;
+      margin-bottom: 28px;
+    }
+    .hero-btns {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      font-size: 14px;
+      font-weight: 600;
+      transition: background 0.15s;
+    }
+    .btn-primary:hover { background: var(--accent-dark); }
+    .btn-secondary {
+      background: var(--bg-muted);
+      color: var(--text);
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.15s;
+    }
+    .btn-secondary:hover { background: var(--border); }
+    .hero-stats {
+      display: flex;
+      gap: 28px;
+      padding-top: 28px;
+      margin-top: 28px;
+      border-top: 1px solid var(--border);
+    }
+    .stat-n {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      display: block;
+    }
+    .stat-l {
+      font-family: var(--font-m);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-faint);
+    }
+
+    /* hero sidebar */
+    .hero-side {}
+    .side-hd {
+      font-family: var(--font-m);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .side-item {
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border-faint);
+      cursor: pointer;
+    }
+    .side-item:last-child { border-bottom: none; }
+    .side-item:hover .si-title { color: var(--accent); }
+    .si-meta {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 5px;
+    }
+    .pill {
+      font-family: var(--font-m);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 3px;
+    }
+    .pill-blue { background: var(--accent-light); color: var(--accent); }
+    .pill-red  { background: var(--red-light);    color: var(--red); }
+    .pill-gray { background: var(--bg-muted);      color: var(--text-muted); }
+    .si-date {
+      font-family: var(--font-m);
+      font-size: 10px;
+      color: var(--text-faint);
+    }
+    .si-title {
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.5;
+      color: var(--text);
+      transition: color 0.15s;
+    }
+
+    /* ── topic bar ── */
+    .topic-bar {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      position: sticky;
+      top: 0;
+      background: rgba(247,247,247,0.96);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 100;
+    }
+    .topic-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .topic-inner::-webkit-scrollbar { display: none; }
+    .topic-btn {
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      font-family: var(--font-b);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      padding: 0 14px;
+      height: 100%;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: color 0.15s, border-bottom-color 0.15s;
+    }
+    .topic-btn:hover { color: var(--text); }
+    .topic-btn.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* ── articles ── */
+    .articles { padding: 48px 24px; }
+    .articles-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+    }
+    .sec-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .sec-label {
+      font-family: var(--font-m);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .see-all {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      transition: opacity 0.15s;
+    }
+    .see-all:hover { opacity: 0.7; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      cursor: pointer;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .card:hover {
+      border-color: var(--text);
+      box-shadow: 0 0 0 2px rgba(0,0,0,0.06);
+    }
+    .card.card-featured {
+      grid-column: span 2;
+      border-left: 3px solid var(--accent);
+    }
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .card-date {
+      font-family: var(--font-m);
+      font-size: 10px;
+      color: var(--text-faint);
+    }
+    .card-title {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.4;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+    .card-featured .card-title { font-size: 21px; }
+    .card-excerpt {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.65;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-foot {
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-faint);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .card-time {
+      font-family: var(--font-m);
+      font-size: 10px;
+      color: var(--text-faint);
+    }
+    .card-cta {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: opacity 0.15s, transform 0.15s;
+    }
+    .card:hover .card-cta { opacity: 1; transform: translateX(0); }
+
+    /* ── about ── */
+    .about {
+      background: var(--bg-subtle);
+      border-top: 1px solid var(--border);
+      padding: 64px 24px;
+    }
+    .about-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .about-label {
+      font-family: var(--font-m);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 14px;
+    }
+    .about-title {
+      font-size: clamp(24px, 3vw, 34px);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+    .about-body {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+    .features { display: flex; flex-direction: column; gap: 11px; }
+    .feature { display: flex; gap: 10px; align-items: flex-start; }
+    .feature-icon {
+      width: 18px;
+      height: 18px;
+      background: var(--accent-light);
+      border-radius: 4px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .feature-dot {
+      width: 5px;
+      height: 5px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+    .feature-text {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .feature-text strong { color: var(--text); font-weight: 600; }
+
+    /* newsletter */
+    .nl-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 36px;
+    }
+    .nl-badge {
+      display: inline-block;
+      font-family: var(--font-m);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      padding: 0;
+      border-radius: 0;
+      margin-bottom: 14px;
+    }
+    .nl-title {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .nl-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+    .nl-form { display: flex; flex-direction: column; gap: 10px; }
+    .nl-input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-family: var(--font-b);
+      font-size: 14px;
+      color: var(--text);
+      background: var(--bg-subtle);
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .nl-input:focus {
+      border-color: var(--text);
+      box-shadow: 0 0 0 2px rgba(0,0,0,0.08);
+    }
+    .nl-submit {
+      width: 100%;
+      padding: 12px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      font-family: var(--font-b);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .nl-submit:hover { background: var(--accent-dark); }
+    .nl-note {
+      font-size: 11px;
+      color: var(--text-faint);
+      text-align: center;
+    }
+
+    /* ── footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 24px;
+    }
+    .footer-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-logo {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .footer-logo span { color: var(--text); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a {
+      font-size: 12px;
+      color: var(--text-faint);
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--text-muted); }
+    .footer-copy {
+      font-family: var(--font-m);
+      font-size: 11px;
+      color: var(--text-faint);
+    }
+
+    /* ── responsive ── */
+    @media (max-width: 860px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 32px; }
+      .hero-side { border-top: 1px solid var(--border); padding-top: 24px; }
+      .mast-nav { display: none; }
+      .grid { grid-template-columns: 1fr; }
+      .card.card-featured { grid-column: span 1; }
+      .about-inner { grid-template-columns: 1fr; gap: 36px; }
+      .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 速報ティッカー -->
+<div class="ticker">
+  <div class="ticker-badge">速報</div>
+  <div class="ticker-track">
+    <span class="ticker-item">生成AI導入率が前年比2.3倍に — 製造業・金融業でのAX事例が急増</span>
+    <span class="ticker-item">人事部門の業務自動化：採用スクリーニングAI化で工数60%削減の実例</span>
+    <span class="ticker-item">2026年版「AIと組織変革」調査レポートを公開</span>
+    <span class="ticker-item">経産省、AI人材育成指針を改訂 — 人事戦略への影響を解説</span>
+    <span class="ticker-item">Claude・ChatGPT活用が進む組織開発の最前線：ファシリテーションへの応用</span>
+    <span class="ticker-item">生成AI導入率が前年比2.3倍に — 製造業・金融業でのAX事例が急増</span>
+    <span class="ticker-item">人事部門の業務自動化：採用スクリーニングAI化で工数60%削減の実例</span>
+    <span class="ticker-item">2026年版「AIと組織変革」調査レポートを公開</span>
+    <span class="ticker-item">経産省、AI人材育成指針を改訂 — 人事戦略への影響を解説</span>
+    <span class="ticker-item">Claude・ChatGPT活用が進む組織開発の最前線：ファシリテーションへの応用</span>
+  </div>
+</div>
+
+<!-- マストヘッド -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="logo">
+      <span class="logo-name">AX <span>Journal</span></span>
+      <span class="logo-edition">Vol.01 — 2026.06</span>
+    </div>
+    <nav class="mast-nav">
+      <a href="#articles">記事一覧</a>
+      <a href="#">トレンド</a>
+      <a href="#">ツール解説</a>
+      <a href="#about">About</a>
+      <a href="#newsletter" class="cta">購読する</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ヒーロー -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        AI × 組織変革のナレッジハブ
+      </div>
+      <h1 class="hero-title">
+        AIが変える、<br><em>組織の未来。</em>
+      </h1>
+      <p class="hero-desc">
+        最新のAX（AI Transformation）動向と実務ノウハウを速報でお届け。<br>
+        人事・経営層向けに特化した知識ハブです。
+      </p>
+      <div class="hero-btns">
+        <a href="#articles" class="btn-primary">記事を読む →</a>
+        <a href="#newsletter" class="btn-secondary">無料で購読する</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <span class="stat-n">28+</span>
+          <span class="stat-l">公開記事</span>
+        </div>
+        <div>
+          <span class="stat-n">週2</span>
+          <span class="stat-l">更新ペース</span>
+        </div>
+        <div>
+          <span class="stat-n">4</span>
+          <span class="stat-l">カバー領域</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-side">
+      <p class="side-hd">注目記事</p>
+      <div class="side-item">
+        <div class="si-meta">
+          <span class="pill pill-red">速報</span>
+          <span class="si-date">2026.06.19</span>
+        </div>
+        <p class="si-title">生成AI導入で採用コスト40%削減：3社の実践例から学ぶ</p>
+      </div>
+      <div class="side-item">
+        <div class="si-meta">
+          <span class="pill pill-blue">AI活用</span>
+          <span class="si-date">2026.06.17</span>
+        </div>
+        <p class="si-title">経営会議でAIを活用する方法：ファシリテーション設計の実例</p>
+      </div>
+      <div class="side-item">
+        <div class="si-meta">
+          <span class="pill pill-gray">組織変革</span>
+          <span class="si-date">2026.06.14</span>
+        </div>
+        <p class="si-title">AXとDXの違いを5分で整理する — 経営層向けフレーム</p>
+      </div>
+      <div class="side-item">
+        <div class="si-meta">
+          <span class="pill pill-blue">HR Tech</span>
+          <span class="si-date">2026.06.10</span>
+        </div>
+        <p class="si-title">人事評価×AI：バイアスを減らしながら活用する設計原則</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- トピックバー -->
+<nav class="topic-bar">
+  <div class="topic-inner">
+    <button class="topic-btn active" onclick="filterCards(this,'all')">すべて</button>
+    <button class="topic-btn" onclick="filterCards(this,'ai')">AI活用・ツール</button>
+    <button class="topic-btn" onclick="filterCards(this,'org')">組織変革</button>
+    <button class="topic-btn" onclick="filterCards(this,'hr')">HR・採用</button>
+    <button class="topic-btn" onclick="filterCards(this,'trend')">トレンド</button>
+    <button class="topic-btn" onclick="filterCards(this,'case')">事例・ケース</button>
+  </div>
+</nav>
+
+<!-- 記事グリッド -->
+<section class="articles" id="articles">
+  <div class="articles-inner">
+    <div class="sec-head">
+      <span class="sec-label">最新記事</span>
+      <a href="#" class="see-all">すべて見る →</a>
+    </div>
+    <div class="grid" id="grid">
+
+      <div class="card card-featured" data-cat="trend">
+        <div class="card-meta">
+          <span class="pill pill-red">速報</span>
+          <span class="pill pill-gray">トレンド</span>
+          <span class="card-date">2026.06.19</span>
+        </div>
+        <h2 class="card-title">生成AI導入率が前年比2.3倍に：人事・経営層が今すぐ押さえるべき最新データ</h2>
+        <p class="card-excerpt">経産省・民間調査5本を横断分析。製造業・金融・小売での導入加速の背景と、人事戦略への具体的な影響を整理します。データが示す「次の波」とは何か。</p>
+        <div class="card-foot">
+          <span class="card-time">読了 約5分</span>
+          <span class="card-cta">続きを読む →</span>
+        </div>
+      </div>
+
+      <div class="card" data-cat="hr">
+        <div class="card-meta">
+          <span class="pill pill-blue">HR・採用</span>
+          <span class="card-date">2026.06.17</span>
+        </div>
+        <h2 class="card-title">採用スクリーニングAI化：実務担当者が陥りがちな3つの失敗</h2>
+        <p class="card-excerpt">AIツールを導入したにもかかわらず「使いこなせない」ケースには共通するパターンがあります。設計フェーズで気をつけるべき3点を整理。</p>
+        <div class="card-foot">
+          <span class="card-time">読了 約4分</span>
+          <span class="card-cta">続きを読む →</span>
+        </div>
+      </div>
+
+      <div class="card" data-cat="org">
+        <div class="card-meta">
+          <span class="pill pill-gray">組織変革</span>
+          <span class="card-date">2026.06.14</span>
+        </div>
+        <h2 class="card-title">AXとDXはどう違うのか：経営層向けに5分で整理する</h2>
+        <p class="card-excerpt">「DXはやった。次はAX？」という問いに答えるための概念整理。AXが組織のどのレイヤーに作用するかを図解します。</p>
+        <div class="card-foot">
+          <span class="card-time">読了 約5分</span>
+          <span class="card-cta">続きを読む →</span>
+        </div>
+      </div>
+
+      <div class="card" data-cat="ai">
+        <div class="card-meta">
+          <span class="pill pill-blue">AI活用</span>
+          <span class="card-date">2026.06.12</span>
+        </div>
+        <h2 class="card-title">Claude・ChatGPTを人事業務に組み込む：実運用フローの設計方法</h2>
+        <p class="card-excerpt">採用・評価・研修設計の各フェーズでどのAIツールをどう使うか。業務フロー別に整理した実践ガイド。</p>
+        <div class="card-foot">
+          <span class="card-time">読了 約6分</span>
+          <span class="card-cta">続きを読む →</span>
+        </div>
+      </div>
+
+      <div class="card" data-cat="case">
+        <div class="card-meta">
+          <span class="pill pill-gray">事例</span>
+          <span class="card-date">2026.06.10</span>
+        </div>
+        <h2 class="card-title">従業員300名メーカーのAX導入記：半年で変わったこと</h2>
+        <p class="card-excerpt">現場主導でAI活用を推進した中堅製造業の半年間の記録。成功の鍵となった組織設計を取材で深掘りします。</p>
+        <div class="card-foot">
+          <span class="card-time">読了 約7分</span>
+          <span class="card-cta">続きを読む →</span>
+        </div>
+      </div>
+
+      <div class="card" data-cat="hr">
+        <div class="card-meta">
+          <span class="pill pill-blue">HR Tech</span>
+          <span class="card-date">2026.06.07</span>
+        </div>
+        <h2 class="card-title">人事評価×AI：公平性とバイアス問題を設計で解決する</h2>
+        <p class="card-excerpt">AIが評価プロセスに入ることで生じるリスクと、それを設計段階でコントロールするフレームワーク。</p>
+        <div class="card-foot">
+          <span class="card-time">読了 約5分</span>
+          <span class="card-cta">続きを読む →</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- About + ニュースレター -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div>
+      <p class="about-label">About AX Journal</p>
+      <h2 class="about-title">AIと組織を<br>つなぐ視点を届ける</h2>
+      <p class="about-body">
+        AX Journalは、AI×組織変革をテーマに人事・HR担当者と経営層向けの知識ハブです。最新トレンドを速報でキャッチしながら、実務で使えるノウハウを深掘りして届けます。
+      </p>
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon"><div class="feature-dot"></div></div>
+          <p class="feature-text"><strong>速報性</strong>：AIと組織に関する最新動向をいち早くキャッチアップ</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><div class="feature-dot"></div></div>
+          <p class="feature-text"><strong>実務視点</strong>：理論より現場で使えるフレームと事例を優先</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><div class="feature-dot"></div></div>
+          <p class="feature-text"><strong>独自洞察</strong>：ニュース転載ではなく、一次情報をもとにした独自解釈</p>
+        </div>
+      </div>
+    </div>
+    <div class="nl-box" id="newsletter">
+      <div class="nl-badge">無料ニュースレター</div>
+      <h3 class="nl-title">メールで受け取る</h3>
+      <p class="nl-sub">週2回、最新記事とトレンドサマリーをお届けします。登録は無料です。</p>
+      <form class="nl-form" onsubmit="nlSubmit(event)">
+        <input type="email" class="nl-input" placeholder="メールアドレスを入力" required>
+        <button type="submit" class="nl-submit" id="nl-btn">無料で購読する</button>
+        <p class="nl-note">スパムは送りません。いつでも解除できます。</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- フッター -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">AX <span>Journal</span></span>
+    <div class="footer-links">
+      <a href="#articles">記事一覧</a>
+      <a href="#about">About</a>
+      <a href="#">お問い合わせ</a>
+    </div>
+    <span class="footer-copy">© 2026 AX Journal. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+  function filterCards(btn, cat) {
+    document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('#grid .card').forEach(c => {
+      c.style.display = (cat === 'all' || c.dataset.cat === cat) ? 'flex' : 'none';
+    });
+  }
+
+  function nlSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById('nl-btn');
+    btn.textContent = '登録しました ✓';
+    btn.style.background = '#059669';
+    btn.disabled = true;
+    e.target.querySelector('.nl-input').disabled = true;
+  }
+</script>
+</body>
+</html>
