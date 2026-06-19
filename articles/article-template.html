@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{TITLE}} — AX Journal</title>
+  <meta name="description" content="{{DESCRIPTION}}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:           #F7F7F7;
+      --bg-card:      #FFFFFF;
+      --bg-subtle:    #EFEFEF;
+      --bg-muted:     #E8E8E8;
+      --surface-dark: #1A1A1A;
+      --text:         #1A1A1A;
+      --text-muted:   #6B6B6B;
+      --text-faint:   #9B9B9B;
+      --accent:       #1A1A1A;
+      --accent-dark:  #000000;
+      --accent-light: #E8E8E8;
+      --red:          #B50000;
+      --red-light:    #F5EDED;
+      --border:       #DEDEDE;
+      --border-faint: #EBEBEB;
+      --radius:       4px;
+      --font-b: 'Inter', 'Noto Sans JP', sans-serif;
+      --font-m: 'DM Mono', 'Courier New', monospace;
+      --body-width: 680px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-b);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── masthead ── */
+    .masthead {
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      background: var(--bg);
+    }
+    .masthead-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo-name {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+    .mast-nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .mast-nav a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: var(--radius);
+      transition: background 0.15s, color 0.15s;
+    }
+    .mast-nav a:hover { background: var(--bg-muted); color: var(--text); }
+    .mast-nav .cta {
+      background: var(--accent);
+      color: #fff;
+      margin-left: 8px;
+    }
+    .mast-nav .cta:hover { background: var(--accent-dark); color: #fff; }
+
+    /* ── article layout ── */
+    .article-wrap {
+      max-width: var(--body-width);
+      margin: 0 auto;
+      padding: 56px 24px 80px;
+    }
+
+    /* ── breadcrumb ── */
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-m);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--text-faint);
+      margin-bottom: 36px;
+    }
+    .breadcrumb a { transition: color 0.15s; }
+    .breadcrumb a:hover { color: var(--text); }
+    .breadcrumb-sep { opacity: 0.4; }
+
+    /* ── article header ── */
+    .article-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .pill {
+      font-family: var(--font-m);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 3px;
+    }
+    .pill-gray { background: var(--bg-muted); color: var(--text-muted); }
+    .pill-red  { background: var(--red-light); color: var(--red); }
+    .article-date, .article-read {
+      font-family: var(--font-m);
+      font-size: 11px;
+      color: var(--text-faint);
+    }
+    .article-date::before { content: ''; }
+    .article-read::before { content: '· '; opacity: 0.4; }
+
+    .article-title {
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: 0.01em;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    .article-lead {
+      font-size: 17px;
+      font-weight: 400;
+      color: var(--text-muted);
+      line-height: 1.85;
+      border-left: 3px solid var(--text);
+      padding-left: 18px;
+      margin-bottom: 40px;
+    }
+
+    .article-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 40px 0;
+    }
+
+    /* ── article body ── */
+    .article-body { font-size: 16px; line-height: 1.9; color: var(--text); }
+
+    .article-body h2 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      margin: 48px 0 14px;
+      padding-top: 4px;
+    }
+    .article-body h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 32px 0 10px;
+    }
+    .article-body p { margin-bottom: 20px; }
+    .article-body p:last-child { margin-bottom: 0; }
+
+    .article-body strong { font-weight: 600; }
+    .article-body em { font-style: italic; color: var(--text-muted); }
+
+    .article-body ul, .article-body ol {
+      padding-left: 20px;
+      margin-bottom: 20px;
+    }
+    .article-body li { margin-bottom: 8px; line-height: 1.75; }
+
+    .article-body blockquote {
+      border-left: 3px solid var(--border);
+      padding: 4px 0 4px 18px;
+      margin: 28px 0;
+      color: var(--text-muted);
+      font-size: 15px;
+      font-style: italic;
+    }
+
+    /* callout box */
+    .callout {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      margin: 28px 0;
+    }
+    .callout-label {
+      font-family: var(--font-m);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 8px;
+    }
+    .callout p { font-size: 14px; color: var(--text-muted); margin-bottom: 0; line-height: 1.75; }
+
+    /* ── article footer ── */
+    .article-footer {
+      margin-top: 56px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+    }
+    .article-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 32px;
+    }
+    .tag {
+      font-family: var(--font-m);
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-muted);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .tag:hover { border-color: var(--text); color: var(--text); }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: color 0.15s;
+    }
+    .back-link:hover { color: var(--text); }
+    .back-link::before { content: '←'; }
+
+    /* ── newsletter strip ── */
+    .nl-strip {
+      background: var(--surface-dark);
+      padding: 36px 24px;
+      margin-top: 64px;
+    }
+    .nl-strip-inner {
+      max-width: var(--body-width);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .nl-strip-text {}
+    .nl-strip-label {
+      font-family: var(--font-m);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 6px;
+    }
+    .nl-strip-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 0.01em;
+    }
+    .nl-strip-form {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .nl-strip-input {
+      padding: 10px 14px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: var(--radius);
+      font-family: var(--font-b);
+      font-size: 13px;
+      color: #fff;
+      outline: none;
+      width: 220px;
+      transition: border-color 0.15s;
+    }
+    .nl-strip-input::placeholder { color: rgba(255,255,255,0.35); }
+    .nl-strip-input:focus { border-color: rgba(255,255,255,0.4); }
+    .nl-strip-btn {
+      padding: 10px 18px;
+      background: #fff;
+      color: var(--text);
+      border: none;
+      border-radius: var(--radius);
+      font-family: var(--font-b);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .nl-strip-btn:hover { opacity: 0.85; }
+
+    /* ── footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 24px;
+      background: var(--bg);
+    }
+    .footer-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-logo {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .footer-copy {
+      font-family: var(--font-m);
+      font-size: 11px;
+      color: var(--text-faint);
+    }
+
+    /* ── responsive ── */
+    @media (max-width: 640px) {
+      .mast-nav { display: none; }
+      .nl-strip-inner { flex-direction: column; align-items: flex-start; }
+      .nl-strip-form { width: 100%; }
+      .nl-strip-input { flex: 1; }
+      .footer-inner { flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- マストヘッド -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <a href="../index.html" class="logo-name">AX Journal</a>
+    <nav class="mast-nav">
+      <a href="../index.html">記事一覧</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#newsletter" class="cta">購読する</a>
+    </nav>
+  </div>
+</header>
+
+<!-- 記事本文 -->
+<main class="article-wrap">
+
+  <!-- パンくず -->
+  <nav class="breadcrumb">
+    <a href="../index.html">AX Journal</a>
+    <span class="breadcrumb-sep">/</span>
+    <span>{{CATEGORY}}</span>
+  </nav>
+
+  <!-- ヘッダー -->
+  <div class="article-eyebrow">
+    <span class="pill pill-gray">{{CATEGORY}}</span>
+    <span class="article-date">{{DATE}}</span>
+    <span class="article-read">読了 約{{READ_TIME}}分</span>
+  </div>
+
+  <h1 class="article-title">{{TITLE}}</h1>
+
+  <p class="article-lead">{{LEAD}}</p>
+
+  <hr class="article-divider">
+
+  <!-- 本文 -->
+  <div class="article-body">
+
+    <h2>{{SECTION_1_TITLE}}</h2>
+    <p>{{SECTION_1_BODY}}</p>
+
+    <div class="callout">
+      <p class="callout-label">ポイント</p>
+      <p>{{CALLOUT_TEXT}}</p>
+    </div>
+
+    <h2>{{SECTION_2_TITLE}}</h2>
+    <p>{{SECTION_2_BODY}}</p>
+
+    <h2>{{SECTION_3_TITLE}}</h2>
+    <p>{{SECTION_3_BODY}}</p>
+
+    <blockquote>{{QUOTE}}</blockquote>
+
+    <h2>まとめ</h2>
+    <p>{{SUMMARY}}</p>
+
+    <ul>
+      <li>{{POINT_1}}</li>
+      <li>{{POINT_2}}</li>
+      <li>{{POINT_3}}</li>
+    </ul>
+
+  </div>
+
+  <!-- フッター -->
+  <footer class="article-footer">
+    <div class="article-tags">
+      <a href="#" class="tag">{{TAG_1}}</a>
+      <a href="#" class="tag">{{TAG_2}}</a>
+      <a href="#" class="tag">{{TAG_3}}</a>
+    </div>
+    <a href="../index.html" class="back-link">記事一覧に戻る</a>
+  </footer>
+
+</main>
+
+<!-- ニュースレター -->
+<div class="nl-strip">
+  <div class="nl-strip-inner">
+    <div class="nl-strip-text">
+      <p class="nl-strip-label">Newsletter</p>
+      <p class="nl-strip-title">AI×組織の最新情報を週2回お届け</p>
+    </div>
+    <form class="nl-strip-form" onsubmit="return false">
+      <input type="email" class="nl-strip-input" placeholder="メールアドレス">
+      <button type="submit" class="nl-strip-btn">登録する</button>
+    </form>
+  </div>
+</div>
+
+<!-- フッター -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">AX Journal</span>
+    <span class="footer-copy">© 2026 AX Journal. All rights reserved.</span>
+  </div>
+</footer>
+
+</body>
+</html>

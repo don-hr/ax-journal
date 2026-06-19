@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>生成AI導入率が前年比2.3倍に：人事・経営層が今すぐ押さえるべき最新データ — AX Journal</title>
+  <meta name="description" content="経産省・民間調査5本を横断分析。製造業・金融・小売での導入加速の背景と、人事戦略への具体的な影響を整理します。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:           #F7F7F7;
+      --bg-card:      #FFFFFF;
+      --bg-subtle:    #EFEFEF;
+      --bg-muted:     #E8E8E8;
+      --surface-dark: #1A1A1A;
+      --text:         #1A1A1A;
+      --text-muted:   #6B6B6B;
+      --text-faint:   #9B9B9B;
+      --accent:       #1A1A1A;
+      --accent-dark:  #000000;
+      --accent-light: #E8E8E8;
+      --red:          #B50000;
+      --red-light:    #F5EDED;
+      --border:       #DEDEDE;
+      --border-faint: #EBEBEB;
+      --radius:       4px;
+      --font-b: 'Inter', 'Noto Sans JP', sans-serif;
+      --font-m: 'DM Mono', 'Courier New', monospace;
+      --body-width: 680px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { font-family: var(--font-b); background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+
+    .masthead { border-bottom: 1px solid var(--border); padding: 0 24px; background: var(--bg); }
+    .masthead-inner { max-width: 1160px; margin: 0 auto; height: 60px; display: flex; align-items: center; justify-content: space-between; }
+    .logo-name { font-size: 15px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text); }
+    .mast-nav { display: flex; align-items: center; gap: 4px; }
+    .mast-nav a { font-size: 13px; font-weight: 500; color: var(--text-muted); padding: 6px 12px; border-radius: var(--radius); transition: background 0.15s, color 0.15s; }
+    .mast-nav a:hover { background: var(--bg-muted); color: var(--text); }
+    .mast-nav .cta { background: var(--accent); color: #fff; margin-left: 8px; }
+    .mast-nav .cta:hover { background: var(--accent-dark); color: #fff; }
+
+    .article-wrap { max-width: var(--body-width); margin: 0 auto; padding: 56px 24px 80px; }
+
+    .breadcrumb { display: flex; align-items: center; gap: 8px; font-family: var(--font-m); font-size: 11px; letter-spacing: 0.06em; color: var(--text-faint); margin-bottom: 36px; }
+    .breadcrumb a { transition: color 0.15s; }
+    .breadcrumb a:hover { color: var(--text); }
+
+    .article-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+    .pill { font-family: var(--font-m); font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; border-radius: 3px; }
+    .pill-gray { background: var(--bg-muted); color: var(--text-muted); }
+    .pill-red  { background: var(--red-light); color: var(--red); }
+    .article-date, .article-read { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); }
+    .article-read::before { content: '· '; opacity: 0.4; }
+
+    .article-title { font-size: clamp(26px, 4vw, 38px); font-weight: 700; line-height: 1.2; letter-spacing: 0.01em; color: var(--text); margin-bottom: 20px; }
+    .article-lead { font-size: 17px; font-weight: 400; color: var(--text-muted); line-height: 1.85; border-left: 3px solid var(--text); padding-left: 18px; margin-bottom: 40px; }
+    .article-divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    .article-body { font-size: 16px; line-height: 1.9; color: var(--text); }
+    .article-body h2 { font-size: 20px; font-weight: 700; letter-spacing: 0.01em; margin: 48px 0 14px; }
+    .article-body h3 { font-size: 16px; font-weight: 600; margin: 32px 0 10px; }
+    .article-body p { margin-bottom: 20px; }
+    .article-body ul, .article-body ol { padding-left: 20px; margin-bottom: 20px; }
+    .article-body li { margin-bottom: 8px; line-height: 1.75; }
+    .article-body strong { font-weight: 600; }
+    .article-body blockquote { border-left: 3px solid var(--border); padding: 4px 0 4px 18px; margin: 28px 0; color: var(--text-muted); font-size: 15px; font-style: italic; }
+
+    .callout { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; margin: 28px 0; }
+    .callout-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 8px; }
+    .callout p { font-size: 14px; color: var(--text-muted); margin-bottom: 0; line-height: 1.75; }
+
+    .data-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 28px 0; }
+    .data-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 16px; }
+    .data-n { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; display: block; margin-bottom: 4px; }
+    .data-l { font-family: var(--font-m); font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-faint); display: block; margin-bottom: 6px; }
+    .data-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+    .article-footer { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--border); }
+    .article-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 32px; }
+    .tag { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-muted); transition: border-color 0.15s, color 0.15s; }
+    .tag:hover { border-color: var(--text); color: var(--text); }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--text-muted); transition: color 0.15s; }
+    .back-link:hover { color: var(--text); }
+    .back-link::before { content: '←'; }
+
+    .nl-strip { background: var(--surface-dark); padding: 36px 24px; margin-top: 64px; }
+    .nl-strip-inner { max-width: var(--body-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .nl-strip-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 6px; }
+    .nl-strip-title { font-size: 16px; font-weight: 600; color: #fff; }
+    .nl-strip-form { display: flex; gap: 8px; flex-shrink: 0; }
+    .nl-strip-input { padding: 10px 14px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: var(--radius); font-family: var(--font-b); font-size: 13px; color: #fff; outline: none; width: 220px; }
+    .nl-strip-input::placeholder { color: rgba(255,255,255,0.35); }
+    .nl-strip-btn { padding: 10px 18px; background: #fff; color: var(--text); border: none; border-radius: var(--radius); font-family: var(--font-b); font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; transition: opacity 0.15s; }
+    .nl-strip-btn:hover { opacity: 0.85; }
+
+    footer { border-top: 1px solid var(--border); padding: 24px; background: var(--bg); }
+    .footer-inner { max-width: 1160px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .footer-logo { font-size: 13px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; }
+    .footer-copy { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); }
+
+    @media (max-width: 640px) {
+      .mast-nav { display: none; }
+      .data-row { grid-template-columns: 1fr 1fr; }
+      .nl-strip-inner { flex-direction: column; align-items: flex-start; }
+      .nl-strip-form { width: 100%; }
+      .nl-strip-input { flex: 1; }
+      .footer-inner { flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <a href="../index.html" class="logo-name">AX Journal</a>
+    <nav class="mast-nav">
+      <a href="../index.html">記事一覧</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#newsletter" class="cta">購読する</a>
+    </nav>
+  </div>
+</header>
+
+<main class="article-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">AX Journal</a>
+    <span>/</span>
+    <span>トレンド</span>
+  </nav>
+
+  <div class="article-eyebrow">
+    <span class="pill pill-red">速報</span>
+    <span class="pill pill-gray">トレンド</span>
+    <span class="article-date">2026.06.19</span>
+    <span class="article-read">読了 約5分</span>
+  </div>
+
+  <h1 class="article-title">生成AI導入率が前年比2.3倍に：人事・経営層が今すぐ押さえるべき最新データ</h1>
+
+  <p class="article-lead">経産省・民間調査5本を横断分析。製造業・金融・小売での導入加速の背景と、人事戦略への具体的な影響を整理します。データが示す「次の波」とは何か。</p>
+
+  <hr class="article-divider">
+
+  <div class="article-body">
+
+    <h2>何が起きているのか：数字で見るAX加速</h2>
+    <p>2026年上半期、生成AIの企業導入を巡る数字が大きく動いた。経産省が6月に公開した「AI活用実態調査」によれば、従業員100名以上の企業における生成AI活用率は前年同期比で2.3倍。特に製造業（+187%）、金融・保険（+214%）、小売・流通（+196%）での伸びが顕著だ。</p>
+
+    <div class="data-row">
+      <div class="data-card">
+        <span class="data-n">2.3×</span>
+        <span class="data-l">前年比導入率</span>
+        <span class="data-desc">100名以上の企業における生成AI活用率</span>
+      </div>
+      <div class="data-card">
+        <span class="data-n">67%</span>
+        <span class="data-l">HR領域での活用</span>
+        <span class="data-desc">採用・評価・研修のいずれかでAI活用中</span>
+      </div>
+      <div class="data-card">
+        <span class="data-n">3.1年</span>
+        <span class="data-l">導入検討期間の短縮</span>
+        <span class="data-desc">2024年の平均検討期間から大幅に短縮</span>
+      </div>
+    </div>
+
+    <p>注目すべきは、これらの数字が「検討中」ではなく「実運用中」の企業を対象にしている点だ。1〜2年前の調査では「試験導入・PoC段階」が大半を占めていたが、今回の調査では本番稼働が主体となっている。</p>
+
+    <h2>人事・HR領域への波及：3つの変化</h2>
+    <p>経営全体でのAI化が進む中、人事・HR機能への影響は特に大きい。調査データと現場取材から、以下の3つの変化が浮かび上がる。</p>
+
+    <h3>① 採用スクリーニングの自動化</h3>
+    <p>応募書類の一次選考にAIを活用する企業が急増。工数削減（平均60%減）だけでなく、採用基準の言語化・可視化が副次的に進むケースが多い。</p>
+
+    <h3>② 1on1・評価面談のAIサポート</h3>
+    <p>管理職向けに、面談前の情報整理・質問案生成・議事録要約を支援するツールの導入が増加。「上司の質が均質化される」と評価する企業がある一方、「AIへの依存が対話の質を下げる」との懸念も浮上している。</p>
+
+    <h3>③ 研修・ラーニングのパーソナライズ</h3>
+    <p>従業員ごとのスキルギャップと業務データをもとに、学習コンテンツを動的に最適化する「AIコーチング」の導入事例が増えている。特にIT・エンジニア職での活用が先行している。</p>
+
+    <div class="callout">
+      <p class="callout-label">編集部の視点</p>
+      <p>数字の急増を「AI化が進んだ」と読むより、「AI活用が経営上のリスクになる閾値を超えた」と読む方が正確かもしれない。導入しないことが遅れを生む局面に入っている。</p>
+    </div>
+
+    <h2>経営層・人事に求められる判断軸</h2>
+    <p>急激な普及の中で、安易な「とりあえずAI導入」に走る企業も増えている。現時点で成果を出している企業に共通するのは、以下の問いに答えを持っていることだ。</p>
+
+    <blockquote>「何を自動化するかより、なぜこれまで自動化できていなかったかを先に問え」— ある製造業CHRO</blockquote>
+
+    <p>ツールの選定より先に、自社のどのプロセスがボトルネックになっているかを特定すること。その上で、AI導入が「人の判断」をどこまで補完し、どこからは代替不能かを線引きする設計が必要だ。</p>
+
+    <h2>まとめ：今週のアクションポイント</h2>
+    <p>最新データが示すのは、AXが「先進企業の話」から「標準的な経営インフラ」へ移行しつつあるという事実だ。以下の3点を今週の確認事項として提案する。</p>
+
+    <ul>
+      <li><strong>自社のAI活用マップを作る</strong>：どの業務でAIが動いているか（または動いていないか）を一覧化する</li>
+      <li><strong>人事KPIへの影響を試算する</strong>：採用工数・離職率・研修コストのうち、AI活用で変化しうる指標を特定する</li>
+      <li><strong>競合のAX動向を把握する</strong>：同業他社の導入事例を四半期に1度は収集・整理する体制を作る</li>
+    </ul>
+
+  </div>
+
+  <footer class="article-footer">
+    <div class="article-tags">
+      <a href="#" class="tag">AI導入</a>
+      <a href="#" class="tag">HR Tech</a>
+      <a href="#" class="tag">トレンド</a>
+      <a href="#" class="tag">経営戦略</a>
+    </div>
+    <a href="../index.html" class="back-link">記事一覧に戻る</a>
+  </footer>
+
+</main>
+
+<div class="nl-strip">
+  <div class="nl-strip-inner">
+    <div class="nl-strip-text">
+      <p class="nl-strip-label">Newsletter</p>
+      <p class="nl-strip-title">AI×組織の最新情報を週2回お届け</p>
+    </div>
+    <form class="nl-strip-form" onsubmit="return false">
+      <input type="email" class="nl-strip-input" placeholder="メールアドレス">
+      <button type="submit" class="nl-strip-btn">登録する</button>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">AX Journal</span>
+    <span class="footer-copy">© 2026 AX Journal. All rights reserved.</span>
+  </div>
+</footer>
+
+</body>
+</html>
