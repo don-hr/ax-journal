@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIエージェントが変える組織設計：再構築の3原則 — AX Journal</title>
+  <meta name="description" content="85%の組織が3年以内のAgentic AI化を目指す一方、76%が現インフラでは対応不可。MIT Technology Reviewが示すABTフレームで組織設計の再構築を解説。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#F7F7F7;--bg-card:#FFFFFF;--bg-subtle:#EFEFEF;--bg-muted:#E8E8E8;--surface-dark:#1A1A1A;--text:#1A1A1A;--text-muted:#6B6B6B;--text-faint:#9B9B9B;--accent:#1A1A1A;--accent-dark:#000000;--red:#B50000;--red-light:#F5EDED;--border:#DEDEDE;--border-faint:#EBEBEB;--radius:4px;--font-b:'Inter','Noto Sans JP',sans-serif;--font-m:'DM Mono','Courier New',monospace;--body-width:680px;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{font-size:16px;scroll-behavior:smooth;}
+    body{font-family:var(--font-b);background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;}
+    a{color:inherit;text-decoration:none;}
+
+    .masthead{border-bottom:1px solid var(--border);padding:0 24px;background:var(--bg);}
+    .masthead-inner{max-width:1160px;margin:0 auto;height:60px;display:flex;align-items:center;justify-content:space-between;}
+    .logo-name{font-size:15px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--text);}
+    .mast-nav{display:flex;align-items:center;gap:4px;}
+    .mast-nav a{font-size:13px;font-weight:500;color:var(--text-muted);padding:6px 12px;border-radius:var(--radius);transition:background 0.15s,color 0.15s;}
+    .mast-nav a:hover{background:var(--bg-muted);color:var(--text);}
+    .mast-nav .cta{background:var(--accent);color:#fff;margin-left:8px;}
+    .mast-nav .cta:hover{background:var(--accent-dark);color:#fff;}
+
+    .article-wrap{max-width:var(--body-width);margin:0 auto;padding:56px 24px 80px;}
+
+    .breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--font-m);font-size:11px;letter-spacing:0.06em;color:var(--text-faint);margin-bottom:36px;}
+    .breadcrumb a:hover{color:var(--text);}
+    .breadcrumb-sep{opacity:0.4;}
+
+    .article-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:18px;}
+    .pill{font-family:var(--font-m);font-size:9px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;padding:3px 8px;border-radius:3px;}
+    .pill-gray{background:var(--bg-muted);color:var(--text-muted);}
+    .pill-red{background:var(--red-light);color:var(--red);}
+    .article-date{font-family:var(--font-m);font-size:11px;color:var(--text-faint);}
+
+    .article-title{font-size:clamp(26px,4vw,38px);font-weight:700;line-height:1.2;letter-spacing:0.01em;color:var(--text);margin-bottom:20px;}
+    .article-lead{font-size:17px;color:var(--text-muted);line-height:1.85;border-left:3px solid var(--text);padding-left:18px;margin-bottom:40px;}
+    .article-divider{border:none;border-top:1px solid var(--border);margin:40px 0;}
+
+    .article-body{font-size:16px;line-height:1.9;color:var(--text);}
+    .article-body h2{font-size:20px;font-weight:700;letter-spacing:0.01em;margin:48px 0 14px;}
+    .article-body h3{font-size:15px;font-weight:600;color:var(--text);margin:28px 0 8px;}
+    .article-body p{margin-bottom:20px;}
+    .article-body ul,.article-body ol{padding-left:20px;margin-bottom:20px;}
+    .article-body li{margin-bottom:8px;line-height:1.75;}
+    .article-body strong{font-weight:600;}
+    .article-body blockquote{border-left:3px solid var(--border);padding:4px 0 4px 18px;margin:28px 0;color:var(--text-muted);font-size:15px;font-style:italic;}
+
+    .callout{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;margin:28px 0;}
+    .callout-label{font-family:var(--font-m);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-faint);margin-bottom:8px;}
+    .callout p{font-size:14px;color:var(--text-muted);margin-bottom:0;line-height:1.75;}
+
+    .article-hero{margin:0 0 28px;border-radius:var(--radius);overflow:hidden;line-height:0;}
+    .article-hero svg{display:block;width:100%;height:auto;}
+
+    .table-wrap{overflow-x:auto;margin:24px 0;}
+    .table-label{font-family:var(--font-m);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-faint);margin-bottom:10px;display:block;}
+    .data-table{width:100%;border-collapse:collapse;font-size:14px;}
+    .data-table th{font-family:var(--font-m);font-size:10px;letter-spacing:0.06em;text-transform:uppercase;padding:10px 14px;background:var(--surface-dark);color:rgba(255,255,255,0.75);text-align:left;white-space:nowrap;}
+    .data-table th:first-child{background:var(--bg-muted);color:var(--text-muted);}
+    .data-table td{padding:11px 14px;border-bottom:1px solid var(--border-faint);line-height:1.65;vertical-align:top;}
+    .data-table tr:last-child td{border-bottom:none;}
+    .data-table td:first-child{font-weight:600;font-size:13px;white-space:nowrap;color:var(--text);border-right:1px solid var(--border);background:var(--bg-subtle);}
+    .data-table .kw{display:inline-block;background:var(--bg-muted);border-radius:3px;padding:2px 7px;font-family:var(--font-m);font-size:11px;margin:2px 2px 2px 0;white-space:nowrap;}
+
+    .vis-grid{display:grid;gap:8px;margin:24px 0;}
+    .vis-grid-3{grid-template-columns:repeat(3,1fr);}
+    .vis-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 12px;text-align:center;}
+    .vis-card.highlight{border-color:var(--text);background:var(--text);color:#fff;}
+    .vis-card-label{font-family:var(--font-m);font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-faint);display:block;margin-bottom:5px;}
+    .vis-card.highlight .vis-card-label{color:rgba(255,255,255,0.55);}
+    .vis-card-en{font-size:14px;font-weight:700;display:block;margin-bottom:4px;}
+    .vis-card-jp{font-size:11px;color:var(--text-muted);line-height:1.5;}
+    .vis-card.highlight .vis-card-jp{color:rgba(255,255,255,0.7);}
+
+    .ref-heading{font-family:var(--font-m);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-faint);font-weight:500;margin-top:48px;margin-bottom:10px;}
+    .ref-list{list-style:none;padding:0;}
+    .ref-list li{margin-bottom:6px;}
+    .ref-list a{font-size:13px;color:var(--text-muted);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--border);transition:color 0.15s,text-decoration-color 0.15s;word-break:break-all;}
+    .ref-list a:hover{color:var(--text);text-decoration-color:var(--text);}
+
+    .article-footer{margin-top:56px;padding-top:28px;border-top:1px solid var(--border);}
+    .article-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:32px;}
+    .tag{font-family:var(--font-m);font-size:10px;letter-spacing:0.06em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--border);border-radius:var(--radius);color:var(--text-muted);transition:border-color 0.15s,color 0.15s;}
+    .tag:hover{border-color:var(--text);color:var(--text);}
+    .back-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--text-muted);transition:color 0.15s;}
+    .back-link:hover{color:var(--text);}
+    .back-link::before{content:'←';}
+
+    .nl-strip{background:var(--surface-dark);padding:36px 24px;margin-top:64px;}
+    .nl-strip-inner{max-width:var(--body-width);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;}
+    .nl-strip-label{font-family:var(--font-m);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:6px;}
+    .nl-strip-title{font-size:16px;font-weight:600;color:#fff;}
+    .nl-strip-form{display:flex;gap:8px;flex-shrink:0;}
+    .nl-strip-input{padding:10px 14px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:var(--radius);font-family:var(--font-b);font-size:13px;color:#fff;outline:none;width:220px;}
+    .nl-strip-input::placeholder{color:rgba(255,255,255,0.35);}
+    .nl-strip-btn{padding:10px 18px;background:#fff;color:var(--text);border:none;border-radius:var(--radius);font-family:var(--font-b);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:opacity 0.15s;}
+    .nl-strip-btn:hover{opacity:0.85;}
+
+    footer{border-top:1px solid var(--border);padding:24px;background:var(--bg);}
+    .footer-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;}
+    .footer-logo{font-size:13px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;}
+    .footer-copy{font-family:var(--font-m);font-size:11px;color:var(--text-faint);}
+
+    @media(max-width:640px){
+      .mast-nav{display:none;}
+      .vis-grid-3{grid-template-columns:1fr;}
+      .nl-strip-inner{flex-direction:column;align-items:flex-start;}
+      .nl-strip-form{width:100%;}
+      .nl-strip-input{flex:1;}
+      .footer-inner{flex-direction:column;gap:12px;}
+    }
+  </style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <a href="../index.html" class="logo-name">AX Journal</a>
+    <nav class="mast-nav">
+      <a href="../index.html">記事一覧</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#newsletter" class="cta">購読する</a>
+    </nav>
+  </div>
+</header>
+
+<main class="article-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">AX Journal</a>
+    <span class="breadcrumb-sep">/</span>
+    <span>組織変革</span>
+  </nav>
+
+  <div class="article-eyebrow">
+    <span class="pill pill-gray">組織変革</span>
+    <span class="article-date">2026.06.20</span>
+  </div>
+
+  <h1 class="article-title">AIエージェントが変える組織設計：再構築の3原則</h1>
+
+  <div class="article-hero">
+    <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+      <rect width="680" height="200" fill="#0d0d0d"/>
+      <defs>
+        <pattern id="g2" width="30" height="30" patternUnits="userSpaceOnUse">
+          <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#171717" stroke-width="0.5"/>
+        </pattern>
+      </defs>
+      <rect width="680" height="200" fill="url(#g2)"/>
+      <ellipse cx="330" cy="95" rx="295" ry="82" fill="none" stroke="#1c1c1c" stroke-width="1"/>
+      <ellipse cx="330" cy="95" rx="220" ry="60" fill="none" stroke="#212121" stroke-width="1"/>
+      <ellipse cx="330" cy="95" rx="148" ry="40" fill="none" stroke="#272727" stroke-width="1"/>
+      <ellipse cx="330" cy="95" rx="84" ry="23" fill="none" stroke="#2e2e2e" stroke-width="1"/>
+      <ellipse cx="330" cy="95" rx="36" ry="10" fill="#141414" stroke="#383838" stroke-width="1"/>
+      <circle cx="330" cy="95" r="4" fill="#424242"/>
+      <line x1="330" y1="95" x2="625" y2="13" stroke="#1c1c1c" stroke-width="0.5" stroke-dasharray="3 5"/>
+      <line x1="330" y1="95" x2="625" y2="95" stroke="#1c1c1c" stroke-width="0.5" stroke-dasharray="3 5"/>
+      <line x1="330" y1="95" x2="625" y2="177" stroke="#1c1c1c" stroke-width="0.5" stroke-dasharray="3 5"/>
+      <line x1="330" y1="95" x2="35" y2="177" stroke="#1c1c1c" stroke-width="0.5" stroke-dasharray="3 5"/>
+      <line x1="330" y1="95" x2="35" y2="95" stroke="#1c1c1c" stroke-width="0.5" stroke-dasharray="3 5"/>
+      <line x1="330" y1="95" x2="35" y2="13" stroke="#1c1c1c" stroke-width="0.5" stroke-dasharray="3 5"/>
+      <circle cx="625" cy="95" r="3" fill="none" stroke="#303030" stroke-width="1"/>
+      <circle cx="35" cy="95" r="3" fill="none" stroke="#303030" stroke-width="1"/>
+      <circle cx="330" cy="13" r="3" fill="none" stroke="#303030" stroke-width="1"/>
+      <circle cx="330" cy="177" r="3" fill="none" stroke="#303030" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <p class="article-lead">「AIを既存組織に上乗せするのは、粘着テープで壊れたモデルを修正するようなものだ」——PwC UK ConsultingグローバルCTOのこの言葉が、エージェントAI時代の組織変革の本質を突いている。MIT Technology Reviewの最新調査（2026年5月）によれば、85%の組織が3年以内にAgentic AI化を目指す一方、76%が「現在のインフラでは対応不可能」と回答。技術だけを変えて組織構造を変えない限り、AIへの投資は実質的なROIを生まない。</p>
+
+  <hr class="article-divider">
+
+  <div class="article-body">
+
+    <h2>「上乗せ型」AI導入が機能しない理由</h2>
+    <p>多くの組織がAI導入で陥るパターンがある。既存の業務フローはそのままに、AIツールを「追加機能」として組み込む——いわゆる「上乗せ型」だ。短期的な効率改善は見えるが、組織設計の根幹は変わらないため、AI本来のポテンシャルは引き出せない。</p>
+    <p>PwC UK ConsultingのグローバルCTO兼Chief AI OfficerであるPrasun Shah氏は「既存の人間による運営モデルへのAI埋め込みは、粘着テープで壊れたモデルを修正するようなもの」と断じる。McKinseyの調査では2030年までに現在の職業の4分の3が再設計を迫られると予測しており、「今の組織設計を前提にしたAI活用」には構造的な限界がある。</p>
+
+    <div class="table-wrap">
+      <span class="table-label">図1｜上乗せ型AI導入 vs ABT（組織再設計型）の比較</span>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>上乗せ型AI導入（従来）</th>
+            <th>ABT（組織再設計型）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>アプローチ</td>
+            <td>既存業務フローにAIを追加</td>
+            <td>業務プロセスをゼロベースで再設計</td>
+          </tr>
+          <tr>
+            <td>成功指標</td>
+            <td><span class="kw">コスト削減率</span> <span class="kw">効率化</span></td>
+            <td><span class="kw">ビジネスアウトカム</span> <span class="kw">成果中心</span></td>
+          </tr>
+          <tr>
+            <td>組織構造</td>
+            <td>変えない（既存ピラミッド維持）</td>
+            <td>ハイブリッド型チームに再編</td>
+          </tr>
+          <tr>
+            <td>技術スタック</td>
+            <td>既存システムへのAPI接続</td>
+            <td>複数システム横断のコネクティビティ</td>
+          </tr>
+          <tr>
+            <td>ROI実績</td>
+            <td>限定的・短期で頭打ち</td>
+            <td>2四半期でROI最大3倍（Ema顧客事例）</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>ABTフレームワーク：組織再設計の3つの柱</h2>
+    <p>MIT Technology Reviewが提唱するAgentic Business Transformation（ABT）は、AIエージェント時代の組織変革を3つの柱で構造化したフレームワークだ。Ema CEOのSurojit Chatterjee氏は「ABTは組織全体の統合であり、既存のデジタル変換やAI導入とは本質的に異なる」と定義する。</p>
+
+    <div class="table-wrap">
+      <span class="table-label">図2｜ABTフレームワーク — 3つの柱</span>
+    </div>
+    <div class="vis-grid vis-grid-3">
+      <div class="vis-card">
+        <span class="vis-card-label">第1の柱</span>
+        <span class="vis-card-en">技術スタック</span>
+        <span class="vis-card-jp">複数システム横断のコネクティビティ。AIエージェントが組織内外のデータに横断アクセスできる基盤を構築する。</span>
+      </div>
+      <div class="vis-card highlight">
+        <span class="vis-card-label">★ 最大の変化点</span>
+        <span class="vis-card-en">人材構造</span>
+        <span class="vis-card-jp">人間とAIが協働するハイブリッド型チームへの再編。管理職の役割定義を根本から見直す。</span>
+      </div>
+      <div class="vis-card">
+        <span class="vis-card-label">第3の柱</span>
+        <span class="vis-card-en">成功指標</span>
+        <span class="vis-card-jp">アウトプット（処理量・コスト）からアウトカム（事業成果・顧客価値）中心の評価軸への転換。</span>
+      </div>
+    </div>
+
+    <p>3つの柱のうち最も影響が大きいのが<strong>人材構造の再編</strong>だ。AIエージェントが「チームメンバー」として業務を担うようになると、人間の役割は「実行者」から「判断者・監督者・戦略立案者」へとシフトする。この変化を前提に、JD（職務定義）・評価基準・採用要件を一から設計し直すことが求められる。</p>
+
+    <div class="callout">
+      <p class="callout-label">編集部の視点</p>
+      <p>「85%が3年以内にAgentic AI化を目指すが、76%が現インフラでは無理」という矛盾は、日本企業にもそのまま当てはまる。DXを「完了した」と言いながらAI活用で躓く組織の多くは、技術の問題ではなく組織設計の問題を抱えている。特に成功指標の転換——「コスト削減率」から「アウトカム達成度」へ——は、経営層の意識変革なしには実現しない。ABTを「ITプロジェクト」として扱う限り、ROIは出ない。</p>
+    </div>
+
+    <h2>アウトカム中心への転換が3倍のROIを生む</h2>
+    <p>ABTフレームの効果を示す実例がある。Emaのエンタープライズ顧客は、AI投資の評価軸をコスト効率中心からアウトカム中心に変更した結果、わずか2四半期でROIが3倍に増加した。同調査では、AIエージェントの活用で業務プロセスが30〜50%加速し、低付加価値業務が25〜40%削減できることも示されている（MIT Technology Review Insights, 2026年5月）。</p>
+    <p>重要なのは、これらの成果が「AIを入れた」だけでは得られないという点だ。プロセス設計・人材配置・指標設定を組織レベルで変えて初めて、AIエージェントのポテンシャルは数字に変わる。</p>
+
+    <blockquote>「ABTは組織全体の統合であり、既存のデジタル変換やAI導入とは本質的に異なる」——Surojit Chatterjee（Ema CEO）</blockquote>
+
+    <h2>まとめ：今後のアクションポイント</h2>
+    <p>上乗せ型のAI導入から脱却し、ABTフレームに基づく組織再設計に踏み出すことが、エージェントAI時代の競争力を左右する。技術・人材・指標の3軸を一体で変えることが、ROIを実現する唯一の道だ。</p>
+    <ul>
+      <li><strong>3軸の現状点検</strong>：自社のAIエージェント対応状況を「技術スタック（接続性）」「人材構造（ハイブリッド化の進捗）」「成功指標（アウトカム志向か否か）」の3軸で自己診断し、最大のボトルネックを1つ特定する</li>
+      <li><strong>指標を変える</strong>：次のAI投資レビューでは、評価軸を「コスト削減率・処理件数」から「どのビジネスアウトカムに貢献したか」に切り替える。指標が変われば、取り組みの優先順位も変わる</li>
+      <li><strong>プロセスをゼロ設計する</strong>：既存業務へのAI追加ではなく、AIエージェントが主役を担う前提でプロセスを一から設計するパイロットを1つ立ち上げる。スコープは小さくていい——「再設計」の実績をつくることが重要だ</li>
+    </ul>
+
+    <h2 class="ref-heading">参照</h2>
+    <ul class="ref-list">
+      <li><a href="https://www.technologyreview.com/2026/05/26/1137584/rethinking-organizational-design-in-the-age-of-agentic-ai/" target="_blank" rel="noopener">Rethinking organizational design in the age of agentic AI — MIT Technology Review Insights（2026年5月）</a></li>
+    </ul>
+
+  </div>
+
+  <footer class="article-footer">
+    <div class="article-tags">
+      <a href="#" class="tag">エージェントAI</a>
+      <a href="#" class="tag">組織変革</a>
+      <a href="#" class="tag">ABTフレーム</a>
+      <a href="#" class="tag">MIT Technology Review</a>
+    </div>
+    <a href="../index.html" class="back-link">記事一覧に戻る</a>
+  </footer>
+
+</main>
+
+<div class="nl-strip">
+  <div class="nl-strip-inner">
+    <div class="nl-strip-text">
+      <p class="nl-strip-label">Newsletter</p>
+      <p class="nl-strip-title">AI×組織の最新情報を週2回お届け</p>
+    </div>
+    <form class="nl-strip-form" onsubmit="return false">
+      <input type="email" class="nl-strip-input" placeholder="メールアドレス">
+      <button type="submit" class="nl-strip-btn">登録する</button>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">AX Journal</span>
+    <span class="footer-copy">© 2026 AX Journal. All rights reserved.</span>
+  </div>
+</footer>
+
+</body>
+</html>
