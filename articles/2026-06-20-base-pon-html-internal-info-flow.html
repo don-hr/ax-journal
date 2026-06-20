@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIドキュメントをURLで共有する——BASE「pon」が変えた社内情報流通 — AX Journal</title>
+  <meta name="description" content="AI生成ドキュメントを「URLで共有」する文化はいかに生まれたか。BASE社CTOが構築した社内HTMLホスティング「pon」の事例から読み解く。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:           #080808;
+      --bg-card:      #111111;
+      --bg-subtle:    #0d0d0d;
+      --bg-muted:     #141414;
+      --surface-dark: #161616;
+      --text:         #EDE9E2;
+      --text-muted:   #888880;
+      --text-faint:   #4E4E4A;
+      --accent:       #C4914A;
+      --accent-dark:  #A87840;
+      --accent-light: rgba(196,145,74,0.12);
+      --red:          #C4914A;
+      --red-light:    rgba(196,145,74,0.10);
+      --border:       #1E1E1E;
+      --border-faint: #161616;
+      --radius:       3px;
+      --font-b: 'Inter', 'Noto Sans JP', sans-serif;
+      --font-m: 'DM Mono', 'Courier New', monospace;
+      --body-width: 680px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { font-family: var(--font-b); background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+
+    .masthead { border-bottom: 1px solid var(--border-faint); padding: 0 24px; background: var(--bg); }
+    .masthead-inner { max-width: 1160px; margin: 0 auto; height: 58px; display: flex; align-items: center; justify-content: space-between; }
+    .logo-name { font-size: 14px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text); }
+    .mast-nav { display: flex; align-items: center; gap: 2px; }
+    .mast-nav a { font-size: 12px; font-weight: 500; color: var(--text-muted); padding: 6px 12px; border-radius: var(--radius); transition: color 0.15s; }
+    .mast-nav a:hover { color: var(--text); }
+    .mast-nav .cta { background: var(--accent); color: #000; font-weight: 700; margin-left: 8px; padding: 6px 18px; letter-spacing: 0.04em; }
+    .mast-nav .cta:hover { background: var(--accent-dark); color: #000; }
+
+    .article-wrap { max-width: var(--body-width); margin: 0 auto; padding: 56px 24px 80px; }
+
+    .breadcrumb { display: flex; align-items: center; gap: 8px; font-family: var(--font-m); font-size: 11px; letter-spacing: 0.06em; color: var(--text-faint); margin-bottom: 36px; }
+    .breadcrumb a:hover { color: var(--text-muted); }
+    .breadcrumb-sep { opacity: 0.35; }
+
+    .article-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+    .pill { font-family: var(--font-m); font-size: 8px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; padding: 3px 7px; border-radius: 2px; }
+    .pill-gray { background: #181818; color: var(--text-muted); border: 1px solid #242424; }
+    .pill-red  { background: var(--red-light); color: var(--accent); border: 1px solid rgba(196,145,74,0.22); }
+    .article-date { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); }
+
+    .article-title { font-size: clamp(26px, 4vw, 38px); font-weight: 700; line-height: 1.2; letter-spacing: 0.01em; color: var(--text); margin-bottom: 20px; }
+    .article-lead { font-size: 17px; color: var(--text-muted); line-height: 1.88; border-left: 3px solid var(--accent); padding-left: 18px; margin-bottom: 40px; }
+    .article-divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    .article-hero { margin: 0 0 28px; border-radius: var(--radius); overflow: hidden; line-height: 0; }
+    .article-hero svg { display: block; width: 100%; height: auto; }
+
+    .article-body { font-size: 16px; line-height: 1.9; color: var(--text); }
+    .article-body h2 { font-size: 20px; font-weight: 700; letter-spacing: 0.01em; margin: 48px 0 14px; color: var(--text); }
+    .article-body h3 { font-size: 15px; font-weight: 600; color: var(--text); margin: 28px 0 8px; }
+    .article-body p { margin-bottom: 20px; }
+    .article-body ul, .article-body ol { padding-left: 20px; margin-bottom: 20px; }
+    .article-body li { margin-bottom: 8px; line-height: 1.75; }
+    .article-body strong { font-weight: 600; color: var(--text); }
+    .article-body em { font-style: italic; color: var(--text-muted); }
+    .article-body blockquote { border-left: 3px solid var(--accent); padding: 4px 0 4px 18px; margin: 28px 0; color: var(--text-muted); font-size: 15px; font-style: italic; }
+
+    .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius); padding: 20px 22px; margin: 28px 0; }
+    .callout-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .callout p { font-size: 14px; color: var(--text-muted); margin-bottom: 0; line-height: 1.75; }
+
+    .source-note { background: rgba(196,145,74,0.06); border: 1px solid rgba(196,145,74,0.18); border-radius: var(--radius); padding: 14px 18px; margin-bottom: 36px; }
+    .source-note p { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); line-height: 1.7; margin-bottom: 0; }
+    .source-note a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+
+    .table-wrap { overflow-x: auto; margin: 24px 0; }
+    .table-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 10px; display: block; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .data-table th { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 10px 14px; background: #181818; color: rgba(255,255,255,0.55); text-align: left; white-space: nowrap; border-bottom: 1px solid var(--border); }
+    .data-table th:first-child { background: #141414; color: var(--text-faint); }
+    .data-table td { padding: 11px 14px; border-bottom: 1px solid var(--border-faint); line-height: 1.65; vertical-align: top; color: var(--text-muted); }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table td:first-child { font-weight: 600; font-size: 13px; white-space: nowrap; color: var(--text); border-right: 1px solid var(--border); background: var(--bg-subtle); }
+    .data-table .kw { display: inline-block; background: #1c1c1c; border: 1px solid #282828; border-radius: 3px; padding: 2px 7px; font-family: var(--font-m); font-size: 11px; margin: 2px 2px 2px 0; white-space: nowrap; color: var(--text-muted); }
+
+    .vis-grid { display: grid; gap: 8px; margin: 24px 0; }
+    .vis-grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .vis-grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .vis-grid-5 { grid-template-columns: repeat(5, 1fr); }
+    .vis-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 12px; text-align: center; }
+    .vis-card.highlight { border-color: var(--accent); background: var(--accent); color: #000; }
+    .vis-card-label { font-family: var(--font-m); font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); display: block; margin-bottom: 4px; }
+    .vis-card.highlight .vis-card-label { color: rgba(0,0,0,0.5); }
+    .vis-card-en { font-size: 13px; font-weight: 700; display: block; margin-bottom: 2px; color: var(--text); }
+    .vis-card.highlight .vis-card-en { color: #000; }
+    .vis-card-jp { font-size: 11px; color: var(--text-muted); }
+    .vis-card.highlight .vis-card-jp { color: rgba(0,0,0,0.65); }
+
+    .ref-heading { font-family: var(--font-m); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); font-weight: 500; margin-top: 48px; margin-bottom: 10px; }
+    .ref-list { list-style: none; padding: 0; }
+    .ref-list li { margin-bottom: 6px; }
+    .ref-list a { font-size: 13px; color: var(--text-muted); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--border); transition: color 0.15s, text-decoration-color 0.15s; word-break: break-all; }
+    .ref-list a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
+    .article-footer { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--border); }
+    .article-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 32px; }
+    .tag { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-faint); transition: border-color 0.15s, color 0.15s; }
+    .tag:hover { border-color: var(--accent); color: var(--accent); }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--text-muted); transition: color 0.15s; }
+    .back-link:hover { color: var(--accent); }
+    .back-link::before { content: '←'; }
+
+    .nl-strip { background: #0a0a0a; padding: 32px 24px; margin-top: 64px; border-top: 1px solid var(--border); }
+    .nl-strip-inner { max-width: var(--body-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .nl-strip-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 6px; }
+    .nl-strip-title { font-size: 16px; font-weight: 600; color: var(--text); letter-spacing: 0.01em; }
+    .nl-strip-form { display: flex; gap: 8px; flex-shrink: 0; }
+    .nl-strip-input { padding: 10px 14px; background: var(--bg-muted); border: 1px solid var(--border); border-radius: var(--radius); font-family: var(--font-b); font-size: 13px; color: var(--text); outline: none; width: 220px; transition: border-color 0.15s; }
+    .nl-strip-input::placeholder { color: var(--text-faint); }
+    .nl-strip-input:focus { border-color: var(--accent); }
+    .nl-strip-btn { padding: 10px 18px; background: var(--accent); color: #000; border: none; border-radius: var(--radius); font-family: var(--font-b); font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: background 0.15s; }
+    .nl-strip-btn:hover { background: var(--accent-dark); }
+
+    footer { border-top: 1px solid var(--border-faint); padding: 24px; background: var(--bg-subtle); }
+    .footer-inner { max-width: 1160px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .footer-logo { font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-faint); }
+    .footer-copy { font-family: var(--font-m); font-size: 10px; color: var(--text-faint); }
+
+    @media (max-width: 640px) {
+      .mast-nav { display: none; }
+      .vis-grid-5 { grid-template-columns: repeat(3, 1fr); }
+      .vis-grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .vis-grid-3 { grid-template-columns: 1fr; }
+      .nl-strip-inner { flex-direction: column; align-items: flex-start; }
+      .nl-strip-form { width: 100%; }
+      .nl-strip-input { flex: 1; }
+      .footer-inner { flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- マストヘッド -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <a href="../index.html" class="logo-name">AX Journal</a>
+    <nav class="mast-nav">
+      <a href="../index.html">記事一覧</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#newsletter" class="cta">購読する</a>
+    </nav>
+  </div>
+</header>
+
+<!-- 記事本文 -->
+<main class="article-wrap">
+
+  <!-- パンくず -->
+  <nav class="breadcrumb">
+    <a href="../index.html">AX Journal</a>
+    <span class="breadcrumb-sep">/</span>
+    <span>事例・ケース</span>
+  </nav>
+
+  <!-- ヘッダー -->
+  <div class="article-eyebrow">
+    <span class="pill pill-gray">事例・ケース</span>
+    <span class="article-date">2026.06.20</span>
+  </div>
+
+  <h1 class="article-title">AIドキュメントをURLで共有する——BASE「pon」が変えた社内情報流通</h1>
+
+  <!-- ヒーローSVG（burst スタイル・銅色アクセントはNE方向） -->
+  <div class="article-hero">
+    <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+      <rect width="680" height="200" fill="#080808"/>
+      <!-- burst: 22本の放射ライン、中心(340,100) -->
+      <!-- 西・北西方向 暗色 -->
+      <line x1="340" y1="100" x2="52" y2="100" stroke="#222" stroke-width="1"/>
+      <line x1="340" y1="100" x2="76" y2="55" stroke="#1e1e1e" stroke-width="1"/>
+      <line x1="340" y1="100" x2="130" y2="18" stroke="#222" stroke-width="1"/>
+      <line x1="340" y1="100" x2="208" y2="4" stroke="#1e1e1e" stroke-width="1"/>
+      <line x1="340" y1="100" x2="290" y2="2" stroke="#282828" stroke-width="1"/>
+      <!-- 北・北東方向 暗色 -->
+      <line x1="340" y1="100" x2="340" y2="3" stroke="#1e1e1e" stroke-width="1"/>
+      <line x1="340" y1="100" x2="388" y2="5" stroke="#242424" stroke-width="1"/>
+      <!-- 北東方向 銅色アクセント 3本 -->
+      <line x1="340" y1="100" x2="438" y2="14" stroke="#C4914A" stroke-width="1.3" opacity="0.72"/>
+      <line x1="340" y1="100" x2="494" y2="38" stroke="#C4914A" stroke-width="1.3" opacity="0.72"/>
+      <line x1="340" y1="100" x2="526" y2="70" stroke="#C4914A" stroke-width="1.2" opacity="0.65"/>
+      <!-- 東・南東方向 暗色 -->
+      <line x1="340" y1="100" x2="628" y2="100" stroke="#222" stroke-width="1"/>
+      <line x1="340" y1="100" x2="608" y2="148" stroke="#1e1e1e" stroke-width="1"/>
+      <line x1="340" y1="100" x2="558" y2="182" stroke="#222" stroke-width="1"/>
+      <line x1="340" y1="100" x2="486" y2="196" stroke="#1e1e1e" stroke-width="1"/>
+      <!-- 南方向 暗色 -->
+      <line x1="340" y1="100" x2="404" y2="197" stroke="#282828" stroke-width="1"/>
+      <line x1="340" y1="100" x2="340" y2="196" stroke="#222" stroke-width="1"/>
+      <line x1="340" y1="100" x2="276" y2="194" stroke="#1e1e1e" stroke-width="1"/>
+      <!-- 南西・西方向 暗色 -->
+      <line x1="340" y1="100" x2="200" y2="178" stroke="#222" stroke-width="1"/>
+      <line x1="340" y1="100" x2="148" y2="152" stroke="#1e1e1e" stroke-width="1"/>
+      <line x1="340" y1="100" x2="112" y2="118" stroke="#222" stroke-width="1"/>
+      <line x1="340" y1="100" x2="106" y2="76" stroke="#1e1e1e" stroke-width="1"/>
+      <line x1="340" y1="100" x2="128" y2="40" stroke="#242424" stroke-width="1"/>
+      <!-- 中心ドット -->
+      <circle cx="340" cy="100" r="4.5" fill="#C4914A" opacity="0.88"/>
+      <circle cx="340" cy="100" r="11" fill="none" stroke="#C4914A" stroke-width="0.5" opacity="0.22"/>
+    </svg>
+  </div>
+
+  <p class="article-lead">AIコーディングが浸透するにつれ、組織内に「流通するが読まれない」ドキュメントが急増している。BASE社のCTO川口氏が2026年6月に公開したブログ記事は、その問題への根本的な答えを提示した——AIが生成したHTMLをそのまま社内ホストし、「URLで共有する」を組織の標準にする、という設計思想だ。</p>
+
+  <hr class="article-divider">
+
+  <!-- 本文 -->
+  <div class="article-body">
+
+    <h2>AIコーディングが生んだ「読めるのに読まれない」ドキュメント問題</h2>
+
+    <p>AIコーディングツールの普及により、実装計画・設計メモ・技術仕様書が以前の何倍もの速さで生成されるようになった。しかしBASE社CTOの川口氏（id:dmnlk）が直面した問題は逆説的だった。<strong>「ドキュメントは増えるが、人間が読むのに適さない」</strong>という状況だ。</p>
+
+    <p>マークダウン形式で共有されるAI生成ドキュメントは、長く、構造はあるが、チャットツールに貼り付けると見た目がくずれ、Notionに移すとレイアウトの自由度が失われる。AIが「読みやすく」設計したHTMLが、変換を経るたびに「読みにくい」ものへと劣化する。これは小さな摩擦のように見えて、実際には「誰も読まないドキュメント」を組織全体で量産する構造的な問題だ。</p>
+
+    <div class="callout">
+      <p class="callout-label">AX Journal 編集部の視点</p>
+      <p>「AIが生成したドキュメントを人間が読める形に変換する」という問いの立て方自体が間違っている。正しい問いは「フォーマット変換ゼロで配布できる形式で、最初から生成させる」ことだ。ponはその設計思想を体現したインフラである。</p>
+    </div>
+
+    <h2>NotionではなくHTMLを選んだ理由——「変換を挟まない」という設計思想</h2>
+
+    <p>川口氏が選んだ解決策は、Notionへの移行でも、マークダウンビューアの導入でもなかった。<strong>AIが生成したHTMLをそのまま社内でホストできる環境を作る</strong>という、シンプルかつ根本的な方針への転換だ。</p>
+
+    <p>Notionにはレイアウトの自由度という制約がある。AIが精密に設計した表や構造も、Notionのブロック体系に合わせた変換を挟んだ瞬間に情報の一部が失われる。HTMLであれば、AIが出力したそのままを即座にURLとして配布できる。「変換を挟まない素直さ」——これがHTMLを選んだ核心的な理由だ。</p>
+
+    <div class="table-wrap">
+      <span class="table-label">図1｜Notion vs 社内HTMLホスティング（pon方式）比較</span>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>比較軸</th>
+            <th>Notion</th>
+            <th>社内HTMLホスティング（pon）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>AI生成物の扱い</td>
+            <td>ブロックへの変換が必要、レイアウト劣化あり</td>
+            <td><span class="kw">変換ゼロ</span> でそのまま配信</td>
+          </tr>
+          <tr>
+            <td>共有方法</td>
+            <td>ページ権限設定 + URLシェア</td>
+            <td><span class="kw">URLで即共有</span>（IAP認証込み）</td>
+          </tr>
+          <tr>
+            <td>レイアウト自由度</td>
+            <td>Notionブロック制約あり</td>
+            <td>HTMLフルコントロール</td>
+          </tr>
+          <tr>
+            <td>対象ユーザー</td>
+            <td>全社（書く側・読む側ともにNotion慣れが必要）</td>
+            <td>書く側はAI任せ、読む側はURLだけ</td>
+          </tr>
+          <tr>
+            <td>運用コスト</td>
+            <td>月額課金、管理者が必要</td>
+            <td>GCS + Cloud Run（使量課金・軽量）</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>「pon」の3層構成——GCS・Cloud Run・IAPで作る社内URLインフラ</h2>
+
+    <p>サービス名は「pon」。技術スタックは意図的にシンプルに設計されている。Google Cloud Storageでファイルを保管し、Cloud Runでフルマネージドに配信し、Identity-Aware ProxyでGoogle Workspaceと連携した認証を担う。この3層構成がすべてだ。</p>
+
+    <div class="table-wrap">
+      <span class="table-label">図2｜「pon」の技術スタック3層</span>
+    </div>
+    <div class="vis-grid vis-grid-3">
+      <div class="vis-card">
+        <span class="vis-card-label">Layer 1 / 保管</span>
+        <span class="vis-card-en">GCS</span>
+        <span class="vis-card-jp">Google Cloud Storage<br>ファイルをオブジェクトとして保持</span>
+      </div>
+      <div class="vis-card highlight">
+        <span class="vis-card-label">Layer 2 / 配信</span>
+        <span class="vis-card-en">Cloud Run</span>
+        <span class="vis-card-jp">フルマネージド配信<br>スケーリング不要・コストゼロから</span>
+      </div>
+      <div class="vis-card">
+        <span class="vis-card-label">Layer 3 / 認証</span>
+        <span class="vis-card-en">IAP</span>
+        <span class="vis-card-jp">Identity-Aware Proxy<br>Google Workspace連携で社内限定</span>
+      </div>
+    </div>
+
+    <p>追加で実装された運用施策も重要だ。<strong>自動7日削除</strong>（古いドキュメントの自然消滅）、<strong>CI統合</strong>（ビルド成果物を自動でponにアップ）、<strong>Claude Code連携</strong>（AIが生成した出力を直接ponにプッシュ）。これらが「AIが作ってURLで渡す」という一連の流れをノーコードで完成させた。</p>
+
+    <h2>エンジニアから全社へ——「pon」が生んだ情報流通の文化変容</h2>
+
+    <p>「pon」のユースケースは当初、エンジニアによる実装計画の共有に限定されていた。しかし変化は予想外の方向から生まれた。<strong>財務・経理など非エンジニア部門が「資料をHTMLにして共有する」習慣を自発的に取り入れ始めた</strong>のだ。</p>
+
+    <p>社内デフォルトが「読みやすい1ページをURLで共有する」に変わった。「pon」というサービス名が動詞として使われるほど文化に根付いた。これは技術ツールの導入ではない。AIドキュメントをチャットに貼るのではなく、URLで渡す——という<strong>情報流通の様式そのもの</strong>が変わった事例だ。</p>
+
+    <blockquote>「変換を挟まない素直さ」がHTMLの強みでした。——川口CTO（BASE株式会社）</blockquote>
+
+    <h2>まとめ</h2>
+
+    <p>AI生成ドキュメントの問題は、ドキュメントの「質」ではなく「流通経路」にある。ponが示した解答は、フォーマット変換ゼロ・URLで共有・社内認証の3点セットで情報流通インフラを作り直すことだった。人事・HR部門でも、JD・組織設計案・評価基準書といった「AIで下書きする書類」が急増している。同様の仕組みは即座に応用できる。</p>
+
+    <ul>
+      <li>社内でAI生成ドキュメントが増えているなら、まず「どのフォーマットで共有しているか」を棚卸しし、変換ステップの数を数える</li>
+      <li>HTMLホスティング環境はGoogle Cloud Storage + Cloud Run + IAPというシンプルな構成で実現できる。自社エンジニアへの導入提案材料として活用できる</li>
+      <li>「URL共有」を社内標準にするには、まずエンジニア部門で小さく始め、他部門への波及を自然に待つ設計が有効——ponはその好例だ</li>
+    </ul>
+
+    <p class="ref-heading">参照</p>
+    <ul class="ref-list">
+      <li><a href="https://devblog.thebase.in/entry/pon" target="_blank" rel="noopener">社内にHTMLをホストする環境を作ったら社内情報の流れが変わった — BASE開発者ブログ（川口CTO, 2026年6月17日）</a></li>
+    </ul>
+
+  </div>
+
+  <!-- フッター -->
+  <footer class="article-footer">
+    <div class="article-tags">
+      <a href="#" class="tag">AI-Document</a>
+      <a href="#" class="tag">Internal-Tool</a>
+      <a href="#" class="tag">事例</a>
+      <a href="#" class="tag">情報流通</a>
+    </div>
+    <a href="../index.html" class="back-link">記事一覧に戻る</a>
+  </footer>
+
+</main>
+
+<!-- ニュースレター -->
+<div class="nl-strip">
+  <div class="nl-strip-inner">
+    <div class="nl-strip-text">
+      <p class="nl-strip-label">Newsletter</p>
+      <p class="nl-strip-title">AI×組織の最新情報を週2回お届け</p>
+    </div>
+    <form class="nl-strip-form" onsubmit="return false">
+      <input type="email" class="nl-strip-input" placeholder="メールアドレス">
+      <button type="submit" class="nl-strip-btn">登録する</button>
+    </form>
+  </div>
+</div>
+
+<!-- フッター -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">AX Journal</span>
+    <span class="footer-copy">© 2026 AX Journal. All rights reserved.</span>
+  </div>
+</footer>
+
+</body>
+</html>
