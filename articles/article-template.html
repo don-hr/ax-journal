@@ -248,6 +248,29 @@
     .back-link:hover { color: var(--text); }
     .back-link::before { content: '←'; }
 
+    .ref-heading {
+      font-family: var(--font-m);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      font-weight: 500;
+      margin-top: 48px;
+      margin-bottom: 10px;
+    }
+    .ref-list { list-style: none; padding: 0; }
+    .ref-list li { margin-bottom: 6px; }
+    .ref-list a {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: var(--border);
+      transition: color 0.15s, text-decoration-color 0.15s;
+      word-break: break-all;
+    }
+    .ref-list a:hover { color: var(--text); text-decoration-color: var(--text); }
+
     /* ── newsletter strip ── */
     .nl-strip {
       background: var(--surface-dark);
@@ -409,6 +432,12 @@
       <li>{{POINT_1}}</li>
       <li>{{POINT_2}}</li>
       <li>{{POINT_3}}</li>
+    </ul>
+
+    <!-- 参照URL（ある場合のみ） -->
+    <h2 class="ref-heading">参照</h2>
+    <ul class="ref-list">
+      <li><a href="{{REF_URL_1}}" target="_blank" rel="noopener">{{REF_TITLE_1}}</a></li>
     </ul>
 
   </div>
