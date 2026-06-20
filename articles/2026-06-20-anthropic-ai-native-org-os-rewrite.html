@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>組織の「OS」を書き換えよ——AnthropicのAIネイティブ組織が示す次のステージ — AX Journal</title>
+  <meta name="description" content="AIを「ツールとして重ねる」だけでは失敗する。Anthropicが実践する組織OS書き換えの4原則と、PC革命を超える速度で迫る変革の正体。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:           #080808;
+      --bg-card:      #111111;
+      --bg-subtle:    #0d0d0d;
+      --bg-muted:     #141414;
+      --text:         #EDE9E2;
+      --text-muted:   #888880;
+      --text-faint:   #4E4E4A;
+      --accent:       #C4914A;
+      --accent-dark:  #A87840;
+      --accent-light: rgba(196,145,74,0.12);
+      --red:          #C4914A;
+      --red-light:    rgba(196,145,74,0.10);
+      --border:       #1E1E1E;
+      --border-faint: #161616;
+      --radius:       3px;
+      --font-b: 'Inter', 'Noto Sans JP', sans-serif;
+      --font-m: 'DM Mono', 'Courier New', monospace;
+      --body-width: 680px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { font-family: var(--font-b); background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+
+    .masthead { border-bottom: 1px solid var(--border-faint); padding: 0 24px; background: var(--bg); }
+    .masthead-inner { max-width: 1160px; margin: 0 auto; height: 58px; display: flex; align-items: center; justify-content: space-between; }
+    .logo-name { font-size: 14px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text); }
+    .mast-nav { display: flex; align-items: center; gap: 2px; }
+    .mast-nav a { font-size: 12px; font-weight: 500; color: var(--text-muted); padding: 6px 12px; border-radius: var(--radius); transition: color 0.15s; }
+    .mast-nav a:hover { color: var(--text); }
+    .mast-nav .cta { background: var(--accent); color: #000; font-weight: 700; margin-left: 8px; padding: 6px 18px; letter-spacing: 0.04em; }
+    .mast-nav .cta:hover { background: var(--accent-dark); color: #000; }
+
+    .article-wrap { max-width: var(--body-width); margin: 0 auto; padding: 56px 24px 80px; }
+
+    .breadcrumb { display: flex; align-items: center; gap: 8px; font-family: var(--font-m); font-size: 11px; letter-spacing: 0.06em; color: var(--text-faint); margin-bottom: 36px; }
+    .breadcrumb a:hover { color: var(--text-muted); }
+    .breadcrumb-sep { opacity: 0.35; }
+
+    .article-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+    .pill { font-family: var(--font-m); font-size: 8px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; padding: 3px 7px; border-radius: 2px; }
+    .pill-gray { background: #181818; color: var(--text-muted); border: 1px solid #242424; }
+    .pill-red  { background: var(--red-light); color: var(--accent); border: 1px solid rgba(196,145,74,0.22); }
+    .article-date { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); }
+
+    .article-title { font-size: clamp(26px, 4vw, 38px); font-weight: 700; line-height: 1.2; letter-spacing: 0.01em; color: var(--text); margin-bottom: 20px; }
+    .article-lead { font-size: 17px; color: var(--text-muted); line-height: 1.88; border-left: 3px solid var(--accent); padding-left: 18px; margin-bottom: 40px; }
+    .article-divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    .article-hero { margin: 0 0 28px; border-radius: var(--radius); overflow: hidden; line-height: 0; }
+    .article-hero svg { display: block; width: 100%; height: auto; }
+
+    .article-body { font-size: 16px; line-height: 1.9; color: var(--text); }
+    .article-body h2 { font-size: 20px; font-weight: 700; letter-spacing: 0.01em; margin: 48px 0 14px; color: var(--text); }
+    .article-body h3 { font-size: 15px; font-weight: 600; color: var(--text); margin: 28px 0 8px; }
+    .article-body p { margin-bottom: 20px; }
+    .article-body ul, .article-body ol { padding-left: 20px; margin-bottom: 20px; }
+    .article-body li { margin-bottom: 8px; line-height: 1.75; }
+    .article-body strong { font-weight: 600; color: var(--text); }
+    .article-body em { font-style: italic; color: var(--text-muted); }
+    .article-body blockquote { border-left: 3px solid var(--accent); padding: 4px 0 4px 18px; margin: 28px 0; color: var(--text-muted); font-size: 15px; font-style: italic; }
+
+    .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius); padding: 20px 22px; margin: 28px 0; }
+    .callout-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .callout p { font-size: 14px; color: var(--text-muted); margin-bottom: 0; line-height: 1.75; }
+
+    .source-note { background: rgba(196,145,74,0.06); border: 1px solid rgba(196,145,74,0.18); border-radius: var(--radius); padding: 14px 18px; margin-bottom: 36px; }
+    .source-note p { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); line-height: 1.7; margin-bottom: 0; }
+    .source-note a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+
+    .table-wrap { overflow-x: auto; margin: 24px 0; }
+    .table-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 10px; display: block; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .data-table th { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 10px 14px; background: #181818; color: rgba(255,255,255,0.55); text-align: left; white-space: nowrap; border-bottom: 1px solid var(--border); }
+    .data-table th:first-child { background: #141414; color: var(--text-faint); }
+    .data-table td { padding: 11px 14px; border-bottom: 1px solid var(--border-faint); line-height: 1.65; vertical-align: top; color: var(--text-muted); }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table td:first-child { font-weight: 600; font-size: 13px; white-space: nowrap; color: var(--text); border-right: 1px solid var(--border); background: var(--bg-subtle); }
+    .data-table .kw { display: inline-block; background: #1c1c1c; border: 1px solid #282828; border-radius: 3px; padding: 2px 7px; font-family: var(--font-m); font-size: 11px; margin: 2px 2px 2px 0; white-space: nowrap; color: var(--text-muted); }
+
+    .vis-grid { display: grid; gap: 8px; margin: 24px 0; }
+    .vis-grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .vis-grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .vis-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 14px; }
+    .vis-card.highlight { border-color: var(--accent); background: var(--accent); color: #000; }
+    .vis-card-label { font-family: var(--font-m); font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); display: block; margin-bottom: 6px; }
+    .vis-card.highlight .vis-card-label { color: rgba(0,0,0,0.5); }
+    .vis-card-en { font-size: 14px; font-weight: 700; display: block; margin-bottom: 4px; color: var(--text); }
+    .vis-card.highlight .vis-card-en { color: #000; }
+    .vis-card-jp { font-size: 12px; color: var(--text-muted); line-height: 1.55; }
+    .vis-card.highlight .vis-card-jp { color: rgba(0,0,0,0.68); }
+
+    .ref-heading { font-family: var(--font-m); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); font-weight: 500; margin-top: 48px; margin-bottom: 10px; }
+    .ref-list { list-style: none; padding: 0; }
+    .ref-list li { margin-bottom: 6px; }
+    .ref-list a { font-size: 13px; color: var(--text-muted); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--border); transition: color 0.15s, text-decoration-color 0.15s; word-break: break-all; }
+    .ref-list a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
+    .article-footer { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--border); }
+    .article-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 32px; }
+    .tag { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-faint); transition: border-color 0.15s, color 0.15s; }
+    .tag:hover { border-color: var(--accent); color: var(--accent); }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--text-muted); transition: color 0.15s; }
+    .back-link:hover { color: var(--accent); }
+    .back-link::before { content: '←'; }
+
+    .nl-strip { background: #0a0a0a; padding: 32px 24px; margin-top: 64px; border-top: 1px solid var(--border); }
+    .nl-strip-inner { max-width: var(--body-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .nl-strip-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 6px; }
+    .nl-strip-title { font-size: 16px; font-weight: 600; color: var(--text); letter-spacing: 0.01em; }
+    .nl-strip-form { display: flex; gap: 8px; flex-shrink: 0; }
+    .nl-strip-input { padding: 10px 14px; background: var(--bg-muted); border: 1px solid var(--border); border-radius: var(--radius); font-family: var(--font-b); font-size: 13px; color: var(--text); outline: none; width: 220px; transition: border-color 0.15s; }
+    .nl-strip-input::placeholder { color: var(--text-faint); }
+    .nl-strip-input:focus { border-color: var(--accent); }
+    .nl-strip-btn { padding: 10px 18px; background: var(--accent); color: #000; border: none; border-radius: var(--radius); font-family: var(--font-b); font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: background 0.15s; }
+    .nl-strip-btn:hover { background: var(--accent-dark); }
+
+    footer { border-top: 1px solid var(--border-faint); padding: 24px; background: var(--bg-subtle); }
+    .footer-inner { max-width: 1160px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .footer-logo { font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-faint); }
+    .footer-copy { font-family: var(--font-m); font-size: 10px; color: var(--text-faint); }
+
+    @media (max-width: 640px) {
+      .mast-nav { display: none; }
+      .vis-grid-2 { grid-template-columns: 1fr; }
+      .vis-grid-3 { grid-template-columns: 1fr; }
+      .nl-strip-inner { flex-direction: column; align-items: flex-start; }
+      .nl-strip-form { width: 100%; }
+      .nl-strip-input { flex: 1; }
+      .footer-inner { flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- マストヘッド -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <a href="../index.html" class="logo-name">AX Journal</a>
+    <nav class="mast-nav">
+      <a href="../index.html">記事一覧</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#newsletter" class="cta">購読する</a>
+    </nav>
+  </div>
+</header>
+
+<main class="article-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">AX Journal</a>
+    <span class="breadcrumb-sep">/</span>
+    <span>組織変革</span>
+  </nav>
+
+  <div class="article-eyebrow">
+    <span class="pill pill-gray">組織変革</span>
+    <span class="article-date">2026.06.20</span>
+  </div>
+
+  <h1 class="article-title">組織の「OS」を書き換えよ——AnthropicのAIネイティブ組織が示す次のステージ</h1>
+
+  <!-- ヒーローSVG（spiral スタイル・アルキメデス螺旋、銅色は末端6セグメント + 終点ドット） -->
+  <div class="article-hero">
+    <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+      <rect width="680" height="200" fill="#080808"/>
+      <!-- spiral: アルキメデス螺旋 center (300,100), r = 8 + 11*θ -->
+      <!-- Dark portion (steps 0→9, θ=0 to 3π/2) -->
+      <polyline
+        points="308,100 312,107 310,117 300,125 285,127 268,118 258,100 258,76 273,52 300,40"
+        fill="none" stroke="#1e1e1e" stroke-width="1.2" stroke-linejoin="round"/>
+      <!-- Copper portion (末端6セグメント, steps 9→15, θ=3π/2 to 5π/2) -->
+      <polyline
+        points="300,40 333,43 362,64 377,100 372,142 344,177 300,194"
+        fill="none" stroke="#C4914A" stroke-width="1.3" stroke-linejoin="round" opacity="0.72"/>
+      <!-- Copper end dot -->
+      <circle cx="300" cy="194" r="3.5" fill="#C4914A" opacity="0.72"/>
+      <circle cx="300" cy="194" r="7" fill="none" stroke="#C4914A" stroke-width="0.5" opacity="0.25"/>
+      <!-- Second (inner) spiral — slightly darker, same center, r = 4 + 11*θ -->
+      <polyline
+        points="304,100 307,105 306,113 300,119 289,121 276,114 269,100 269,81 281,62 300,52"
+        fill="none" stroke="#161616" stroke-width="1" stroke-linejoin="round"/>
+      <polyline
+        points="300,52 325,55 348,71 360,100 356,136 332,166 300,182"
+        fill="none" stroke="#1a1a1a" stroke-width="1" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <p class="article-lead">「AIを導入した」と言う組織の多くは、実は失敗パターンを踏んでいる。既存のプロセスにAIを重ね、速度を上げようとするだけでは根本は何も変わらない。Anthropicが自社で実践し、そして公開した処方箋は明快だ——<strong>「組織全体のOSを書き換えること」</strong>が唯一の正解だと。</p>
+
+  <hr class="article-divider">
+
+  <div class="source-note">
+    <p>本記事は、Anthropic公式ブログ記事「<a href="https://claude.com/blog/running-an-ai-native-engineering-org" target="_blank" rel="noopener">Running an AI-Native Engineering Org</a>」をもとに、AX Journal編集部が日本語で再構成・加筆したものです。</p>
+  </div>
+
+  <div class="article-body">
+
+    <h2>「重ねる」か「書き換える」か——PC革命が残した教訓</h2>
+
+    <p>Anthropicのブログは1990年代のPC革命の分析から始まる。「コンピューターのパラドックス」と呼ばれた現象——PCが爆発的に普及したにもかかわらず、生産性が向上しない企業が続出した。理由は単純だった。<strong>紙のファイルキャビネットをそのままに、横にPCを置いただけ</strong>だったからだ。</p>
+
+    <p>生産性が向上した企業は何をしたか。紙とペンを完全に捨て、PCを業務プロセスの中心に据えて組織を再設計した。AI革命でも同じ構図が展開されている。</p>
+
+    <div class="table-wrap">
+      <span class="table-label">図1｜部分最適（失敗）vs 全体最適（成功）の構図</span>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>フェーズ</th>
+            <th>1990年代のPC革命</th>
+            <th>現在のAI革命</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>部分最適<br>（失敗パターン）</td>
+            <td>紙のキャビネットを残したまま<span class="kw">横にPCを置く</span></td>
+            <td>ウォーターフォール開発を残したまま<span class="kw">補助ツールとしてAIを使う</span></td>
+          </tr>
+          <tr>
+            <td>全体最適<br>（成功パターン）</td>
+            <td>紙をすべて廃止し<span class="kw">PCを業務プロセスの中心に再設計</span></td>
+            <td>コード記述・レビューの自動化を前提に<span class="kw">AIを組織の中心に据えてワークフローを刷新</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <blockquote>「AIの導入は既存プロセスの速度向上ではなく、組織全体のオペレーティングシステム（OS）の書き換えである」——Anthropicブログ</blockquote>
+
+    <h2>AnthropicのAIネイティブOS——4つの実践</h2>
+
+    <p>Anthropicはこの「OS書き換え」を4つの実践として具体化している。</p>
+
+    <div class="table-wrap">
+      <span class="table-label">図2｜AnthropicのAIネイティブ組織4原則</span>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>原則</th>
+            <th>何をしているか</th>
+            <th>組織への示唆</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>エージェントツリー</td>
+            <td>1つのエージェントが子・孫エージェントを自律起動。数千規模の<span class="kw">並列処理ツリー</span>が常時稼働</td>
+            <td>「AIに1タスク依頼する」から「AIに意思決定ツリーを委ねる」へ</td>
+          </tr>
+          <tr>
+            <td>オートモード</td>
+            <td>ツール実行ごとの人間許可を廃止。別AIが<span class="kw">安全性を自動検証</span>。Computer Useで自律テスト</td>
+            <td>99%「Yes」と答えるだけのプロンプト確認がむしろ危険だと認識する</td>
+          </tr>
+          <tr>
+            <td>職種の融合</td>
+            <td>PM・デザイナー・財務チームが直接コードベースを修正。<span class="kw">プロダクト文脈とアイデア</span>が評価軸</td>
+            <td>「コーディング力」より「ビジネス文脈+ユーザー視点」が全職種の共通要件に</td>
+          </tr>
+          <tr>
+            <td>コンテキストミニマリズム</td>
+            <td>膨大なプロンプト設計を廃止。<span class="kw">最小限の指示</span>のみ渡し、最適アプローチはAIが選択</td>
+            <td>「AIに詳しく教えるほど良い」という直感が逆効果になる</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>特に「オートモード」への移行の論拠は反直感的だが説得力がある。人間が99%「Yes」と答えるツール実行許可プロンプトを毎回確認させると、<strong>注意力が分散してセキュリティリスクが高まる</strong>。AIによる自動検証に任せた方が、実際には安全性が高いことが実証されている。「人間による確認」が安全に見えて、最も危険なパターンになりうる。</p>
+
+    <div class="callout">
+      <p class="callout-label">AX Journal 編集部の視点</p>
+      <p>「職種の融合」が進む組織では、採用要件の全面改訂が不可避だ。「〇〇年のエンジニア経験」「デザインツール習熟度」という従来の要件が意味を失い、「プロダクトの文脈理解」「ユーザー視点」「AIの挙動を正しく評価する能力」が全職種共通の必須要件になる。人事部門は今この転換を設計する立場にある。</p>
+    </div>
+
+    <h2>速度が違う——PC革命（10〜15年）を超える変化速度</h2>
+
+    <p>PC革命が組織に浸透するまでには10〜15年かかった。しかし今回のAI革命は本質的に速い。その理由がある——<strong>AIはすでにPCやネットワークを自ら操作できる</strong>からだ。Computer Useによって、AIはブラウザを開き、コードを実行し、テストをクリックし、バグを修正する。人間の操作を代替するだけでなく、変革のプロセスそのものも加速させる。</p>
+
+    <div class="vis-grid vis-grid-2">
+      <div class="vis-card">
+        <span class="vis-card-label">PC革命（1990年代）</span>
+        <span class="vis-card-en">10〜15年</span>
+        <span class="vis-card-jp">人間がPCを操作しながら組織に浸透。学習・文化変容に長い時間が必要だった</span>
+      </div>
+      <div class="vis-card highlight">
+        <span class="vis-card-label">AI革命（現在進行中）</span>
+        <span class="vis-card-en">3〜5年以内</span>
+        <span class="vis-card-jp">AIが自らPCを操作できる。変革プロセス自体がAIによって加速される</span>
+      </div>
+    </div>
+
+    <p>「うちの業界はまだ大丈夫」という先送りが最も危険なパターンだ。ガバナンスと文化の変容が技術の変容に追いつけない状態で変革が到来すると、組織は制御できないまま変化に飲み込まれる。</p>
+
+    <h2>直面するリスク——ジュニアエンジニア問題と採用基準の壁</h2>
+
+    <p>Anthropicのブログ自身がリスクを直視している点が誠実だ。2つの課題が明示されている。</p>
+
+    <p>第一に<strong>スキル空洞化のリスク</strong>。バグ修正・CI調整・デバッグといった「泥臭い定型業務」をAIのルーティンが担うことで、ジュニアエンジニアがシステムの構造を深く理解する機会が失われる。「動くが理由が分からない」コードベースが積み上がるリスクがある。</p>
+
+    <p>第二に<strong>組織的な前提条件の高さ</strong>。Anthropicの「全職種融合モデル」は、メンバー全員が高いプロダクトセンスと基礎的な技術理解を持つことを前提とする。大企業が同じモデルをそのまま模倣しようとすると、<strong>採用基準と評価制度のドラスティックな改定</strong>が必要になる。数十年で培ったジョブ設計の見直しは容易ではない。</p>
+
+    <h2>まとめ</h2>
+
+    <p>AIネイティブ組織への移行は、ツールの調達ではなく組織OSの書き換えだ。「AIをどのツールに使うか」ではなく「どう組織のコアに組み込むか」が問いになる。</p>
+
+    <ul>
+      <li>社内のAI活用状況を「重ねているか、書き換えているか」の二項で評価する——コアのワークフロー（意思決定・コミュニケーション・ガバナンス）にAIが組み込まれているかどうかが判断基準</li>
+      <li>採用要件と評価基準を「職種ごとの専門スキル」から「プロダクト文脈理解・AIの挙動を評価する能力」を軸に再設計する。これは人事主導でしかできない仕事だ</li>
+      <li>ジュニア層の学習機会を意図的に設計する——ルーティンに任せた定型業務の「なぜ」を体験させる仕組みなしには、組織のAI依存が技術理解の空洞化を招く</li>
+    </ul>
+
+    <p class="ref-heading">参照</p>
+    <ul class="ref-list">
+      <li><a href="https://claude.com/blog/running-an-ai-native-engineering-org" target="_blank" rel="noopener">Anthropic — Running an AI-Native Engineering Org（claude.com/blog）</a></li>
+    </ul>
+
+  </div>
+
+  <footer class="article-footer">
+    <div class="article-tags">
+      <a href="#" class="tag">AIネイティブ組織</a>
+      <a href="#" class="tag">組織OS</a>
+      <a href="#" class="tag">エージェント統制</a>
+      <a href="#" class="tag">採用基準</a>
+    </div>
+    <a href="../index.html" class="back-link">記事一覧に戻る</a>
+  </footer>
+
+</main>
+
+<div class="nl-strip">
+  <div class="nl-strip-inner">
+    <div class="nl-strip-text">
+      <p class="nl-strip-label">Newsletter</p>
+      <p class="nl-strip-title">AI×組織の最新情報を週2回お届け</p>
+    </div>
+    <form class="nl-strip-form" onsubmit="return false">
+      <input type="email" class="nl-strip-input" placeholder="メールアドレス">
+      <button type="submit" class="nl-strip-btn">登録する</button>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">AX Journal</span>
+    <span class="footer-copy">© 2026 AX Journal. All rights reserved.</span>
+  </div>
+</footer>
+
+</body>
+</html>
