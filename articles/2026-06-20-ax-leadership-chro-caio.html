@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AXをリードするのは誰か — CHRO+CAIO・CHRO+CAXO誕生が示す転換点 — AX Journal</title>
+  <meta name="description" content="メルカリとSansanが同日に人事×AI統合ポジションを発表。AI戦略と人事戦略の統合が事業判断となった今、AXをリードする「熱源」はどこにいるか。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:           #080808;
+      --bg-card:      #111111;
+      --bg-subtle:    #0d0d0d;
+      --bg-muted:     #141414;
+      --surface-dark: #161616;
+      --text:         #EDE9E2;
+      --text-muted:   #888880;
+      --text-faint:   #4E4E4A;
+      --accent:       #C4914A;
+      --accent-dark:  #A87840;
+      --accent-light: rgba(196,145,74,0.12);
+      --red:          #C4914A;
+      --red-light:    rgba(196,145,74,0.10);
+      --border:       #1E1E1E;
+      --border-faint: #161616;
+      --radius:       3px;
+      --font-b: 'Inter', 'Noto Sans JP', sans-serif;
+      --font-m: 'DM Mono', 'Courier New', monospace;
+      --body-width: 680px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { font-family: var(--font-b); background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+
+    .masthead { border-bottom: 1px solid var(--border-faint); padding: 0 24px; background: var(--bg); }
+    .masthead-inner { max-width: 1160px; margin: 0 auto; height: 58px; display: flex; align-items: center; justify-content: space-between; }
+    .logo-name { font-size: 14px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text); }
+    .mast-nav { display: flex; align-items: center; gap: 2px; }
+    .mast-nav a { font-size: 12px; font-weight: 500; color: var(--text-muted); padding: 6px 12px; border-radius: var(--radius); transition: color 0.15s; }
+    .mast-nav a:hover { color: var(--text); }
+    .mast-nav .cta { background: var(--accent); color: #000; font-weight: 700; margin-left: 8px; padding: 6px 18px; letter-spacing: 0.04em; }
+    .mast-nav .cta:hover { background: var(--accent-dark); color: #000; }
+
+    .article-wrap { max-width: var(--body-width); margin: 0 auto; padding: 56px 24px 80px; }
+
+    .breadcrumb { display: flex; align-items: center; gap: 8px; font-family: var(--font-m); font-size: 11px; letter-spacing: 0.06em; color: var(--text-faint); margin-bottom: 36px; }
+    .breadcrumb a:hover { color: var(--text-muted); }
+    .breadcrumb-sep { opacity: 0.35; }
+
+    .article-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+    .pill { font-family: var(--font-m); font-size: 8px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; padding: 3px 7px; border-radius: 2px; }
+    .pill-gray { background: #181818; color: var(--text-muted); border: 1px solid #242424; }
+    .pill-red  { background: var(--red-light); color: var(--accent); border: 1px solid rgba(196,145,74,0.22); }
+    .article-date { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); }
+
+    .article-title { font-size: clamp(26px, 4vw, 38px); font-weight: 700; line-height: 1.2; letter-spacing: 0.01em; color: var(--text); margin-bottom: 20px; }
+    .article-lead { font-size: 17px; color: var(--text-muted); line-height: 1.88; border-left: 3px solid var(--accent); padding-left: 18px; margin-bottom: 40px; }
+    .article-divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    .article-hero { margin: 0 0 28px; border-radius: var(--radius); overflow: hidden; line-height: 0; }
+    .article-hero svg { display: block; width: 100%; height: auto; }
+
+    .article-body { font-size: 16px; line-height: 1.9; color: var(--text); }
+    .article-body h2 { font-size: 20px; font-weight: 700; letter-spacing: 0.01em; margin: 48px 0 14px; color: var(--text); }
+    .article-body h3 { font-size: 15px; font-weight: 600; color: var(--text); margin: 28px 0 8px; }
+    .article-body p { margin-bottom: 20px; }
+    .article-body ul, .article-body ol { padding-left: 20px; margin-bottom: 20px; }
+    .article-body li { margin-bottom: 8px; line-height: 1.75; }
+    .article-body strong { font-weight: 600; color: var(--text); }
+    .article-body em { font-style: italic; color: var(--text-muted); }
+    .article-body blockquote { border-left: 3px solid var(--accent); padding: 4px 0 4px 18px; margin: 28px 0; color: var(--text-muted); font-size: 15px; font-style: italic; }
+
+    .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius); padding: 20px 22px; margin: 28px 0; }
+    .callout-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .callout p { font-size: 14px; color: var(--text-muted); margin-bottom: 0; line-height: 1.75; }
+
+    .source-note { background: rgba(196,145,74,0.06); border: 1px solid rgba(196,145,74,0.18); border-radius: var(--radius); padding: 14px 18px; margin-bottom: 36px; }
+    .source-note p { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); line-height: 1.7; margin-bottom: 0; }
+    .source-note a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+
+    .table-wrap { overflow-x: auto; margin: 24px 0; }
+    .table-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 10px; display: block; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .data-table th { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 10px 14px; background: #181818; color: rgba(255,255,255,0.55); text-align: left; white-space: nowrap; border-bottom: 1px solid var(--border); }
+    .data-table th:first-child { background: #141414; color: var(--text-faint); }
+    .data-table td { padding: 11px 14px; border-bottom: 1px solid var(--border-faint); line-height: 1.65; vertical-align: top; color: var(--text-muted); }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table td:first-child { font-weight: 600; font-size: 13px; white-space: nowrap; color: var(--text); border-right: 1px solid var(--border); background: var(--bg-subtle); }
+    .data-table .kw { display: inline-block; background: #1c1c1c; border: 1px solid #282828; border-radius: 3px; padding: 2px 7px; font-family: var(--font-m); font-size: 11px; margin: 2px 2px 2px 0; white-space: nowrap; color: var(--text-muted); }
+
+    .vis-grid { display: grid; gap: 8px; margin: 24px 0; }
+    .vis-grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .vis-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 12px; text-align: center; }
+    .vis-card.highlight { border-color: var(--accent); background: var(--accent); color: #000; }
+    .vis-card-label { font-family: var(--font-m); font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); display: block; margin-bottom: 4px; }
+    .vis-card.highlight .vis-card-label { color: rgba(0,0,0,0.5); }
+    .vis-card-en { font-size: 13px; font-weight: 700; display: block; margin-bottom: 2px; color: var(--text); }
+    .vis-card.highlight .vis-card-en { color: #000; }
+    .vis-card-jp { font-size: 11px; color: var(--text-muted); }
+    .vis-card.highlight .vis-card-jp { color: rgba(0,0,0,0.65); }
+
+    .ref-heading { font-family: var(--font-m); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); font-weight: 500; margin-top: 48px; margin-bottom: 10px; }
+    .ref-list { list-style: none; padding: 0; }
+    .ref-list li { margin-bottom: 6px; }
+    .ref-list a { font-size: 13px; color: var(--text-muted); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--border); transition: color 0.15s, text-decoration-color 0.15s; word-break: break-all; }
+    .ref-list a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
+    .article-footer { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--border); }
+    .article-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 32px; }
+    .tag { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-faint); transition: border-color 0.15s, color 0.15s; }
+    .tag:hover { border-color: var(--accent); color: var(--accent); }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--text-muted); transition: color 0.15s; }
+    .back-link:hover { color: var(--accent); }
+    .back-link::before { content: '←'; }
+
+    .nl-strip { background: #0a0a0a; padding: 32px 24px; margin-top: 64px; border-top: 1px solid var(--border); }
+    .nl-strip-inner { max-width: var(--body-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .nl-strip-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 6px; }
+    .nl-strip-title { font-size: 16px; font-weight: 600; color: var(--text); letter-spacing: 0.01em; }
+    .nl-strip-form { display: flex; gap: 8px; flex-shrink: 0; }
+    .nl-strip-input { padding: 10px 14px; background: var(--bg-muted); border: 1px solid var(--border); border-radius: var(--radius); font-family: var(--font-b); font-size: 13px; color: var(--text); outline: none; width: 220px; transition: border-color 0.15s; }
+    .nl-strip-input::placeholder { color: var(--text-faint); }
+    .nl-strip-input:focus { border-color: var(--accent); }
+    .nl-strip-btn { padding: 10px 18px; background: var(--accent); color: #000; border: none; border-radius: var(--radius); font-family: var(--font-b); font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: background 0.15s; }
+    .nl-strip-btn:hover { background: var(--accent-dark); }
+
+    footer { border-top: 1px solid var(--border-faint); padding: 24px; background: var(--bg-subtle); }
+    .footer-inner { max-width: 1160px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .footer-logo { font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-faint); }
+    .footer-copy { font-family: var(--font-m); font-size: 10px; color: var(--text-faint); }
+
+    @media (max-width: 640px) {
+      .mast-nav { display: none; }
+      .vis-grid-3 { grid-template-columns: 1fr; }
+      .nl-strip-inner { flex-direction: column; align-items: flex-start; }
+      .nl-strip-form { width: 100%; }
+      .nl-strip-input { flex: 1; }
+      .footer-inner { flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <a href="../index.html" class="logo-name">AX Journal</a>
+    <nav class="mast-nav">
+      <a href="../index.html">記事一覧</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#newsletter" class="cta">購読する</a>
+    </nav>
+  </div>
+</header>
+
+<main class="article-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">AX Journal</a>
+    <span class="breadcrumb-sep">/</span>
+    <span>組織変革</span>
+  </nav>
+
+  <div class="article-eyebrow">
+    <span class="pill pill-gray">組織変革</span>
+    <span class="article-date">2026.06.20</span>
+  </div>
+
+  <h1 class="article-title">AXをリードするのは誰か — CHRO+CAIO・CHRO+CAXO誕生が示す転換点</h1>
+
+  <div class="article-hero">
+    <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+      <rect width="680" height="200" fill="#0d0d0d"/>
+      <defs><pattern id="hero-grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#181818" stroke-width="0.5"/></pattern></defs>
+      <rect width="680" height="200" fill="url(#hero-grid)"/>
+      <g transform="rotate(32, 340, 100)">
+        <ellipse cx="340" cy="100" rx="290" ry="72" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+        <ellipse cx="340" cy="100" rx="200" ry="50" fill="none" stroke="#232323" stroke-width="1"/>
+        <ellipse cx="340" cy="100" rx="118" ry="32" fill="none" stroke="#2a2a2a" stroke-width="1"/>
+        <ellipse cx="340" cy="100" rx="50" ry="14" fill="#141414" stroke="#333" stroke-width="1"/>
+        <circle cx="340" cy="100" r="5" fill="#3a3a3a"/>
+        <line x1="50" y1="100" x2="630" y2="100" stroke="#1e1e1e" stroke-width="0.5" stroke-dasharray="4 4"/>
+        <line x1="340" y1="-60" x2="340" y2="260" stroke="#1e1e1e" stroke-width="0.5" stroke-dasharray="4 4"/>
+        <line x1="340" y1="100" x2="624" y2="28" stroke="#1c1c1c" stroke-width="0.5" stroke-dasharray="3 5"/>
+        <line x1="340" y1="100" x2="56" y2="28" stroke="#1c1c1c" stroke-width="0.5" stroke-dasharray="3 5"/>
+        <line x1="340" y1="100" x2="624" y2="172" stroke="#1c1c1c" stroke-width="0.5" stroke-dasharray="3 5"/>
+        <line x1="340" y1="100" x2="56" y2="172" stroke="#1c1c1c" stroke-width="0.5" stroke-dasharray="3 5"/>
+        <circle cx="630" cy="100" r="3" fill="none" stroke="#2e2e2e" stroke-width="1"/>
+        <circle cx="50" cy="100" r="3" fill="none" stroke="#2e2e2e" stroke-width="1"/>
+        <circle cx="624" cy="28" r="3" fill="none" stroke="#2e2e2e" stroke-width="1"/>
+        <circle cx="56" cy="28" r="3" fill="none" stroke="#2e2e2e" stroke-width="1"/>
+        <circle cx="624" cy="172" r="3" fill="none" stroke="#2e2e2e" stroke-width="1"/>
+        <circle cx="56" cy="172" r="3" fill="none" stroke="#2e2e2e" stroke-width="1"/>
+      </g>
+    </svg>
+  </div>
+
+  <p class="article-lead">2026年6月1日、メルカリとSansanが同日に「人事×AI」を象徴する役職変更を発表した。一方はCTOがCHRO兼CAIOへ、他方はCHROが新設のCAXO（Chief AI Transformation Officer）へ。単なる組織図の変更ではない——AI戦略と人事戦略を同一の責任者のもとに統合することが、事業成長の「必然」として経営判断された歴史的な一日だ。</p>
+
+  <hr class="article-divider">
+
+  <div class="source-note">
+    <p>本記事は、人事図書館 館長・吉田洋介氏（<a href="https://x.com/trustyyle/status/2061401194585846172" target="_blank" rel="noopener">@trustyyle</a>）の投稿「人事×AI：AXをリードするのは誰か」（2026年6月1日）をもとに、AX Journal編集部が再構成・加筆したものです。</p>
+  </div>
+
+  <div class="article-body">
+
+    <h2>同日発表が持つ意味</h2>
+
+    <p>6月1日、メルカリはCTOの木村俊也氏がCHRO兼CAIOに就任すると発表した。同日、SansanはCHROの大間祐太氏が「CAXO（Chief AI Transformation Officer）」という新設ポジションを兼務すると発表した。偶然の一致ではなく、業界の空気を読んだかのような同期は、「AI×人事の統合」が単一企業の先進的試みを超えた、時代の必然であることを示している。</p>
+
+    <span class="table-label">図1｜2社の発表比較</span>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>企業</th>
+            <th>変更内容</th>
+            <th>新ポジション</th>
+            <th>ミッション</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>メルカリ</td>
+            <td>CTO木村俊也 →<br><span class="kw">CHRO兼CAIO</span></td>
+            <td>CHRO + CAIO</td>
+            <td>"人と組織の運営基盤"をAI前提で再設計。AI-Native Company実現を人事から主導</td>
+          </tr>
+          <tr>
+            <td>Sansan</td>
+            <td>CHRO大間祐太 →<br><span class="kw">CHRO兼CAXO</span>（新設）</td>
+            <td>CHRO + CAXO</td>
+            <td>AI前提の組織カルチャー構築、全社横断のAX統括、収益創造のけん引</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>2社の発表に共通するのは、「AI戦略と人事戦略を別の責任者が担うことの限界」という認識だ。メルカリは「両領域の統合的な再構築を進めるため」と明示し、SansanはCAXOのミッションを「組織とビジネスの課題、双方を深く知る者がAXをリードすべき」という考えで説明している。</p>
+
+    <h2>事業経営上の必然——経営者はなぜ急ぐのか</h2>
+
+    <p>今回の動きを「先進的な2社の特殊事例」として受け止めるのは危うい。この数ヶ月、多くの経営者が同様の課題認識を持ちはじめている。かつて経営者の最前線は、外部環境・商品開発・販売力・顧客満足度だった。AIの登場でその構造が変わった。<strong>「ほぼすべてのホワイトカラー機能においてAIを活用することが事業の最前線」</strong>になり、AI前提の組織づくりができるかどうかが事業成長の分岐点になった。</p>
+
+    <p>経営者は待てない。最短距離で成果を出しにいく。「事業も、組織も、AIも分かっていて、人望もあり、変革していく力強さを持った人」が選ばれる。社内にいれば登用が進み、いなければ外部採用か急速育成に動く。温情や優しさが先にくる余裕のないまま、事業業績に対してフラットかつ合理的に判断が下されていく——その厳しさが、AI時代の組織変革の実態だ。</p>
+
+    <div class="callout">
+      <p class="callout-label">AX Journal 編集部の視点</p>
+      <p>今回の2社の発表が持つ本質的な意味は「人事のテクノロジー化」ではない。AIが事業の最前線になったことで、<strong>組織設計そのものが経営の中核課題</strong>になったという構造転換だ。CHROがCAIOやCAXOを兼務するのは、それを誰よりも早く理解した企業の合理的な答えにすぎない。問うべきは「人事が変わるか」ではなく「あなたはソース（熱源）になれるか」だ。</p>
+    </div>
+
+    <h2>人事はAIを学べているか — 約900名のデータが示す現実</h2>
+
+    <p>「人事のプロチェックリスト」（約900名回答）によると、テクノロジー領域の学習習慣は下から2番目にとどまっている。感度の高い先進層が集まるデータでこの結果であれば、人事全体としてのAI理解は、まだ遠いところにあると言わざるを得ない。</p>
+
+    <span class="table-label">図2｜人事の学習領域 優先度（約900名調査）</span>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>領域</th>
+            <th>学習習慣 優先度</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>採用・育成・制度設計</td>
+            <td>上位（高い）</td>
+          </tr>
+          <tr>
+            <td>労務・コンプライアンス</td>
+            <td>中位</td>
+          </tr>
+          <tr>
+            <td>テクノロジー・AI活用</td>
+            <td>下位（下から2番目）</td>
+          </tr>
+          <tr>
+            <td>人を知る（対話・観察）</td>
+            <td>最下位</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>この現実と、「AI戦略を担えるCHRO」への急速な経営ニーズのギャップが、今後の人事市場に大きな地殻変動をもたらす可能性がある。「人事だからAXが期待される」ではなく、「AXをやれる人事」だけが経営の期待を受ける時代が、静かに、しかし急速に始まっている。</p>
+
+    <h2>AXをリードするのは「職種」ではなく「熱源」だ</h2>
+
+    <p>では結局、AXをリードするのは人事なのか——その問いへの答えは単純ではない。多くの組織変革の成功事例が示すのは、変革を成し遂げるのはポジションではなく<strong>「ソース（熱源）」となる個人</strong>だということだ。360事例の調査でも、成果を上げている企業にはソースの存在が強く感じられたという。</p>
+
+    <p>各企業の中に「本気でAIを組織に実装したい」と思ってすでに動き出している人はいるか——それが本当の問いだ。人事がそれを担えるなら人事の価値は高まる。担えなければ、高まらない。「AI時代に人事の価値が再認識される」という期待は持ちすぎない方がいい。期待されているのは「人と組織に関するテーマを実際に前に進めること」であって、それはイコールで人事への期待ではないからだ。</p>
+
+    <blockquote>「人事だからといってAXの期待が来るわけではない」——しかしそれでも、人事こそがこの領域のプロとしてリードする姿を強く望む。AIを深く早く学びながら、激しくAXを進めていく個人が、人事の中から生まれてほしい。（吉田洋介氏）</blockquote>
+
+    <h2>まとめ：明日から取るべき3つのアクション</h2>
+
+    <p>千載一遇のチャンスが人事に訪れている。人事の主業務が成長のドライバーになると組織の大半が認識するタイミングは、これまでなかった。このチャンスを活かすか逃すかで、事業貢献からの距離が大きく変わる。</p>
+
+    <ul>
+      <li><strong>自社の経営者がAI×組織についてどう考えているかを、直接聞きに行く</strong>——変革のタイミングと温度感を把握することが先決。経営者が動き出してから追いかけるのでは遅い</li>
+      <li><strong>AIを"業務効率化ツール"としてではなく"組織設計の前提"として捉え直す</strong>——評価・タレントマネジメント・意思決定プロセスへの実装を具体的に検討する段階に来ている</li>
+      <li><strong>自分が「ソース（熱源）」になれるか問い直す</strong>——「人事だから関係ある/ない」ではなく、「本気でやりたいか」が唯一のスタートラインだ</li>
+    </ul>
+
+    <p class="ref-heading">参照・出典</p>
+    <ul class="ref-list">
+      <li><a href="https://x.com/trustyyle/status/2061401194585846172" target="_blank" rel="noopener">吉田洋介（@trustyyle）「人事×AI：AXをリードするのは誰か」— X投稿（2026年6月1日）</a></li>
+      <li><a href="https://about.mercari.com/press/news/articles/20260601_chrocaio/" target="_blank" rel="noopener">メルカリ公式：木村俊也 CHRO兼CAIO就任発表（2026年6月1日）</a></li>
+      <li><a href="https://prtimes.jp/main/html/rd/p/000000840.000049627.html" target="_blank" rel="noopener">Sansan公式：CAXO（Chief AI Transformation Officer）新設・大間祐太氏就任（2026年6月1日）</a></li>
+    </ul>
+
+  </div>
+
+  <footer class="article-footer">
+    <div class="article-tags">
+      <a href="#" class="tag">AXリーダーシップ</a>
+      <a href="#" class="tag">CHRO</a>
+      <a href="#" class="tag">AI人事戦略</a>
+      <a href="#" class="tag">組織変革</a>
+    </div>
+    <a href="../index.html" class="back-link">記事一覧に戻る</a>
+  </footer>
+
+</main>
+
+<div class="nl-strip">
+  <div class="nl-strip-inner">
+    <div class="nl-strip-text">
+      <p class="nl-strip-label">Newsletter</p>
+      <p class="nl-strip-title">AI×組織の最新情報を週2回お届け</p>
+    </div>
+    <form class="nl-strip-form" onsubmit="return false">
+      <input type="email" class="nl-strip-input" placeholder="メールアドレス">
+      <button type="submit" class="nl-strip-btn">登録する</button>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">AX Journal</span>
+    <span class="footer-copy">© 2026 AX Journal. All rights reserved.</span>
+  </div>
+</footer>
+
+</body>
+</html>
