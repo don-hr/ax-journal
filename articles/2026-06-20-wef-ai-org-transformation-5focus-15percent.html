@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>組織の中心にAIを組み込んだ企業だけが勝つ——WEFレポートが示す「15%の壁」 — AX Journal</title>
+  <meta name="description" content="WEF×アクセンチュアの最新レポートが示す衝撃：AIをコアワークフローに組み込む構造的再設計に成功した企業はわずか15%。5変革領域・3転換・4原則を読み解く。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:           #080808;
+      --bg-card:      #111111;
+      --bg-subtle:    #0d0d0d;
+      --bg-muted:     #141414;
+      --surface-dark: #161616;
+      --text:         #EDE9E2;
+      --text-muted:   #888880;
+      --text-faint:   #4E4E4A;
+      --accent:       #C4914A;
+      --accent-dark:  #A87840;
+      --accent-light: rgba(196,145,74,0.12);
+      --red:          #C4914A;
+      --red-light:    rgba(196,145,74,0.10);
+      --border:       #1E1E1E;
+      --border-faint: #161616;
+      --radius:       3px;
+      --font-b: 'Inter', 'Noto Sans JP', sans-serif;
+      --font-m: 'DM Mono', 'Courier New', monospace;
+      --body-width: 680px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { font-family: var(--font-b); background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+
+    .masthead { border-bottom: 1px solid var(--border-faint); padding: 0 24px; background: var(--bg); }
+    .masthead-inner { max-width: 1160px; margin: 0 auto; height: 58px; display: flex; align-items: center; justify-content: space-between; }
+    .logo-name { font-size: 14px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text); }
+    .mast-nav { display: flex; align-items: center; gap: 2px; }
+    .mast-nav a { font-size: 12px; font-weight: 500; color: var(--text-muted); padding: 6px 12px; border-radius: var(--radius); transition: color 0.15s; }
+    .mast-nav a:hover { color: var(--text); }
+    .mast-nav .cta { background: var(--accent); color: #000; font-weight: 700; margin-left: 8px; padding: 6px 18px; letter-spacing: 0.04em; }
+    .mast-nav .cta:hover { background: var(--accent-dark); color: #000; }
+
+    .article-wrap { max-width: var(--body-width); margin: 0 auto; padding: 56px 24px 80px; }
+
+    .breadcrumb { display: flex; align-items: center; gap: 8px; font-family: var(--font-m); font-size: 11px; letter-spacing: 0.06em; color: var(--text-faint); margin-bottom: 36px; }
+    .breadcrumb a:hover { color: var(--text-muted); }
+    .breadcrumb-sep { opacity: 0.35; }
+
+    .article-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+    .pill { font-family: var(--font-m); font-size: 8px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; padding: 3px 7px; border-radius: 2px; }
+    .pill-gray { background: #181818; color: var(--text-muted); border: 1px solid #242424; }
+    .pill-red  { background: var(--red-light); color: var(--accent); border: 1px solid rgba(196,145,74,0.22); }
+    .article-date { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); }
+
+    .article-title { font-size: clamp(26px, 4vw, 38px); font-weight: 700; line-height: 1.2; letter-spacing: 0.01em; color: var(--text); margin-bottom: 20px; }
+    .article-lead { font-size: 17px; color: var(--text-muted); line-height: 1.88; border-left: 3px solid var(--accent); padding-left: 18px; margin-bottom: 40px; }
+    .article-divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    .article-hero { margin: 0 0 28px; border-radius: var(--radius); overflow: hidden; line-height: 0; }
+    .article-hero svg { display: block; width: 100%; height: auto; }
+
+    .article-body { font-size: 16px; line-height: 1.9; color: var(--text); }
+    .article-body h2 { font-size: 20px; font-weight: 700; letter-spacing: 0.01em; margin: 48px 0 14px; color: var(--text); }
+    .article-body h3 { font-size: 15px; font-weight: 600; color: var(--text); margin: 28px 0 8px; }
+    .article-body p { margin-bottom: 20px; }
+    .article-body ul, .article-body ol { padding-left: 20px; margin-bottom: 20px; }
+    .article-body li { margin-bottom: 8px; line-height: 1.75; }
+    .article-body strong { font-weight: 600; color: var(--text); }
+    .article-body em { font-style: italic; color: var(--text-muted); }
+    .article-body blockquote { border-left: 3px solid var(--accent); padding: 4px 0 4px 18px; margin: 28px 0; color: var(--text-muted); font-size: 15px; font-style: italic; }
+
+    .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius); padding: 20px 22px; margin: 28px 0; }
+    .callout-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .callout p { font-size: 14px; color: var(--text-muted); margin-bottom: 0; line-height: 1.75; }
+
+    .source-note { background: rgba(196,145,74,0.06); border: 1px solid rgba(196,145,74,0.18); border-radius: var(--radius); padding: 14px 18px; margin-bottom: 36px; }
+    .source-note p { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); line-height: 1.7; margin-bottom: 0; }
+    .source-note a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+
+    .stat-block { display: flex; align-items: baseline; gap: 12px; background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius); padding: 20px 24px; margin: 28px 0; }
+    .stat-num { font-family: var(--font-m); font-size: 52px; font-weight: 700; color: var(--accent); line-height: 1; flex-shrink: 0; }
+    .stat-desc { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+    .stat-desc strong { color: var(--text); }
+
+    .table-wrap { overflow-x: auto; margin: 24px 0; }
+    .table-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 10px; display: block; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .data-table th { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 10px 14px; background: #181818; color: rgba(255,255,255,0.55); text-align: left; white-space: nowrap; border-bottom: 1px solid var(--border); }
+    .data-table th:first-child { background: #141414; color: var(--text-faint); }
+    .data-table td { padding: 11px 14px; border-bottom: 1px solid var(--border-faint); line-height: 1.65; vertical-align: top; color: var(--text-muted); }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table td:first-child { font-weight: 600; font-size: 13px; white-space: nowrap; color: var(--text); border-right: 1px solid var(--border); background: var(--bg-subtle); }
+    .data-table .kw { display: inline-block; background: #1c1c1c; border: 1px solid #282828; border-radius: 3px; padding: 2px 7px; font-family: var(--font-m); font-size: 11px; margin: 2px 2px 2px 0; white-space: nowrap; color: var(--text-muted); }
+
+    .vis-grid { display: grid; gap: 8px; margin: 24px 0; }
+    .vis-grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .vis-grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .vis-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 12px; text-align: center; }
+    .vis-card.highlight { border-color: var(--accent); background: var(--accent); color: #000; }
+    .vis-card-label { font-family: var(--font-m); font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); display: block; margin-bottom: 4px; }
+    .vis-card.highlight .vis-card-label { color: rgba(0,0,0,0.5); }
+    .vis-card-en { font-size: 13px; font-weight: 700; display: block; margin-bottom: 2px; color: var(--text); }
+    .vis-card.highlight .vis-card-en { color: #000; }
+    .vis-card-jp { font-size: 11px; color: var(--text-muted); }
+    .vis-card.highlight .vis-card-jp { color: rgba(0,0,0,0.65); }
+
+    .ref-heading { font-family: var(--font-m); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); font-weight: 500; margin-top: 48px; margin-bottom: 10px; }
+    .ref-list { list-style: none; padding: 0; }
+    .ref-list li { margin-bottom: 6px; }
+    .ref-list a { font-size: 13px; color: var(--text-muted); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--border); transition: color 0.15s, text-decoration-color 0.15s; word-break: break-all; }
+    .ref-list a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
+    .article-footer { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--border); }
+    .article-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 32px; }
+    .tag { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-faint); transition: border-color 0.15s, color 0.15s; }
+    .tag:hover { border-color: var(--accent); color: var(--accent); }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--text-muted); transition: color 0.15s; }
+    .back-link:hover { color: var(--accent); }
+    .back-link::before { content: '←'; }
+
+    .nl-strip { background: #0a0a0a; padding: 32px 24px; margin-top: 64px; border-top: 1px solid var(--border); }
+    .nl-strip-inner { max-width: var(--body-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .nl-strip-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 6px; }
+    .nl-strip-title { font-size: 16px; font-weight: 600; color: var(--text); letter-spacing: 0.01em; }
+    .nl-strip-form { display: flex; gap: 8px; flex-shrink: 0; }
+    .nl-strip-input { padding: 10px 14px; background: var(--bg-muted); border: 1px solid var(--border); border-radius: var(--radius); font-family: var(--font-b); font-size: 13px; color: var(--text); outline: none; width: 220px; transition: border-color 0.15s; }
+    .nl-strip-input::placeholder { color: var(--text-faint); }
+    .nl-strip-input:focus { border-color: var(--accent); }
+    .nl-strip-btn { padding: 10px 18px; background: var(--accent); color: #000; border: none; border-radius: var(--radius); font-family: var(--font-b); font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: background 0.15s; }
+    .nl-strip-btn:hover { background: var(--accent-dark); }
+
+    footer { border-top: 1px solid var(--border-faint); padding: 24px; background: var(--bg-subtle); }
+    .footer-inner { max-width: 1160px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .footer-logo { font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-faint); }
+    .footer-copy { font-family: var(--font-m); font-size: 10px; color: var(--text-faint); }
+
+    @media (max-width: 640px) {
+      .mast-nav { display: none; }
+      .stat-block { flex-direction: column; gap: 6px; }
+      .stat-num { font-size: 40px; }
+      .vis-grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .vis-grid-3 { grid-template-columns: 1fr; }
+      .nl-strip-inner { flex-direction: column; align-items: flex-start; }
+      .nl-strip-form { width: 100%; }
+      .nl-strip-input { flex: 1; }
+      .footer-inner { flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- マストヘッド -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <a href="../index.html" class="logo-name">AX Journal</a>
+    <nav class="mast-nav">
+      <a href="../index.html">記事一覧</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#newsletter" class="cta">購読する</a>
+    </nav>
+  </div>
+</header>
+
+<!-- 記事本文 -->
+<main class="article-wrap">
+
+  <!-- パンくず -->
+  <nav class="breadcrumb">
+    <a href="../index.html">AX Journal</a>
+    <span class="breadcrumb-sep">/</span>
+    <span>組織変革</span>
+  </nav>
+
+  <!-- ヘッダー -->
+  <div class="article-eyebrow">
+    <span class="pill pill-gray">組織変革</span>
+    <span class="article-date">2026.06.20</span>
+  </div>
+
+  <h1 class="article-title">組織の中心にAIを組み込んだ企業だけが勝つ——WEFレポートが示す「15%の壁」</h1>
+
+  <!-- ヒーローSVG（flow スタイル・ベジェ曲線群、銅色は中段） -->
+  <div class="article-hero">
+    <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+      <rect width="680" height="200" fill="#080808"/>
+      <!-- flow: 7本のベジェ曲線群 (上から下へ) -->
+      <path d="M0,22 C113,6 227,40 340,22 C453,4 567,38 680,22" fill="none" stroke="#1c1c1c" stroke-width="1"/>
+      <path d="M0,48 C113,32 227,66 340,48 C453,30 567,64 680,48" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+      <path d="M0,74 C113,58 227,92 340,74 C453,56 567,90 680,74" fill="none" stroke="#222" stroke-width="1"/>
+      <!-- 銅色：中段曲線 + 両端点ドット -->
+      <path d="M0,100 C113,84 227,118 340,100 C453,82 567,116 680,100" fill="none" stroke="#C4914A" stroke-width="1.4" opacity="0.70"/>
+      <circle cx="0"   cy="100" r="3" fill="#C4914A" opacity="0.72"/>
+      <circle cx="680" cy="100" r="3" fill="#C4914A" opacity="0.72"/>
+      <!-- 暗色：中段以下 -->
+      <path d="M0,126 C113,110 227,144 340,126 C453,108 567,142 680,126" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+      <path d="M0,152 C113,136 227,170 340,152 C453,134 567,168 680,152" fill="none" stroke="#222" stroke-width="1"/>
+      <path d="M0,176 C113,160 227,194 340,176 C453,158 567,192 680,176" fill="none" stroke="#262626" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <p class="article-lead">「AIの成功は、技術的な達成ではなく、組織的な変革だ」——世界経済フォーラム（WEF）とアクセンチュアが2026年3月に発表したホワイトペーパーは、冒頭でそう断言する。パイロット運用は終わった。AIをコアワークフローと意思決定プロセスの中心に組み込む「構造的な組織再設計」に成功している企業は、全体のわずか<strong>15%</strong>だ。</p>
+
+  <hr class="article-divider">
+
+  <div class="source-note">
+    <p>本記事は、世界経済フォーラム（WEF）×アクセンチュア共同ホワイトペーパー「<a href="https://reports.weforum.org/docs/WEF_Organizational_Transformation_in_the_Age_of_AI_How_Organizations_Maximize_AI's_Potential_2026.pdf" target="_blank" rel="noopener">Organizational Transformation in the Age of AI: How Organizations Maximize AI's Potential</a>」（2026年3月）をもとに、AX Journal編集部が再構成・加筆したものです。</p>
+  </div>
+
+  <!-- 本文 -->
+  <div class="article-body">
+
+    <h2>「15%の壁」——なぜほとんどの企業はAIで成果を出せないのか</h2>
+
+    <div class="stat-block">
+      <span class="stat-num">15%</span>
+      <span class="stat-desc"><strong>AIをコアワークフローに組み込む構造的な再設計に成功している企業の割合</strong>（WEF×アクセンチュア, 2026年3月）。残りの85%は「ユースケースの積み上げ」の段階に留まっている。</span>
+    </div>
+
+    <p>企業の多くはAIを「既存の業務プロセスの上に重ねる（レイヤリングする）」形で導入している。特定のタスクを自動化し、2桁の生産性向上を達成した事例も少なくない。しかしレポートはここで重要な警告を発する——<strong>タスクの自動化だけでは、企業全体の業績やマクロ経済レベルの成果には結びつかない</strong>のだ。</p>
+
+    <p>真の価値を引き出すのは「AIを組み込む（エンベッドする）」という発想の転換だ。コアワークフロー・意思決定プロセス・オペレーティングモデルの設計そのものをAI前提で書き換える。この違いが「15%の壁」の本質だ。技術の失敗ではない——<strong>「組織変化の遅れ」が最大のボトルネック</strong>になっている。</p>
+
+    <h2>5つの変革領域——コアワークフローへのAI統合のフロントライン</h2>
+
+    <p>レポートは、先進15%の企業がAIをコアワークフローに統合している5つの重要な変革領域（Focus Areas）を特定している。各領域で起きているのは「点の改善」ではなく、業務の根本的なパラダイム転換だ。</p>
+
+    <div class="table-wrap">
+      <span class="table-label">図1｜5変革領域（Focus Areas）——Before/After比較</span>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>領域</th>
+            <th>従来の姿（Before）</th>
+            <th>AI統合後の姿（After）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>CX<br><span style="font-size:11px;color:#4E4E4A;font-weight:400">顧客体験</span></td>
+            <td>静的な顧客ジャーニーの追跡</td>
+            <td><span class="kw">顧客インテント</span>に駆動されたリアルタイム・個別化エンゲージメント</td>
+          </tr>
+          <tr>
+            <td>Operations<br><span style="font-size:11px;color:#4E4E4A;font-weight:400">業務運営</span></td>
+            <td>過去データによる予測型の実行</td>
+            <td>変化に適応・進化する<span class="kw">AIオーケストレーション</span>システム</td>
+          </tr>
+          <tr>
+            <td>R&amp;D<br><span style="font-size:11px;color:#4E4E4A;font-weight:400">研究開発</span></td>
+            <td>直線的な開発プロセス</td>
+            <td>継続的な<span class="kw">エビデンス駆動型</span>学習・実験サイクル</td>
+          </tr>
+          <tr>
+            <td>Strategy<br><span style="font-size:11px;color:#4E4E4A;font-weight:400">戦略立案</span></td>
+            <td>年次などの定期的な計画サイクル</td>
+            <td>リアルタイムシグナルによる<span class="kw">継続的な戦略ステアリング</span></td>
+          </tr>
+          <tr>
+            <td>Talent<br><span style="font-size:11px;color:#4E4E4A;font-weight:400">人材体験・人員計画</span></td>
+            <td>職務（ロール）ベースの人材管理</td>
+            <td>市場変化に対応する<span class="kw">動的ケイパビリティベース</span>のシステム</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p class="callout-label">AX Journal 編集部の視点 — 人事への最重要示唆</p>
+      <p>5領域の中で人事が直接担うのが「Talent」だ。「職務（ロール）ベース」から「動的ケイパビリティベース」への転換は、採用・評価・育成・タレントマネジメントのすべてを書き換える。JD（職務記述書）がAI前提で更新されていない企業は、すでに組織設計の出発点で遅れている。</p>
+    </div>
+
+    <h2>3つの構造的転換——「孤立から統合」「単発から継続」「タスクから価値創造」へ</h2>
+
+    <p>5つの変革領域を横断して、成功する企業には共通した3つの構造的転換が観察されている。これらは個別の施策ではなく、組織の「動き方」そのものが変わることを意味する。</p>
+
+    <div class="table-wrap">
+      <span class="table-label">図2｜3つの構造的転換</span>
+    </div>
+    <div class="vis-grid vis-grid-3">
+      <div class="vis-card">
+        <span class="vis-card-label">Shift 1</span>
+        <span class="vis-card-en">統合システムへ</span>
+        <span class="vis-card-jp">孤立したユースケースから<br>部門間データが連携・補強し合う<br>統合システムへ移行</span>
+      </div>
+      <div class="vis-card highlight">
+        <span class="vis-card-label">Shift 2</span>
+        <span class="vis-card-en">継続的プロセスへ</span>
+        <span class="vis-card-jp">単発のイニシアチブから<br>常に察知・学習・意思決定を<br>繰り返す体制へ移行</span>
+      </div>
+      <div class="vis-card">
+        <span class="vis-card-label">Shift 3</span>
+        <span class="vis-card-en">人間の価値創造へ</span>
+        <span class="vis-card-jp">タスクの自動化を超えて<br>人間は判断・調和・責任に<br>集中する体制へ移行</span>
+      </div>
+    </div>
+
+    <p>特に「Shift 3」は、AX時代の人間の役割の核心を示している。AIがインサイトの抽出と実行を加速させる分だけ、人間は<strong>判断（What to do）・全体のオーケストレーション（How to coordinate）・結果に対する責任（Accountability）</strong>に集中できる。これは人間の代替ではなく、人間の役割の高度化だ。</p>
+
+    <h2>スケール実現の4原則——「人間の主導権」が最も重要な設計思想</h2>
+
+    <p>AIを既存プロセスに重ねるのではなく、業務の実行そのものに組み込むために、成功している企業が実践している4つの原則がある。</p>
+
+    <div class="table-wrap">
+      <span class="table-label">図3｜スケール実現の4原則</span>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>原則</th>
+            <th>内容</th>
+            <th>人事・経営への示唆</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Human in the Lead</td>
+            <td>AIが自律動作する環境でも、方向性・トレードオフ判断・結果責任は人間が担う</td>
+            <td>エージェンティックAI導入時のガバナンス設計が必要</td>
+          </tr>
+          <tr>
+            <td>エンドツーエンド</td>
+            <td>部分最適ではなく、業務プロセスの最初から最後までをAI前提で再設計する</td>
+            <td>採用〜オンボーディング〜評価の一貫したAX設計</td>
+          </tr>
+          <tr>
+            <td>信頼と透明性</td>
+            <td>AIの意思決定に対するガバナンスを業務の「加速装置」として機能させる</td>
+            <td>従業員がAI判断を信頼できる透明な説明責任の仕組み</td>
+          </tr>
+          <tr>
+            <td>規律ある実験</td>
+            <td>継続的に実験し、エビデンスに基づきリソースを柔軟に再配分する文化</td>
+            <td>AIパイロットを「単発イベント」にせず制度化する</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <blockquote>「AIを導入するか否か」という問いは終わった。問われているのは「AIを前提として組織をどう再構築するか」だ。——WEF×アクセンチュア ホワイトペーパー（2026年3月）</blockquote>
+
+    <h2>まとめ</h2>
+
+    <p>WEFレポートが突きつける現実は単純だ——AIに取り組んでいる企業の85%は、まだスタートラインにすら立っていない。「ユースケースを積む」フェーズは終わった。次のフェーズは「組織そのものをAI前提で再設計する」構造変革だ。この設計を誰が担うか。人事・CHRO・経営層が、最も早く動かなければならない立場にある。</p>
+
+    <ul>
+      <li>自社のAI活用が「タスクの自動化（レイヤリング）」か「コアワークフローへの統合（エンベッディング）」かを、まず正直に診断する</li>
+      <li>5変革領域のうち「Talent（人材体験・人員計画）」は人事が直接設計できる領域——職務ベースから動的ケイパビリティベースへの移行計画を策定する</li>
+      <li>「人間の主導権（Human in the Lead）」を組織原則として明文化し、AIガバナンスの起点を人事主導で設計する</li>
+    </ul>
+
+    <p class="ref-heading">参照</p>
+    <ul class="ref-list">
+      <li><a href="https://reports.weforum.org/docs/WEF_Organizational_Transformation_in_the_Age_of_AI_How_Organizations_Maximize_AI's_Potential_2026.pdf" target="_blank" rel="noopener">WEF×Accenture — Organizational Transformation in the Age of AI: How Organizations Maximize AI's Potential（2026年3月）</a></li>
+    </ul>
+
+  </div>
+
+  <!-- フッター -->
+  <footer class="article-footer">
+    <div class="article-tags">
+      <a href="#" class="tag">WEF</a>
+      <a href="#" class="tag">組織設計</a>
+      <a href="#" class="tag">AI-Governance</a>
+      <a href="#" class="tag">CHRO</a>
+    </div>
+    <a href="../index.html" class="back-link">記事一覧に戻る</a>
+  </footer>
+
+</main>
+
+<!-- ニュースレター -->
+<div class="nl-strip">
+  <div class="nl-strip-inner">
+    <div class="nl-strip-text">
+      <p class="nl-strip-label">Newsletter</p>
+      <p class="nl-strip-title">AI×組織の最新情報を週2回お届け</p>
+    </div>
+    <form class="nl-strip-form" onsubmit="return false">
+      <input type="email" class="nl-strip-input" placeholder="メールアドレス">
+      <button type="submit" class="nl-strip-btn">登録する</button>
+    </form>
+  </div>
+</div>
+
+<!-- フッター -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">AX Journal</span>
+    <span class="footer-copy">© 2026 AX Journal. All rights reserved.</span>
+  </div>
+</footer>
+
+</body>
+</html>
