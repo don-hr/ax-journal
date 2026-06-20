@@ -60,6 +60,16 @@
     .callout-label{font-family:var(--font-m);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-faint);margin-bottom:8px;}
     .callout p{font-size:14px;color:var(--text-muted);margin-bottom:0;line-height:1.75;}
 
+    .table-wrap{overflow-x:auto;margin:24px 0;}
+    .table-label{font-family:var(--font-m);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-faint);margin-bottom:10px;display:block;}
+    .data-table{width:100%;border-collapse:collapse;font-size:14px;}
+    .data-table th{font-family:var(--font-m);font-size:10px;letter-spacing:0.06em;text-transform:uppercase;padding:10px 14px;background:var(--surface-dark);color:rgba(255,255,255,0.75);text-align:left;white-space:nowrap;}
+    .data-table th:first-child{background:var(--bg-muted);color:var(--text-muted);}
+    .data-table td{padding:11px 14px;border-bottom:1px solid var(--border-faint);line-height:1.65;vertical-align:top;}
+    .data-table tr:last-child td{border-bottom:none;}
+    .data-table td:first-child{font-weight:600;font-size:13px;white-space:nowrap;color:var(--text);border-right:1px solid var(--border);background:var(--bg-subtle);}
+    .data-table .kw{display:inline-block;background:var(--bg-muted);border-radius:3px;padding:2px 7px;font-family:var(--font-m);font-size:11px;margin:2px 2px 2px 0;white-space:nowrap;}
+
     .five-m{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:24px 0;}
     .m-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 12px;text-align:center;}
     .m-card.highlight{border-color:var(--text);background:var(--text);color:#fff;}
@@ -132,7 +142,6 @@
   <div class="article-eyebrow">
     <span class="pill pill-gray">組織変革</span>
     <span class="article-date">2026.06.20</span>
-    <span class="article-read">読了 約6分</span>
   </div>
 
   <h1 class="article-title">AIが組織を根本から変える：3市場変化と「5M」再設計フレーム</h1>
@@ -147,8 +156,77 @@
     <p>インターネット革命が変えたのは「情報を運ぶコスト」だった。電子メール、クラウド、SaaSによって業務の効率は劇的に上がったが、情報を処理・判断する組織の構造——ピラミッド型のヒエラルキー——は根本的には変わらなかった。</p>
     <p>AI革命が変えるのは「情報を考える・処理する・編集するコスト」だ。これは組織の中間層が長年担ってきた役割の中核に触れる。意思決定プロセスの「中抜き」が技術的に可能になることで、誰が何を判断すべきかという組織設計の前提そのものが問い直される。DXとAXの本質的な違いはここにある。</p>
 
+    <div class="table-wrap">
+      <span class="table-label">図1｜インターネット革命 vs AI革命（AX）の比較</span>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>インターネット革命（DX）</th>
+            <th>AI革命（AX）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>何のコストを下げるか</td>
+            <td>情報を「運ぶ」コスト</td>
+            <td>情報を「考える・判断する」コスト</td>
+          </tr>
+          <tr>
+            <td>業務への影響</td>
+            <td>効率化・スピードアップ</td>
+            <td>意思決定プロセスそのものの代替</td>
+          </tr>
+          <tr>
+            <td>組織構造への影響</td>
+            <td>限定的（ピラミッド型を維持）</td>
+            <td>根本的な再設計が必要</td>
+          </tr>
+          <tr>
+            <td>中間管理職への影響</td>
+            <td>比較的軽微</td>
+            <td>「情報結節点」としての役割が消える</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <h2>3つの市場で同時に起きている構造変化</h2>
     <p>白木氏は「商品・資本・労働」の3市場がAIによって同時・構造的に変化すると整理する。個別に対応するのではなく、3市場を一体として捉えることが重要だ。</p>
+
+    <div class="table-wrap">
+      <span class="table-label">図2｜3市場で起きている構造変化キーワード一覧</span>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>市場</th>
+            <th>変化①</th>
+            <th>変化②</th>
+            <th>変化③</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>商品市場</td>
+            <td><span class="kw">機能の漂白化</span><br>機能差が競合優位にならなくなる</td>
+            <td><span class="kw">情報の要塞化</span><br>自社固有データが参入障壁になる</td>
+            <td><span class="kw">意味の結晶化</span><br>思想・物語への共感が差別化軸に</td>
+          </tr>
+          <tr>
+            <td>資本市場</td>
+            <td><span class="kw">資産の無型化</span><br>ブランド・文化が投資対象に</td>
+            <td><span class="kw">指標の先行化</span><br>財務から非財務・未来予測型へ</td>
+            <td><span class="kw">判断の実行化</span><br>戦略よりも「実行力」が評価される</td>
+          </tr>
+          <tr>
+            <td>労働市場</td>
+            <td><span class="kw">雇用の流動化</span><br>スキル可視化で人材移動が加速</td>
+            <td><span class="kw">人材の希少化</span><br>AI代替不可の人材価値が急騰</td>
+            <td><span class="kw">労働の混成化</span><br>人間＋AIの協働チームが標準に</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <h3>① 商品市場：機能から「思想」へのシフト</h3>
     <p>AIによる瞬時の機能比較が進むことで、商品・サービスの機能差は競合優位性の根拠になりにくくなる（機能の漂白化）。残る差別化の軸は2つ。ひとつは、AIがアクセスできない自社固有のデータや暗黙知（データモート）。もうひとつは、機能ではなく企業の「思想・物語」への共感を呼ぶブランドの文脈（意味の結晶化）だ。HR領域においても、採用支援サービスの機能差は平準化しつつある。勝負どころは自社が持つ固有のデータと、共感を生む発信の質になる。</p>
