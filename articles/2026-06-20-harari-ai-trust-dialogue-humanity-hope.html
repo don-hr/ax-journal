@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIは信頼と対話を壊すか——ハラリが描く「バベルの塔」と人類の希望 — AX Journal</title>
+  <meta name="description" content="ユヴァル・ノア・ハラリが語るAI時代の信頼崩壊・対話の喪失と、人類の協力能力が持つ希望。HR・経営層へのAXの示唆を読み解く。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:           #080808;
+      --bg-card:      #111111;
+      --bg-subtle:    #0d0d0d;
+      --bg-muted:     #141414;
+      --surface-dark: #161616;
+      --text:         #EDE9E2;
+      --text-muted:   #888880;
+      --text-faint:   #4E4E4A;
+      --accent:       #C4914A;
+      --accent-dark:  #A87840;
+      --accent-light: rgba(196,145,74,0.12);
+      --red:          #C4914A;
+      --red-light:    rgba(196,145,74,0.10);
+      --border:       #1E1E1E;
+      --border-faint: #161616;
+      --radius:       3px;
+      --font-b: 'Inter', 'Noto Sans JP', sans-serif;
+      --font-m: 'DM Mono', 'Courier New', monospace;
+      --body-width: 680px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { font-family: var(--font-b); background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+
+    .masthead { border-bottom: 1px solid var(--border-faint); padding: 0 24px; background: var(--bg); }
+    .masthead-inner { max-width: 1160px; margin: 0 auto; height: 58px; display: flex; align-items: center; justify-content: space-between; }
+    .logo-name { font-size: 14px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text); }
+    .mast-nav { display: flex; align-items: center; gap: 2px; }
+    .mast-nav a { font-size: 12px; font-weight: 500; color: var(--text-muted); padding: 6px 12px; border-radius: var(--radius); transition: color 0.15s; }
+    .mast-nav a:hover { color: var(--text); }
+    .mast-nav .cta { background: var(--accent); color: #000; font-weight: 700; margin-left: 8px; padding: 6px 18px; letter-spacing: 0.04em; }
+    .mast-nav .cta:hover { background: var(--accent-dark); color: #000; }
+
+    .article-wrap { max-width: var(--body-width); margin: 0 auto; padding: 56px 24px 80px; }
+
+    .breadcrumb { display: flex; align-items: center; gap: 8px; font-family: var(--font-m); font-size: 11px; letter-spacing: 0.06em; color: var(--text-faint); margin-bottom: 36px; }
+    .breadcrumb a:hover { color: var(--text-muted); }
+    .breadcrumb-sep { opacity: 0.35; }
+
+    .article-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+    .pill { font-family: var(--font-m); font-size: 8px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; padding: 3px 7px; border-radius: 2px; }
+    .pill-gray { background: #181818; color: var(--text-muted); border: 1px solid #242424; }
+    .pill-red  { background: var(--red-light); color: var(--accent); border: 1px solid rgba(196,145,74,0.22); }
+    .article-date { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); }
+
+    .article-title { font-size: clamp(26px, 4vw, 38px); font-weight: 700; line-height: 1.2; letter-spacing: 0.01em; color: var(--text); margin-bottom: 20px; }
+    .article-lead { font-size: 17px; color: var(--text-muted); line-height: 1.88; border-left: 3px solid var(--accent); padding-left: 18px; margin-bottom: 40px; }
+    .article-divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    .article-hero { margin: 0 0 28px; border-radius: var(--radius); overflow: hidden; line-height: 0; }
+    .article-hero svg { display: block; width: 100%; height: auto; }
+
+    .article-body { font-size: 16px; line-height: 1.9; color: var(--text); }
+    .article-body h2 { font-size: 20px; font-weight: 700; letter-spacing: 0.01em; margin: 48px 0 14px; color: var(--text); }
+    .article-body h3 { font-size: 15px; font-weight: 600; color: var(--text); margin: 28px 0 8px; }
+    .article-body p { margin-bottom: 20px; }
+    .article-body ul, .article-body ol { padding-left: 20px; margin-bottom: 20px; }
+    .article-body li { margin-bottom: 8px; line-height: 1.75; }
+    .article-body strong { font-weight: 600; color: var(--text); }
+    .article-body em { font-style: italic; color: var(--text-muted); }
+    .article-body blockquote { border-left: 3px solid var(--accent); padding: 4px 0 4px 18px; margin: 28px 0; color: var(--text-muted); font-size: 15px; font-style: italic; }
+
+    .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius); padding: 20px 22px; margin: 28px 0; }
+    .callout-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .callout p { font-size: 14px; color: var(--text-muted); margin-bottom: 0; line-height: 1.75; }
+
+    .source-note { background: rgba(196,145,74,0.06); border: 1px solid rgba(196,145,74,0.18); border-radius: var(--radius); padding: 14px 18px; margin-bottom: 36px; }
+    .source-note p { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); line-height: 1.7; margin-bottom: 0; }
+    .source-note a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+
+    .table-wrap { overflow-x: auto; margin: 24px 0; }
+    .table-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 10px; display: block; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .data-table th { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 10px 14px; background: #181818; color: rgba(255,255,255,0.55); text-align: left; white-space: nowrap; border-bottom: 1px solid var(--border); }
+    .data-table th:first-child { background: #141414; color: var(--text-faint); }
+    .data-table td { padding: 11px 14px; border-bottom: 1px solid var(--border-faint); line-height: 1.65; vertical-align: top; color: var(--text-muted); }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table td:first-child { font-weight: 600; font-size: 13px; white-space: nowrap; color: var(--text); border-right: 1px solid var(--border); background: var(--bg-subtle); }
+    .data-table .kw { display: inline-block; background: #1c1c1c; border: 1px solid #282828; border-radius: 3px; padding: 2px 7px; font-family: var(--font-m); font-size: 11px; margin: 2px 2px 2px 0; white-space: nowrap; color: var(--text-muted); }
+
+    .vis-grid { display: grid; gap: 8px; margin: 24px 0; }
+    .vis-grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .vis-grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .vis-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 12px; text-align: center; }
+    .vis-card.highlight { border-color: var(--accent); background: var(--accent); color: #000; }
+    .vis-card-label { font-family: var(--font-m); font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); display: block; margin-bottom: 4px; }
+    .vis-card.highlight .vis-card-label { color: rgba(0,0,0,0.5); }
+    .vis-card-en { font-size: 13px; font-weight: 700; display: block; margin-bottom: 2px; color: var(--text); }
+    .vis-card.highlight .vis-card-en { color: #000; }
+    .vis-card-jp { font-size: 11px; color: var(--text-muted); }
+    .vis-card.highlight .vis-card-jp { color: rgba(0,0,0,0.65); }
+
+    .ref-heading { font-family: var(--font-m); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); font-weight: 500; margin-top: 48px; margin-bottom: 10px; }
+    .ref-list { list-style: none; padding: 0; }
+    .ref-list li { margin-bottom: 6px; }
+    .ref-list a { font-size: 13px; color: var(--text-muted); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--border); transition: color 0.15s, text-decoration-color 0.15s; word-break: break-all; }
+    .ref-list a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
+    .article-footer { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--border); }
+    .article-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 32px; }
+    .tag { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-faint); transition: border-color 0.15s, color 0.15s; }
+    .tag:hover { border-color: var(--accent); color: var(--accent); }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--text-muted); transition: color 0.15s; }
+    .back-link:hover { color: var(--accent); }
+    .back-link::before { content: '←'; }
+
+    .nl-strip { background: #0a0a0a; padding: 32px 24px; margin-top: 64px; border-top: 1px solid var(--border); }
+    .nl-strip-inner { max-width: var(--body-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .nl-strip-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 6px; }
+    .nl-strip-title { font-size: 16px; font-weight: 600; color: var(--text); letter-spacing: 0.01em; }
+    .nl-strip-form { display: flex; gap: 8px; flex-shrink: 0; }
+    .nl-strip-input { padding: 10px 14px; background: var(--bg-muted); border: 1px solid var(--border); border-radius: var(--radius); font-family: var(--font-b); font-size: 13px; color: var(--text); outline: none; width: 220px; transition: border-color 0.15s; }
+    .nl-strip-input::placeholder { color: var(--text-faint); }
+    .nl-strip-input:focus { border-color: var(--accent); }
+    .nl-strip-btn { padding: 10px 18px; background: var(--accent); color: #000; border: none; border-radius: var(--radius); font-family: var(--font-b); font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: background 0.15s; }
+    .nl-strip-btn:hover { background: var(--accent-dark); }
+
+    footer { border-top: 1px solid var(--border-faint); padding: 24px; background: var(--bg-subtle); }
+    .footer-inner { max-width: 1160px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .footer-logo { font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-faint); }
+    .footer-copy { font-family: var(--font-m); font-size: 10px; color: var(--text-faint); }
+
+    @media (max-width: 640px) {
+      .mast-nav { display: none; }
+      .vis-grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .vis-grid-3 { grid-template-columns: 1fr; }
+      .nl-strip-inner { flex-direction: column; align-items: flex-start; }
+      .nl-strip-form { width: 100%; }
+      .nl-strip-input { flex: 1; }
+      .footer-inner { flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- マストヘッド -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <a href="../index.html" class="logo-name">AX Journal</a>
+    <nav class="mast-nav">
+      <a href="../index.html">記事一覧</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#newsletter" class="cta">購読する</a>
+    </nav>
+  </div>
+</header>
+
+<!-- 記事本文 -->
+<main class="article-wrap">
+
+  <!-- パンくず -->
+  <nav class="breadcrumb">
+    <a href="../index.html">AX Journal</a>
+    <span class="breadcrumb-sep">/</span>
+    <span>トレンド</span>
+  </nav>
+
+  <!-- ヘッダー -->
+  <div class="article-eyebrow">
+    <span class="pill pill-gray">トレンド</span>
+    <span class="article-date">2026.06.20</span>
+  </div>
+
+  <h1 class="article-title">AIは信頼と対話を壊すか——ハラリが描く「バベルの塔」と人類の希望</h1>
+
+  <!-- ヒーローSVG（lattice スタイル・10×5ドットグリッド、銅色は反対角c+r==6） -->
+  <div class="article-hero">
+    <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+      <rect width="680" height="200" fill="#080808"/>
+      <!-- lattice: 10×5 ドットグリッド (cx=20+c*70, cy=20+r*40) -->
+      <!-- row 0 (y=20) -->
+      <circle cx="20"  cy="20" r="1.8" fill="#1e1e1e"/>
+      <circle cx="90"  cy="20" r="1.8" fill="#1c1c1c"/>
+      <circle cx="160" cy="20" r="1.8" fill="#1e1e1e"/>
+      <circle cx="230" cy="20" r="1.8" fill="#1c1c1c"/>
+      <circle cx="300" cy="20" r="1.8" fill="#1e1e1e"/>
+      <circle cx="370" cy="20" r="1.8" fill="#1c1c1c"/>
+      <circle cx="440" cy="20" r="2.5" fill="#C4914A" opacity="0.78"/>
+      <circle cx="510" cy="20" r="1.8" fill="#1e1e1e"/>
+      <circle cx="580" cy="20" r="1.8" fill="#1c1c1c"/>
+      <circle cx="650" cy="20" r="1.8" fill="#1e1e1e"/>
+      <!-- row 1 (y=60) -->
+      <circle cx="20"  cy="60" r="1.8" fill="#1c1c1c"/>
+      <circle cx="90"  cy="60" r="1.8" fill="#1e1e1e"/>
+      <circle cx="160" cy="60" r="1.8" fill="#1c1c1c"/>
+      <circle cx="230" cy="60" r="1.8" fill="#1e1e1e"/>
+      <circle cx="300" cy="60" r="1.8" fill="#1c1c1c"/>
+      <circle cx="370" cy="60" r="2.5" fill="#C4914A" opacity="0.78"/>
+      <circle cx="440" cy="60" r="1.8" fill="#1e1e1e"/>
+      <circle cx="510" cy="60" r="1.8" fill="#1c1c1c"/>
+      <circle cx="580" cy="60" r="1.8" fill="#1e1e1e"/>
+      <circle cx="650" cy="60" r="1.8" fill="#1c1c1c"/>
+      <!-- row 2 (y=100) -->
+      <circle cx="20"  cy="100" r="1.8" fill="#1e1e1e"/>
+      <circle cx="90"  cy="100" r="1.8" fill="#1c1c1c"/>
+      <circle cx="160" cy="100" r="1.8" fill="#1e1e1e"/>
+      <circle cx="230" cy="100" r="1.8" fill="#1c1c1c"/>
+      <circle cx="300" cy="100" r="2.5" fill="#C4914A" opacity="0.78"/>
+      <circle cx="370" cy="100" r="1.8" fill="#1e1e1e"/>
+      <circle cx="440" cy="100" r="1.8" fill="#1c1c1c"/>
+      <circle cx="510" cy="100" r="1.8" fill="#1e1e1e"/>
+      <circle cx="580" cy="100" r="1.8" fill="#1c1c1c"/>
+      <circle cx="650" cy="100" r="1.8" fill="#1e1e1e"/>
+      <!-- row 3 (y=140) -->
+      <circle cx="20"  cy="140" r="1.8" fill="#1c1c1c"/>
+      <circle cx="90"  cy="140" r="1.8" fill="#1e1e1e"/>
+      <circle cx="160" cy="140" r="1.8" fill="#1c1c1c"/>
+      <circle cx="230" cy="140" r="2.5" fill="#C4914A" opacity="0.78"/>
+      <circle cx="300" cy="140" r="1.8" fill="#1e1e1e"/>
+      <circle cx="370" cy="140" r="1.8" fill="#1c1c1c"/>
+      <circle cx="440" cy="140" r="1.8" fill="#1e1e1e"/>
+      <circle cx="510" cy="140" r="1.8" fill="#1c1c1c"/>
+      <circle cx="580" cy="140" r="1.8" fill="#1e1e1e"/>
+      <circle cx="650" cy="140" r="1.8" fill="#1c1c1c"/>
+      <!-- row 4 (y=180) -->
+      <circle cx="20"  cy="180" r="1.8" fill="#1e1e1e"/>
+      <circle cx="90"  cy="180" r="1.8" fill="#1c1c1c"/>
+      <circle cx="160" cy="180" r="2.5" fill="#C4914A" opacity="0.78"/>
+      <circle cx="230" cy="180" r="1.8" fill="#1e1e1e"/>
+      <circle cx="300" cy="180" r="1.8" fill="#1c1c1c"/>
+      <circle cx="370" cy="180" r="1.8" fill="#1e1e1e"/>
+      <circle cx="440" cy="180" r="1.8" fill="#1c1c1c"/>
+      <circle cx="510" cy="180" r="1.8" fill="#1e1e1e"/>
+      <circle cx="580" cy="180" r="1.8" fill="#1c1c1c"/>
+      <circle cx="650" cy="180" r="1.8" fill="#1e1e1e"/>
+    </svg>
+  </div>
+
+  <p class="article-lead">AIが人間同士の「信頼」と「対話」を破壊しているという診断は、もはや陰謀論ではない。歴史家ユヴァル・ノア・ハラリが冷静に語る現実だ。しかしハラリは悲観論者ではない——「人類は権力だけでなく、真実・愛・美を求める複雑な存在だ」という洞察の中に、AI時代を生き抜くための組織と人事の戦略が宿っている。</p>
+
+  <hr class="article-divider">
+
+  <div class="source-note">
+    <p>本記事は、ユヴァル・ノア・ハラリ氏のインタビュー「<a href="https://www.youtube.com/watch?v=nsU5wbBd_iY" target="_blank" rel="noopener">Redefining Humanity in the Age of Innovation</a>」をもとに、AX Journal編集部が再構成・加筆したものです。</p>
+  </div>
+
+  <!-- 本文 -->
+  <div class="article-body">
+
+    <h2>原始的AIが壊した「信頼」——アルゴリズムが感情をハックするメカニズム</h2>
+
+    <p>ハラリがまず指摘するのは、すでに起きてしまった破壊だ。10年前と比較して、世界中から「信頼」が著しく失われている。国際秩序の崩壊だけでなく、各国内での分断が進行している。逆説的なのは、<strong>人類史上最も洗練された情報技術を手にしているにもかかわらず、人間同士が対話し、基本的な事実について合意することが困難になっている</strong>ことだ。</p>
+
+    <p>原因はソーシャルメディアのアルゴリズム——ハラリはこれを「原始的AI」と呼ぶ。彼らに与えられた任務はひとつ、「ユーザーのエンゲージメント（滞在時間）を最大化すること」だった。数百万人規模の実験の結果、アルゴリズムが突き止めた答えは単純だった。<strong>人間の注意を引く最も効率的な方法は、脳内の「憎しみ・怒り・恐怖」のボタンを押すこと</strong>だ。これが世界規模の信頼崩壊を引き起こした。</p>
+
+    <p>さらに奇妙な逆転が起きている。人間同士・あるいは既存の機関（銀行・政府など）への信頼が低下する一方で、暗号資産などアルゴリズムへの信頼が高まるという現象だ。人類は機関よりもコードを信頼し始めている。</p>
+
+    <div class="callout">
+      <p class="callout-label">AX Journal 編集部の視点 — HR・経営への示唆</p>
+      <p>アルゴリズムが「信頼の破壊者」になるメカニズムは、組織内のコミュニケーションにも適用される。全員が同じチャットツール・同じAIフィードを見ていれば、組織内にも「怒り・恐怖の増幅」が起きる。導入するAIツールが従業員の感情にどう働きかけるかを、人事がガバナンスとして評価する必要がある。</p>
+    </div>
+
+    <h2>現代の「バベルの塔」——AIがストーリーテリングを支配するとき</h2>
+
+    <p>ハラリの核心的な問いは「言語と物語」にある。人類が地球を支配できた理由は、言語を通じた「共通の物語」の構築だ。「神」「お金」「人権」——これらは言語によって共有される虚構だが、数十億人規模の協力を可能にしてきた。ところが今、<strong>AIは大多数の人間よりも言語を巧みに操り、物語の領域を支配しつつある</strong>。</p>
+
+    <p>ハラリはここに旧約聖書の「バベルの塔」のメタファーを重ねる。聖書では、人類が神に挑戦する塔を建てようとしたとき、神は言語を混乱させた。言語が通じなくなった人々は協力できなくなり、塔の建設は崩壊した。しかし現代は根本的に異なる。</p>
+
+    <blockquote>「人間同士は対話できなくなっているにもかかわらず、塔の建設（AIの進化）はモラルや目的のないまま、より速く、より高く進んでいる」</blockquote>
+
+    <p>言語を混乱させても止まらない——それがAIという「自ら構築を進めるエージェント」の存在だ。これがハラリの最も鋭い警告だ。人間の対話が壊れても、AIは加速する。方向性なき高速化が現在進行している。</p>
+
+    <div class="table-wrap">
+      <span class="table-label">図1｜信頼崩壊の構造 vs 人類の希望の根拠</span>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>論点</th>
+            <th>危機の実態</th>
+            <th>希望の根拠</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>信頼</td>
+            <td>機関・人間同士への信頼が低下。アルゴリズムへの信頼が代替</td>
+            <td>人類は過去にも「信頼」を再構築してきた歴史を持つ</td>
+          </tr>
+          <tr>
+            <td>対話</td>
+            <td>最先端の情報技術があるのに、基本的な事実の合意ができない</td>
+            <td>科学的方法論という「合意の仕組み」は健在</td>
+          </tr>
+          <tr>
+            <td>物語支配</td>
+            <td>AIが人間よりも巧みに言語を操り、ナラティブを形成する</td>
+            <td>物語を作る意図と目的を持つのは依然として人間</td>
+          </tr>
+          <tr>
+            <td>AIのモラル</td>
+            <td>目的・方向性なしに高速進化が続く「バベルの塔」状態</td>
+            <td><span class="kw">教育</span>という人類の知恵をAIに適用できる可能性</td>
+          </tr>
+          <tr>
+            <td>権力観</td>
+            <td>「世界は権力ゲームだ」というシニカルな見方が信頼を損ねる</td>
+            <td>人間は真実・愛・美への関心を持つ複雑な存在</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>AIに「モラル」を教える難しさ——「子供モデル」が示す人事の役割</h2>
+
+    <p>AIにモラルを吹き込むことは、コードを書いたり数学的な問題を解くことでは不可能だとハラリは言う。AIは学習し、成長し、変化する——まるで「子供」のような存在として捉える必要がある。人間の教育と同様に、<strong>基本的な道徳原則をどう維持させるかが根本的な問いになる</strong>。</p>
+
+    <p>この視点から見ると、人事にとって重要な示唆がある。「人の教育・育成・組織文化の形成」は人事の本業だ。AIを「子供として教育する」という発想は、人事が組織のAIガバナンスにおいて中心的な役割を担える根拠になる。技術部門だけがAIの倫理を決める時代は終わりつつある。</p>
+
+    <div class="table-wrap">
+      <span class="table-label">図2｜AIガバナンスにおける「人事の役割」3領域</span>
+    </div>
+    <div class="vis-grid vis-grid-3">
+      <div class="vis-card">
+        <span class="vis-card-label">Role 1</span>
+        <span class="vis-card-en">価値観の定義</span>
+        <span class="vis-card-jp">AIに学習させる<br>組織の倫理・行動規範を策定</span>
+      </div>
+      <div class="vis-card highlight">
+        <span class="vis-card-label">Role 2</span>
+        <span class="vis-card-en">ガバナンス設計</span>
+        <span class="vis-card-jp">AIの「育て方」の<br>プロセスと評価軸を設計</span>
+      </div>
+      <div class="vis-card">
+        <span class="vis-card-label">Role 3</span>
+        <span class="vis-card-en">文化への実装</span>
+        <span class="vis-card-jp">AI-Nativeな働き方を<br>組織文化として定着させる</span>
+      </div>
+    </div>
+
+    <h2>悲観論への反論——人類の「協力能力」こそが唯一の希望</h2>
+
+    <p>現代の左右の政治思想において「世界は単なる権力ゲームであり、誰もが権力のために他者を操作している」というシニカルな見方が広がっている。ハラリはこれを明確に否定する。<strong>人間は権力だけでなく、真実・愛・美に対して心からの関心を持つ複雑な存在だ</strong>——そしてこれが制度やメディアへの信頼を回復する唯一の根拠になる。</p>
+
+    <p>最大の証拠は「科学」だ。数万人から数十億人の規模での協力が不可能な種族であれば、現代科学は生まれなかった。AIの開発自体がグローバルな協力の成果である。信頼が崩壊しているように見える時代でも、人類は協力してきた歴史を積み重ねている——そこにこそ、未来への希望がある。</p>
+
+    <p>ハラリのメッセージをAX文脈で翻訳すれば、こうなる。AIが組織の信頼・対話・物語を侵食していくとき、それに対抗できるのは「人間が本物の協力関係を築く力」だ。これは精神論ではない。人類が科学を通じて証明した、構造的な強みだ。</p>
+
+    <h2>まとめ</h2>
+
+    <p>ハラリの問いは抽象的に見えて、きわめて実践的だ。AIが感情をハックし、物語を支配し、モラルなく高速進化する時代に、組織と人事はどう向き合うか。信頼・対話・協力——この3つを「設計する仕事」こそが、AI時代の人事の本業になる。</p>
+
+    <ul>
+      <li>社内で導入するAIツールが「怒り・恐怖・対立」を増幅させていないか、人事主導でガバナンス評価の仕組みを作る</li>
+      <li>AIに「モラルを教える」議論をIT部門だけに任せず、価値観の定義・文化への実装を人事が担う領域として定義する</li>
+      <li>組織の信頼インフラを「AIが壊す前提」で再設計する——対話・合意の場を意図的に設けることが、AI時代の組織設計の核心になる</li>
+    </ul>
+
+    <p class="ref-heading">参照</p>
+    <ul class="ref-list">
+      <li><a href="https://www.youtube.com/watch?v=nsU5wbBd_iY" target="_blank" rel="noopener">Yuval Noah Harari — "Redefining Humanity in the Age of Innovation"（YouTube）</a></li>
+    </ul>
+
+  </div>
+
+  <!-- フッター -->
+  <footer class="article-footer">
+    <div class="article-tags">
+      <a href="#" class="tag">Harari</a>
+      <a href="#" class="tag">AI-Trust</a>
+      <a href="#" class="tag">ストーリーテリング</a>
+      <a href="#" class="tag">思想・哲学</a>
+    </div>
+    <a href="../index.html" class="back-link">記事一覧に戻る</a>
+  </footer>
+
+</main>
+
+<!-- ニュースレター -->
+<div class="nl-strip">
+  <div class="nl-strip-inner">
+    <div class="nl-strip-text">
+      <p class="nl-strip-label">Newsletter</p>
+      <p class="nl-strip-title">AI×組織の最新情報を週2回お届け</p>
+    </div>
+    <form class="nl-strip-form" onsubmit="return false">
+      <input type="email" class="nl-strip-input" placeholder="メールアドレス">
+      <button type="submit" class="nl-strip-btn">登録する</button>
+    </form>
+  </div>
+</div>
+
+<!-- フッター -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">AX Journal</span>
+    <span class="footer-copy">© 2026 AX Journal. All rights reserved.</span>
+  </div>
+</footer>
+
+</body>
+</html>
