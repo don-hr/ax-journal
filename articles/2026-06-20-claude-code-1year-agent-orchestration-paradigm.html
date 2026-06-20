@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>コードを書く仕事は、終わった——Anthropic「Claude Code 1年」が示す開発パラダイムシフト — AX Journal</title>
+  <meta name="description" content="AnthropicのプロダクトチームがClaude Code 1年間の変化を語った。「エージェントの軍隊」「職種の融合」「ルーティン自律処理」——3つの構造変化が示す、新時代の組織と職能。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:           #080808;
+      --bg-card:      #111111;
+      --bg-subtle:    #0d0d0d;
+      --bg-muted:     #141414;
+      --surface-dark: #161616;
+      --text:         #EDE9E2;
+      --text-muted:   #888880;
+      --text-faint:   #4E4E4A;
+      --accent:       #C4914A;
+      --accent-dark:  #A87840;
+      --accent-light: rgba(196,145,74,0.12);
+      --red:          #C4914A;
+      --red-light:    rgba(196,145,74,0.10);
+      --border:       #1E1E1E;
+      --border-faint: #161616;
+      --radius:       3px;
+      --font-b: 'Inter', 'Noto Sans JP', sans-serif;
+      --font-m: 'DM Mono', 'Courier New', monospace;
+      --body-width: 680px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { font-family: var(--font-b); background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+
+    .masthead { border-bottom: 1px solid var(--border-faint); padding: 0 24px; background: var(--bg); }
+    .masthead-inner { max-width: 1160px; margin: 0 auto; height: 58px; display: flex; align-items: center; justify-content: space-between; }
+    .logo-name { font-size: 14px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text); }
+    .mast-nav { display: flex; align-items: center; gap: 2px; }
+    .mast-nav a { font-size: 12px; font-weight: 500; color: var(--text-muted); padding: 6px 12px; border-radius: var(--radius); transition: color 0.15s; }
+    .mast-nav a:hover { color: var(--text); }
+    .mast-nav .cta { background: var(--accent); color: #000; font-weight: 700; margin-left: 8px; padding: 6px 18px; letter-spacing: 0.04em; }
+    .mast-nav .cta:hover { background: var(--accent-dark); color: #000; }
+
+    .article-wrap { max-width: var(--body-width); margin: 0 auto; padding: 56px 24px 80px; }
+
+    .breadcrumb { display: flex; align-items: center; gap: 8px; font-family: var(--font-m); font-size: 11px; letter-spacing: 0.06em; color: var(--text-faint); margin-bottom: 36px; }
+    .breadcrumb a:hover { color: var(--text-muted); }
+    .breadcrumb-sep { opacity: 0.35; }
+
+    .article-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+    .pill { font-family: var(--font-m); font-size: 8px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; padding: 3px 7px; border-radius: 2px; }
+    .pill-gray { background: #181818; color: var(--text-muted); border: 1px solid #242424; }
+    .pill-red  { background: var(--red-light); color: var(--accent); border: 1px solid rgba(196,145,74,0.22); }
+    .article-date { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); }
+
+    .article-title { font-size: clamp(26px, 4vw, 38px); font-weight: 700; line-height: 1.2; letter-spacing: 0.01em; color: var(--text); margin-bottom: 20px; }
+    .article-lead { font-size: 17px; color: var(--text-muted); line-height: 1.88; border-left: 3px solid var(--accent); padding-left: 18px; margin-bottom: 40px; }
+    .article-divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    .article-hero { margin: 0 0 28px; border-radius: var(--radius); overflow: hidden; line-height: 0; }
+    .article-hero svg { display: block; width: 100%; height: auto; }
+
+    .article-body { font-size: 16px; line-height: 1.9; color: var(--text); }
+    .article-body h2 { font-size: 20px; font-weight: 700; letter-spacing: 0.01em; margin: 48px 0 14px; color: var(--text); }
+    .article-body h3 { font-size: 15px; font-weight: 600; color: var(--text); margin: 28px 0 8px; }
+    .article-body p { margin-bottom: 20px; }
+    .article-body ul, .article-body ol { padding-left: 20px; margin-bottom: 20px; }
+    .article-body li { margin-bottom: 8px; line-height: 1.75; }
+    .article-body strong { font-weight: 600; color: var(--text); }
+    .article-body em { font-style: italic; color: var(--text-muted); }
+    .article-body blockquote { border-left: 3px solid var(--accent); padding: 4px 0 4px 18px; margin: 28px 0; color: var(--text-muted); font-size: 15px; font-style: italic; }
+
+    .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius); padding: 20px 22px; margin: 28px 0; }
+    .callout-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .callout p { font-size: 14px; color: var(--text-muted); margin-bottom: 0; line-height: 1.75; }
+
+    .source-note { background: rgba(196,145,74,0.06); border: 1px solid rgba(196,145,74,0.18); border-radius: var(--radius); padding: 14px 18px; margin-bottom: 36px; }
+    .source-note p { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); line-height: 1.7; margin-bottom: 0; }
+    .source-note a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+
+    .table-wrap { overflow-x: auto; margin: 24px 0; }
+    .table-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 10px; display: block; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .data-table th { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 10px 14px; background: #181818; color: rgba(255,255,255,0.55); text-align: left; white-space: nowrap; border-bottom: 1px solid var(--border); }
+    .data-table th:first-child { background: #141414; color: var(--text-faint); }
+    .data-table td { padding: 11px 14px; border-bottom: 1px solid var(--border-faint); line-height: 1.65; vertical-align: top; color: var(--text-muted); }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table td:first-child { font-weight: 600; font-size: 13px; white-space: nowrap; color: var(--text); border-right: 1px solid var(--border); background: var(--bg-subtle); }
+    .data-table .kw { display: inline-block; background: #1c1c1c; border: 1px solid #282828; border-radius: 3px; padding: 2px 7px; font-family: var(--font-m); font-size: 11px; margin: 2px 2px 2px 0; white-space: nowrap; color: var(--text-muted); }
+
+    .vis-grid { display: grid; gap: 8px; margin: 24px 0; }
+    .vis-grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .vis-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 14px; text-align: center; }
+    .vis-card.highlight { border-color: var(--accent); background: var(--accent); color: #000; }
+    .vis-card-label { font-family: var(--font-m); font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); display: block; margin-bottom: 6px; }
+    .vis-card.highlight .vis-card-label { color: rgba(0,0,0,0.5); }
+    .vis-card-en { font-size: 14px; font-weight: 700; display: block; margin-bottom: 4px; color: var(--text); }
+    .vis-card.highlight .vis-card-en { color: #000; }
+    .vis-card-jp { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+    .vis-card.highlight .vis-card-jp { color: rgba(0,0,0,0.65); }
+
+    .ref-heading { font-family: var(--font-m); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); font-weight: 500; margin-top: 48px; margin-bottom: 10px; }
+    .ref-list { list-style: none; padding: 0; }
+    .ref-list li { margin-bottom: 6px; }
+    .ref-list a { font-size: 13px; color: var(--text-muted); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--border); transition: color 0.15s, text-decoration-color 0.15s; word-break: break-all; }
+    .ref-list a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
+    .article-footer { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--border); }
+    .article-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 32px; }
+    .tag { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-faint); transition: border-color 0.15s, color 0.15s; }
+    .tag:hover { border-color: var(--accent); color: var(--accent); }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--text-muted); transition: color 0.15s; }
+    .back-link:hover { color: var(--accent); }
+    .back-link::before { content: '←'; }
+
+    .nl-strip { background: #0a0a0a; padding: 32px 24px; margin-top: 64px; border-top: 1px solid var(--border); }
+    .nl-strip-inner { max-width: var(--body-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .nl-strip-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 6px; }
+    .nl-strip-title { font-size: 16px; font-weight: 600; color: var(--text); letter-spacing: 0.01em; }
+    .nl-strip-form { display: flex; gap: 8px; flex-shrink: 0; }
+    .nl-strip-input { padding: 10px 14px; background: var(--bg-muted); border: 1px solid var(--border); border-radius: var(--radius); font-family: var(--font-b); font-size: 13px; color: var(--text); outline: none; width: 220px; transition: border-color 0.15s; }
+    .nl-strip-input::placeholder { color: var(--text-faint); }
+    .nl-strip-input:focus { border-color: var(--accent); }
+    .nl-strip-btn { padding: 10px 18px; background: var(--accent); color: #000; border: none; border-radius: var(--radius); font-family: var(--font-b); font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: background 0.15s; }
+    .nl-strip-btn:hover { background: var(--accent-dark); }
+
+    footer { border-top: 1px solid var(--border-faint); padding: 24px; background: var(--bg-subtle); }
+    .footer-inner { max-width: 1160px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .footer-logo { font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-faint); }
+    .footer-copy { font-family: var(--font-m); font-size: 10px; color: var(--text-faint); }
+
+    @media (max-width: 640px) {
+      .mast-nav { display: none; }
+      .vis-grid-3 { grid-template-columns: 1fr; }
+      .nl-strip-inner { flex-direction: column; align-items: flex-start; }
+      .nl-strip-form { width: 100%; }
+      .nl-strip-input { flex: 1; }
+      .footer-inner { flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- マストヘッド -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <a href="../index.html" class="logo-name">AX Journal</a>
+    <nav class="mast-nav">
+      <a href="../index.html">記事一覧</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#newsletter" class="cta">購読する</a>
+    </nav>
+  </div>
+</header>
+
+<main class="article-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">AX Journal</a>
+    <span class="breadcrumb-sep">/</span>
+    <span>トレンド</span>
+  </nav>
+
+  <div class="article-eyebrow">
+    <span class="pill pill-gray">トレンド</span>
+    <span class="article-date">2026.06.20</span>
+  </div>
+
+  <h1 class="article-title">コードを書く仕事は、終わった——Anthropic「Claude Code 1年」が示す開発パラダイムシフト</h1>
+
+  <!-- ヒーローSVG（circuit スタイル・PCBトレース + チップ矩形、銅色は1本のトレース + 1チップ） -->
+  <div class="article-hero">
+    <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+      <rect width="680" height="200" fill="#080808"/>
+      <!-- circuit: PCBトレース群 (orthogonal paths) -->
+      <!-- Top trace group -->
+      <path d="M20,44 L158,44" stroke="#1e1e1e" stroke-width="1" fill="none"/>
+      <path d="M158,44 L158,84" stroke="#1e1e1e" stroke-width="1" fill="none"/>
+      <path d="M158,84 L318,84" stroke="#1e1e1e" stroke-width="1" fill="none"/>
+      <path d="M318,44 L318,84" stroke="#1e1e1e" stroke-width="1" fill="none"/>
+      <path d="M318,44 L478,44" stroke="#222" stroke-width="1" fill="none"/>
+      <path d="M478,44 L478,84" stroke="#222" stroke-width="1" fill="none"/>
+      <path d="M478,84 L660,84" stroke="#222" stroke-width="1" fill="none"/>
+      <!-- Copper trace (center-left): 1本の銅色トレース -->
+      <path d="M0,130 L100,130 L100,108 L240,108" stroke="#C4914A" stroke-width="1.3" fill="none" opacity="0.72"/>
+      <!-- Continuation (dark) from copper -->
+      <path d="M240,108 L400,108" stroke="#1c1c1c" stroke-width="1" fill="none"/>
+      <path d="M400,108 L400,84" stroke="#1c1c1c" stroke-width="1" fill="none"/>
+      <path d="M400,84 L478,84" stroke="#1c1c1c" stroke-width="1" fill="none"/>
+      <!-- Bottom trace group -->
+      <path d="M60,168 L200,168" stroke="#222" stroke-width="1" fill="none"/>
+      <path d="M200,168 L200,138" stroke="#222" stroke-width="1" fill="none"/>
+      <path d="M200,138 L360,138" stroke="#222" stroke-width="1" fill="none"/>
+      <path d="M360,138 L360,168" stroke="#222" stroke-width="1" fill="none"/>
+      <path d="M360,168 L540,168" stroke="#222" stroke-width="1" fill="none"/>
+      <path d="M540,168 L540,108" stroke="#1e1e1e" stroke-width="1" fill="none"/>
+      <path d="M540,108 L660,108" stroke="#1e1e1e" stroke-width="1" fill="none"/>
+      <!-- Via circles (dark, at junctions) -->
+      <circle cx="158" cy="44" r="2.5" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+      <circle cx="158" cy="84" r="2.5" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+      <circle cx="318" cy="44" r="2.5" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+      <circle cx="318" cy="84" r="2.5" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+      <circle cx="478" cy="44" r="2.5" fill="none" stroke="#222" stroke-width="1"/>
+      <circle cx="478" cy="84" r="2.5" fill="none" stroke="#222" stroke-width="1"/>
+      <circle cx="400" cy="84" r="2.5" fill="none" stroke="#1c1c1c" stroke-width="1"/>
+      <circle cx="400" cy="108" r="2.5" fill="none" stroke="#1c1c1c" stroke-width="1"/>
+      <circle cx="200" cy="138" r="2.5" fill="none" stroke="#222" stroke-width="1"/>
+      <circle cx="200" cy="168" r="2.5" fill="none" stroke="#222" stroke-width="1"/>
+      <circle cx="360" cy="138" r="2.5" fill="none" stroke="#222" stroke-width="1"/>
+      <circle cx="360" cy="168" r="2.5" fill="none" stroke="#222" stroke-width="1"/>
+      <circle cx="540" cy="108" r="2.5" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+      <circle cx="540" cy="168" r="2.5" fill="none" stroke="#222" stroke-width="1"/>
+      <!-- Via circles on copper trace -->
+      <circle cx="100" cy="130" r="3" fill="none" stroke="#C4914A" stroke-width="1" opacity="0.72"/>
+      <circle cx="100" cy="108" r="3" fill="none" stroke="#C4914A" stroke-width="1" opacity="0.72"/>
+      <circle cx="240" cy="108" r="3" fill="none" stroke="#C4914A" stroke-width="1" opacity="0.65"/>
+      <!-- Dark chip rectangles -->
+      <rect x="148" y="68" width="20" height="32" rx="1" fill="#0d0d0d" stroke="#1e1e1e" stroke-width="0.5"/>
+      <rect x="308" y="68" width="20" height="32" rx="1" fill="#0d0d0d" stroke="#1e1e1e" stroke-width="0.5"/>
+      <rect x="468" y="68" width="20" height="32" rx="1" fill="#0d0d0d" stroke="#222" stroke-width="0.5"/>
+      <rect x="530" y="130" width="20" height="28" rx="1" fill="#0d0d0d" stroke="#1e1e1e" stroke-width="0.5"/>
+      <rect x="350" y="122" width="20" height="32" rx="1" fill="#0d0d0d" stroke="#222" stroke-width="0.5"/>
+      <!-- Copper chip rectangle (1個) -->
+      <rect x="90" y="96" width="20" height="24" rx="1" fill="rgba(196,145,74,0.08)" stroke="#C4914A" stroke-width="0.8" opacity="0.72"/>
+    </svg>
+  </div>
+
+  <p class="article-lead">AnthropicのプロダクトチームがClaude Code 1年間の変化を率直に語った動画がある。リリース当初は「Slackの反応も少なく、簡単なタスクをこなす程度」だったツールが、今では<strong>数千規模のエージェントツリー</strong>を走らせ、エンジニアをPCから解放した。この1年間に起きた変化は、「ソフトウェア開発者」という職能の定義そのものへの問い直しだ。</p>
+
+  <hr class="article-divider">
+
+  <div class="source-note">
+    <p>本記事はAnthropic公式YouTube動画「<a href="https://www.youtube.com/watch?v=Hth_tLaC2j8" target="_blank" rel="noopener">Reflecting on a year of Claude Code</a>」をもとに、AX Journal編集部が日本語で再構成・加筆したものです。</p>
+  </div>
+
+  <div class="article-body">
+
+    <h2>1年で「補助ツール」から「エージェントの軍隊」へ</h2>
+
+    <p>Claude Code黎明期の評価は辛口だった。「Slackでの反応も少なく、簡単なエンジニアリングタスクをこなす程度」——これが1年前のチームの正直な評価だ。しかし今日の姿はまったく異なる。1つのエージェントが子エージェントに指示を出し、それがさらに孫エージェントを呼ぶ——<strong>数千規模のツリー構造でタスクが自律実行</strong>される状態が日常になった。</p>
+
+    <p>特徴的なのは「スキルの永続化」の仕組みだ。Claudeが間違えたとき、単に指示を修正して終わりにしない。その修正内容を<code style="font-family:var(--font-m);font-size:13px;background:#141414;padding:2px 6px;border-radius:2px">CLAUDE.md</code>（指示書）に書き込ませるか、新しい「スキル」として登録させる。これにより次回以降は永久に自律して動けるよう仕組み化される。エラーがスキルになる——この学習ループがエージェントの信頼性を指数的に高めた。</p>
+
+    <h2>職種の境界が消えた——デザイナーもPMも「コードを書く」時代へ</h2>
+
+    <p>職能の境界が溶けている。AIがコードを書くようになったため、デザイナーやプロダクトマネージャー、財務チーム、データサイエンティストまでもがClaude Codeを立ち上げ、プロトタイプ作成・バグ修正・データ予測を直接行うようになった。</p>
+
+    <p>重要なのは誰が「コードを書けるか」ではなく、<strong>「プロダクトやビジネスの文脈・デザイン・ユーザー視点を持っているか」</strong>だ。この変化を要約すれば、「全員がPMであり全員がエンジニアである状態」への移行と言える。これはAnthropicという最先端の組織の話だが、方向性は多くの組織が向かう先でもある。</p>
+
+    <blockquote>「開発の本質は『コードの記述』から『エージェントの統制とアイデアの創出』へ移行した」——Anthropic開発チームメンバー（動画内発言）</blockquote>
+
+    <div class="callout">
+      <p class="callout-label">AX Journal 編集部の視点</p>
+      <p>デザイナーやPMが「コードを書く」時代になったなら、採用要件・職種定義・評価基準のすべてが問い直される。「エンジニア職」「デザイナー職」という区切りは、機能としての定義から「視点と判断力を持つ人間」の定義へと移行しつつある。人事は3〜5年先を見据えてジョブ設計を更新する必要がある。</p>
+    </div>
+
+    <h2>3つの構造変化——ルーティン・オートモード・コンテキストミニマリズム</h2>
+
+    <p>1年間の進化の核心は3つの構造変化に集約される。</p>
+
+    <div class="table-wrap">
+      <span class="table-label">図1｜Claude Code 1年間の3大構造変化</span>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>変化</th>
+            <th>以前</th>
+            <th>現在</th>
+            <th>組織への影響</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ルーティン化</td>
+            <td>バグ報告 → 人間が発見 → 修正</td>
+            <td>GitHubのバグを24時間監視、<span class="kw">人間が気づく前にPRが上がる</span></td>
+            <td>「常駐型エージェント」がチームの一員になる</td>
+          </tr>
+          <tr>
+            <td>オートモード移行</td>
+            <td>計画モード必須（事前Plan Step）＋ツール実行ごとに人間許可</td>
+            <td>計画不要・直接実行。許可も<span class="kw">AIが安全性を自動検証</span></td>
+            <td>人間の注意力を高精度な判断に集中できる</td>
+          </tr>
+          <tr>
+            <td>コンテキストミニマリズム</td>
+            <td>緻密なプロンプト設計・大量の文脈注入が必要</td>
+            <td>最小限の指示でモデルが自ら文脈を引き出す。<span class="kw">過剰な情報は逆効果</span></td>
+            <td>「マイクロマネジメント型AI運用」から脱却できる</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>ルーティン化の例は象徴的だ。特定のエンジニアがGitHubのバグ報告を24時間監視するルーティンを設定した結果、「バグを直そうとした瞬間、別のClaude（同僚のルーティンエージェント）がすでに修正済みだった」という現象が日常化している。エージェントは単なるツールではなく、<strong>常駐する「バーチャル同僚」</strong>として機能し始めた。</p>
+
+    <p>オートモードへの移行にも重要な論拠がある。人間が99%「Yes」と答えるプロンプトに目を通し続けると注意力が散漫になる。AIによる自動スクリーニング（オートモード）の方が<strong>結果的に安全性が高い</strong>ことが実証されており、信頼と効率の両立という困難な課題を解決しつつある。</p>
+
+    <h2>「PCの前に張り付く」時代の終わり——新しい職能像</h2>
+
+    <p>エンジニアがPCの前に張り付く必要がなくなった。セキュリティ検証がエージェントに委ねられ、ルーティンが24時間稼働する環境では、エンジニアリング業務の半分を<strong>外出先やソファの上からスマートフォン・音声モードで行うスタイル</strong>が定着してきた。これは単なる利便性の話ではなく、「開発者が自分の時間とエネルギーを何に使うか」の根本的な再定義だ。</p>
+
+    <div class="vis-grid vis-grid-3">
+      <div class="vis-card">
+        <span class="vis-card-label">スキル 01</span>
+        <span class="vis-card-en">Systemize</span>
+        <span class="vis-card-jp">誤りをスキルに変え、CLAUDE.mdに仕組み化する</span>
+      </div>
+      <div class="vis-card highlight">
+        <span class="vis-card-label">スキル 02</span>
+        <span class="vis-card-en">Orchestrate</span>
+        <span class="vis-card-jp">エージェントツリーを統制し、検証ループを設計する</span>
+      </div>
+      <div class="vis-card">
+        <span class="vis-card-label">スキル 03</span>
+        <span class="vis-card-en">Ideate</span>
+        <span class="vis-card-jp">プロダクト文脈・ユーザー視点・事業判断を担う</span>
+      </div>
+    </div>
+
+    <p>レガシーな大企業がこの変化を達成するのは容易ではない。Anthropicという「最先端のAI開発リテラシーを持つ組織」だからこそ超高速で実現できている側面がある。PCレスへの移行（10〜15年かかった）と同様、文化とガバナンスの変革が技術の変革に追いつくまでに時間がかかる。しかし<strong>方向性は不可逆だ</strong>。</p>
+
+    <h2>まとめ</h2>
+
+    <p>「コードを書ける人が強い」という時代の終わりが来た。次のパラダイムは「エージェントを統制し、仕組み化し、アイデアと判断を持てる人」が強い時代だ。この変化は採用要件・評価制度・組織設計のすべてに影響する。</p>
+
+    <ul>
+      <li>採用要件から「〇〇言語経験」を削減し、「エージェント統制・プロダクト文脈・ユーザー視点」を中心に再定義する——これは今すぐできる人事の行動だ</li>
+      <li>社内で「ルーティン」を設計できる人材を特定・育成する。24時間稼働のエージェントを設計できる人間が、1人で従来の3〜5人分の付加価値を生む</li>
+      <li>「過剰なAI管理・マイクロマネジメント型運用」に陥っていないか点検する——情報を与えすぎてモデルの自律性を殺していないか、コンテキストミニマリズムの観点からAI活用方針を見直す</li>
+    </ul>
+
+    <p class="ref-heading">参照</p>
+    <ul class="ref-list">
+      <li><a href="https://www.youtube.com/watch?v=Hth_tLaC2j8" target="_blank" rel="noopener">Anthropic — Reflecting on a year of Claude Code（YouTube）</a></li>
+    </ul>
+
+  </div>
+
+  <footer class="article-footer">
+    <div class="article-tags">
+      <a href="#" class="tag">Claude-Code</a>
+      <a href="#" class="tag">エージェント統制</a>
+      <a href="#" class="tag">職能変革</a>
+      <a href="#" class="tag">開発パラダイム</a>
+    </div>
+    <a href="../index.html" class="back-link">記事一覧に戻る</a>
+  </footer>
+
+</main>
+
+<div class="nl-strip">
+  <div class="nl-strip-inner">
+    <div class="nl-strip-text">
+      <p class="nl-strip-label">Newsletter</p>
+      <p class="nl-strip-title">AI×組織の最新情報を週2回お届け</p>
+    </div>
+    <form class="nl-strip-form" onsubmit="return false">
+      <input type="email" class="nl-strip-input" placeholder="メールアドレス">
+      <button type="submit" class="nl-strip-btn">登録する</button>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">AX Journal</span>
+    <span class="footer-copy">© 2026 AX Journal. All rights reserved.</span>
+  </div>
+</footer>
+
+</body>
+</html>
