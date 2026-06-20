@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIが組織を根本から変える：3市場変化と「5M」再設計フレーム — AX Journal</title>
+  <meta name="description" content="AI革命はDXと何が違うのか。白木俊氏が語る3つの市場変化と5Mフレームワークで、組織再設計のロードマップを読み解く。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#F7F7F7; --bg-card:#FFFFFF; --bg-subtle:#EFEFEF; --bg-muted:#E8E8E8;
+      --surface-dark:#1A1A1A; --text:#1A1A1A; --text-muted:#6B6B6B; --text-faint:#9B9B9B;
+      --accent:#1A1A1A; --accent-dark:#000000; --accent-light:#E8E8E8;
+      --red:#B50000; --red-light:#F5EDED; --border:#DEDEDE; --border-faint:#EBEBEB;
+      --radius:4px; --font-b:'Inter','Noto Sans JP',sans-serif; --font-m:'DM Mono','Courier New',monospace;
+      --body-width:680px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{font-size:16px;scroll-behavior:smooth;}
+    body{font-family:var(--font-b);background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;}
+    a{color:inherit;text-decoration:none;}
+
+    .masthead{border-bottom:1px solid var(--border);padding:0 24px;background:var(--bg);}
+    .masthead-inner{max-width:1160px;margin:0 auto;height:60px;display:flex;align-items:center;justify-content:space-between;}
+    .logo-name{font-size:15px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--text);}
+    .mast-nav{display:flex;align-items:center;gap:4px;}
+    .mast-nav a{font-size:13px;font-weight:500;color:var(--text-muted);padding:6px 12px;border-radius:var(--radius);transition:background 0.15s,color 0.15s;}
+    .mast-nav a:hover{background:var(--bg-muted);color:var(--text);}
+    .mast-nav .cta{background:var(--accent);color:#fff;margin-left:8px;}
+    .mast-nav .cta:hover{background:var(--accent-dark);color:#fff;}
+
+    .article-wrap{max-width:var(--body-width);margin:0 auto;padding:56px 24px 80px;}
+
+    .breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--font-m);font-size:11px;letter-spacing:0.06em;color:var(--text-faint);margin-bottom:36px;}
+    .breadcrumb a:hover{color:var(--text);}
+
+    .article-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:18px;}
+    .pill{font-family:var(--font-m);font-size:9px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;padding:3px 8px;border-radius:3px;}
+    .pill-gray{background:var(--bg-muted);color:var(--text-muted);}
+    .pill-red{background:var(--red-light);color:var(--red);}
+    .article-date,.article-read{font-family:var(--font-m);font-size:11px;color:var(--text-faint);}
+    .article-read::before{content:'· ';opacity:0.4;}
+
+    .article-title{font-size:clamp(26px,4vw,38px);font-weight:700;line-height:1.2;letter-spacing:0.01em;color:var(--text);margin-bottom:20px;}
+    .article-lead{font-size:17px;color:var(--text-muted);line-height:1.85;border-left:3px solid var(--text);padding-left:18px;margin-bottom:40px;}
+    .article-divider{border:none;border-top:1px solid var(--border);margin:40px 0;}
+
+    .article-body{font-size:16px;line-height:1.9;color:var(--text);}
+    .article-body h2{font-size:20px;font-weight:700;letter-spacing:0.01em;margin:48px 0 14px;}
+    .article-body h3{font-size:15px;font-weight:600;color:var(--text);margin:28px 0 8px;}
+    .article-body p{margin-bottom:20px;}
+    .article-body ul,.article-body ol{padding-left:20px;margin-bottom:20px;}
+    .article-body li{margin-bottom:8px;line-height:1.75;}
+    .article-body strong{font-weight:600;}
+    .article-body blockquote{border-left:3px solid var(--border);padding:4px 0 4px 18px;margin:28px 0;color:var(--text-muted);font-size:15px;font-style:italic;}
+
+    .callout{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;margin:28px 0;}
+    .callout-label{font-family:var(--font-m);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-faint);margin-bottom:8px;}
+    .callout p{font-size:14px;color:var(--text-muted);margin-bottom:0;line-height:1.75;}
+
+    .five-m{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:24px 0;}
+    .m-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 12px;text-align:center;}
+    .m-card.highlight{border-color:var(--text);background:var(--text);color:#fff;}
+    .m-label{font-family:var(--font-m);font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-faint);display:block;margin-bottom:4px;}
+    .m-card.highlight .m-label{color:rgba(255,255,255,0.55);}
+    .m-en{font-size:13px;font-weight:700;display:block;margin-bottom:2px;}
+    .m-jp{font-size:11px;color:var(--text-muted);}
+    .m-card.highlight .m-jp{color:rgba(255,255,255,0.7);}
+
+    .ref-heading{font-family:var(--font-m);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-faint);font-weight:500;margin-top:48px;margin-bottom:10px;}
+    .ref-list{list-style:none;padding:0;}
+    .ref-list li{margin-bottom:6px;}
+    .ref-list a{font-size:13px;color:var(--text-muted);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--border);transition:color 0.15s,text-decoration-color 0.15s;word-break:break-all;}
+    .ref-list a:hover{color:var(--text);text-decoration-color:var(--text);}
+
+    .article-footer{margin-top:56px;padding-top:28px;border-top:1px solid var(--border);}
+    .article-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:32px;}
+    .tag{font-family:var(--font-m);font-size:10px;letter-spacing:0.06em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--border);border-radius:var(--radius);color:var(--text-muted);transition:border-color 0.15s,color 0.15s;}
+    .tag:hover{border-color:var(--text);color:var(--text);}
+    .back-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--text-muted);transition:color 0.15s;}
+    .back-link:hover{color:var(--text);}
+    .back-link::before{content:'←';}
+
+    .nl-strip{background:var(--surface-dark);padding:36px 24px;margin-top:64px;}
+    .nl-strip-inner{max-width:var(--body-width);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;}
+    .nl-strip-label{font-family:var(--font-m);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:6px;}
+    .nl-strip-title{font-size:16px;font-weight:600;color:#fff;}
+    .nl-strip-form{display:flex;gap:8px;flex-shrink:0;}
+    .nl-strip-input{padding:10px 14px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:var(--radius);font-family:var(--font-b);font-size:13px;color:#fff;outline:none;width:220px;}
+    .nl-strip-input::placeholder{color:rgba(255,255,255,0.35);}
+    .nl-strip-btn{padding:10px 18px;background:#fff;color:var(--text);border:none;border-radius:var(--radius);font-family:var(--font-b);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:opacity 0.15s;}
+    .nl-strip-btn:hover{opacity:0.85;}
+
+    footer{border-top:1px solid var(--border);padding:24px;background:var(--bg);}
+    .footer-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;}
+    .footer-logo{font-size:13px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;}
+    .footer-copy{font-family:var(--font-m);font-size:11px;color:var(--text-faint);}
+
+    @media(max-width:640px){
+      .mast-nav{display:none;}
+      .five-m{grid-template-columns:repeat(3,1fr);}
+      .nl-strip-inner{flex-direction:column;align-items:flex-start;}
+      .nl-strip-form{width:100%;}
+      .nl-strip-input{flex:1;}
+      .footer-inner{flex-direction:column;gap:12px;}
+    }
+  </style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <a href="../index.html" class="logo-name">AX Journal</a>
+    <nav class="mast-nav">
+      <a href="../index.html">記事一覧</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#newsletter" class="cta">購読する</a>
+    </nav>
+  </div>
+</header>
+
+<main class="article-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">AX Journal</a>
+    <span>/</span>
+    <span>組織変革</span>
+  </nav>
+
+  <div class="article-eyebrow">
+    <span class="pill pill-gray">組織変革</span>
+    <span class="article-date">2026.06.20</span>
+    <span class="article-read">読了 約6分</span>
+  </div>
+
+  <h1 class="article-title">AIが組織を根本から変える：3市場変化と「5M」再設計フレーム</h1>
+
+  <p class="article-lead">インターネット革命は「情報を運ぶコスト」を下げた。しかしAI革命は「情報を考えるコスト」を下げる。この一文が示す通り、AIが組織にもたらす変化はDXのそれとは次元が異なる。リンク＆モチベーション代表の白木俊氏が論じる3市場変化と「5M」フレームワークから、組織再設計のロードマップを読み解く。</p>
+
+  <hr class="article-divider">
+
+  <div class="article-body">
+
+    <h2>インターネット革命とAI革命は何が違うのか</h2>
+    <p>インターネット革命が変えたのは「情報を運ぶコスト」だった。電子メール、クラウド、SaaSによって業務の効率は劇的に上がったが、情報を処理・判断する組織の構造——ピラミッド型のヒエラルキー——は根本的には変わらなかった。</p>
+    <p>AI革命が変えるのは「情報を考える・処理する・編集するコスト」だ。これは組織の中間層が長年担ってきた役割の中核に触れる。意思決定プロセスの「中抜き」が技術的に可能になることで、誰が何を判断すべきかという組織設計の前提そのものが問い直される。DXとAXの本質的な違いはここにある。</p>
+
+    <h2>3つの市場で同時に起きている構造変化</h2>
+    <p>白木氏は「商品・資本・労働」の3市場がAIによって同時・構造的に変化すると整理する。個別に対応するのではなく、3市場を一体として捉えることが重要だ。</p>
+
+    <h3>① 商品市場：機能から「思想」へのシフト</h3>
+    <p>AIによる瞬時の機能比較が進むことで、商品・サービスの機能差は競合優位性の根拠になりにくくなる（機能の漂白化）。残る差別化の軸は2つ。ひとつは、AIがアクセスできない自社固有のデータや暗黙知（データモート）。もうひとつは、機能ではなく企業の「思想・物語」への共感を呼ぶブランドの文脈（意味の結晶化）だ。HR領域においても、採用支援サービスの機能差は平準化しつつある。勝負どころは自社が持つ固有のデータと、共感を生む発信の質になる。</p>
+
+    <h3>② 資本市場：財務指標から「非財務」のリアルタイム評価へ</h3>
+    <p>AIによって「ブランド強度」「理念浸透度」「企業文化の健全性」など、これまで可視化が難しかった無形資産が測定可能になる（資産の無型化）。投資家の関心は過去の財務指標から未来予測型の非財務指標へと移行しつつある。加えて、優れた戦略や構想はAIが高精度で生成できるようになるため、投資判断の焦点は「戦略の質」から「実行力」へとシフトする（判断の実行化）。</p>
+
+    <h3>③ 労働市場：流動化・希少化・混成化の同時進行</h3>
+    <p>AIによる社内情報の見える化が進むと、個人のスキルが外部から可視化されやすくなり、人材の流動化が加速する。一方で、AIには代替できない「人間固有のスキル」を持つ人材の価値は相対的に高まる（人材の希少化）。さらに、組織図の中にAIが「メンバー」として組み込まれ、人間とAIが協働する混成型の組織が標準になる（労働の混成化）。</p>
+
+    <div class="callout">
+      <p class="callout-label">編集部の視点</p>
+      <p>「機能の漂白化」はHR業界にとって他人事ではない。採用支援ツールの機能差はすでに縮まっており、差別化の源泉は「そのサービスを使うことで何を信じているか」という思想的な文脈に移行しつつある。自社サービスの「なぜ」を言語化できているかどうかが、今後の競争力を左右する。</p>
+    </div>
+
+    <h2>組織を再設計する「5M」フレームワーク</h2>
+    <p>3市場の変化に対応するためには、ツール導入にとどまらず、組織設計をゼロベースで見直す必要がある。白木氏が提示するのが「5M」フレームだ。</p>
+
+    <div class="five-m">
+      <div class="m-card">
+        <span class="m-label">戦略</span>
+        <span class="m-en">Message</span>
+        <span class="m-jp">事業戦略</span>
+      </div>
+      <div class="m-card">
+        <span class="m-label">文化</span>
+        <span class="m-en">Motivation</span>
+        <span class="m-jp">同期形成</span>
+      </div>
+      <div class="m-card highlight">
+        <span class="m-label">★ 最大変化</span>
+        <span class="m-en">Mission</span>
+        <span class="m-jp">役割設計</span>
+      </div>
+      <div class="m-card">
+        <span class="m-label">育成</span>
+        <span class="m-en">Membering</span>
+        <span class="m-jp">人材開発</span>
+      </div>
+      <div class="m-card">
+        <span class="m-label">評価</span>
+        <span class="m-en">Monitoring</span>
+        <span class="m-jp">管理制度</span>
+      </div>
+    </div>
+
+    <p>5つのうち最も大きな変化が起きるポイントとして強調されるのが<strong>Mission（役割設計）</strong>だ。AIが担う業務と人間が担う業務の境界が変わることで、ポジション定義・JD・評価基準のすべてが更新を迫られる。残りの4Mは、このMissionの再定義を前提として逆算的に設計し直す必要がある。</p>
+
+    <h2>管理職の役割はどう変わるか</h2>
+    <p>「情報の結節点としての管理職」は不要になる。上位層からの情報を下位層に伝達し、進捗を集約・報告するだけの役割は、AIによる情報処理の自動化で代替される。これは管理職の存在意義の否定ではなく、役割の再定義だ。</p>
+
+    <blockquote>「罰ゲーム的な事務業務をAIが引き受けてくれることで、マネージャーは本来集中すべきことに時間を使える」——白木俊氏</blockquote>
+
+    <p>新時代のマネージャーが集中すべきは2点。ひとつは<strong>メンバーの動機形成</strong>——「なぜこれをやるのか」という意志を確認し、引き出すこと。もうひとつは<strong>現場での臨機応変な意思決定と実行</strong>——AIが出す最適解を文脈に合わせて判断し、動かすことだ。</p>
+
+    <h2>まとめ：今後のアクションポイント</h2>
+    <p>AI革命は業務の効率化にとどまらず、「誰が何を判断すべきか」という組織設計の根幹を問い直す。3市場の変化を外部環境として受け止めつつ、5Mフレームを使って自社の組織設計を逆算的に見直すことが、AXに対応する経営の本質だ。</p>
+    <ul>
+      <li><strong>3市場マッピング</strong>：商品・資本・労働の3市場で自社にどんな変化が起きているかを一枚紙で整理する</li>
+      <li><strong>5Mの棚卸し</strong>：現状の組織設計を5Mで点検し、最も変化が必要な「M」を1つ特定して優先的に着手する</li>
+      <li><strong>管理職JDの見直し</strong>：「AIが代替する業務」と「人間が担うべき業務」を明文化し、マネージャーの評価基準をアップデートする</li>
+    </ul>
+
+    <h2 class="ref-heading">参照</h2>
+    <ul class="ref-list">
+      <li><a href="https://www.youtube.com/watch?v=I83entcRNS8" target="_blank" rel="noopener">【動画】AIが組織に与える大変化（AX）：3つの市場変化と5Mフレームで解説｜白木俊氏（リンク＆モチベーション）</a></li>
+    </ul>
+
+  </div>
+
+  <footer class="article-footer">
+    <div class="article-tags">
+      <a href="#" class="tag">組織変革</a>
+      <a href="#" class="tag">AX</a>
+      <a href="#" class="tag">マネジメント</a>
+      <a href="#" class="tag">5Mフレーム</a>
+    </div>
+    <a href="../index.html" class="back-link">記事一覧に戻る</a>
+  </footer>
+
+</main>
+
+<div class="nl-strip">
+  <div class="nl-strip-inner">
+    <div class="nl-strip-text">
+      <p class="nl-strip-label">Newsletter</p>
+      <p class="nl-strip-title">AI×組織の最新情報を週2回お届け</p>
+    </div>
+    <form class="nl-strip-form" onsubmit="return false">
+      <input type="email" class="nl-strip-input" placeholder="メールアドレス">
+      <button type="submit" class="nl-strip-btn">登録する</button>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">AX Journal</span>
+    <span class="footer-copy">© 2026 AX Journal. All rights reserved.</span>
+  </div>
+</footer>
+
+</body>
+</html>
