@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>「課題は何ですか？」をやめたら変革が進んだ——AWS「AI BPR」が示す強み起点の組織変革 — AX Journal</title>
+  <meta name="description" content="AWSが実践したAI BPRは「課題は何か」という問いを捨てた。強み起点の4ステップが、満足度5.0/変革可能性6.5という実績をたった1セッションで生み出した事例。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:           #080808;
+      --bg-card:      #111111;
+      --bg-subtle:    #0d0d0d;
+      --bg-muted:     #141414;
+      --surface-dark: #161616;
+      --text:         #EDE9E2;
+      --text-muted:   #888880;
+      --text-faint:   #4E4E4A;
+      --accent:       #C4914A;
+      --accent-dark:  #A87840;
+      --accent-light: rgba(196,145,74,0.12);
+      --red:          #C4914A;
+      --red-light:    rgba(196,145,74,0.10);
+      --border:       #1E1E1E;
+      --border-faint: #161616;
+      --radius:       3px;
+      --font-b: 'Inter', 'Noto Sans JP', sans-serif;
+      --font-m: 'DM Mono', 'Courier New', monospace;
+      --body-width: 680px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { font-family: var(--font-b); background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+
+    .masthead { border-bottom: 1px solid var(--border-faint); padding: 0 24px; background: var(--bg); }
+    .masthead-inner { max-width: 1160px; margin: 0 auto; height: 58px; display: flex; align-items: center; justify-content: space-between; }
+    .logo-name { font-size: 14px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text); }
+    .mast-nav { display: flex; align-items: center; gap: 2px; }
+    .mast-nav a { font-size: 12px; font-weight: 500; color: var(--text-muted); padding: 6px 12px; border-radius: var(--radius); transition: color 0.15s; }
+    .mast-nav a:hover { color: var(--text); }
+    .mast-nav .cta { background: var(--accent); color: #000; font-weight: 700; margin-left: 8px; padding: 6px 18px; letter-spacing: 0.04em; }
+    .mast-nav .cta:hover { background: var(--accent-dark); color: #000; }
+
+    .article-wrap { max-width: var(--body-width); margin: 0 auto; padding: 56px 24px 80px; }
+
+    .breadcrumb { display: flex; align-items: center; gap: 8px; font-family: var(--font-m); font-size: 11px; letter-spacing: 0.06em; color: var(--text-faint); margin-bottom: 36px; }
+    .breadcrumb a:hover { color: var(--text-muted); }
+    .breadcrumb-sep { opacity: 0.35; }
+
+    .article-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+    .pill { font-family: var(--font-m); font-size: 8px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; padding: 3px 7px; border-radius: 2px; }
+    .pill-gray { background: #181818; color: var(--text-muted); border: 1px solid #242424; }
+    .pill-red  { background: var(--red-light); color: var(--accent); border: 1px solid rgba(196,145,74,0.22); }
+    .article-date { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); }
+
+    .article-title { font-size: clamp(26px, 4vw, 38px); font-weight: 700; line-height: 1.2; letter-spacing: 0.01em; color: var(--text); margin-bottom: 20px; }
+    .article-lead { font-size: 17px; color: var(--text-muted); line-height: 1.88; border-left: 3px solid var(--accent); padding-left: 18px; margin-bottom: 40px; }
+    .article-divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    .article-hero { margin: 0 0 28px; border-radius: var(--radius); overflow: hidden; line-height: 0; }
+    .article-hero svg { display: block; width: 100%; height: auto; }
+
+    .article-body { font-size: 16px; line-height: 1.9; color: var(--text); }
+    .article-body h2 { font-size: 20px; font-weight: 700; letter-spacing: 0.01em; margin: 48px 0 14px; color: var(--text); }
+    .article-body h3 { font-size: 15px; font-weight: 600; color: var(--text); margin: 28px 0 8px; }
+    .article-body p { margin-bottom: 20px; }
+    .article-body ul, .article-body ol { padding-left: 20px; margin-bottom: 20px; }
+    .article-body li { margin-bottom: 8px; line-height: 1.75; }
+    .article-body strong { font-weight: 600; color: var(--text); }
+    .article-body em { font-style: italic; color: var(--text-muted); }
+    .article-body blockquote { border-left: 3px solid var(--accent); padding: 4px 0 4px 18px; margin: 28px 0; color: var(--text-muted); font-size: 15px; font-style: italic; }
+
+    .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius); padding: 20px 22px; margin: 28px 0; }
+    .callout-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .callout p { font-size: 14px; color: var(--text-muted); margin-bottom: 0; line-height: 1.75; }
+
+    .source-note { background: rgba(196,145,74,0.06); border: 1px solid rgba(196,145,74,0.18); border-radius: var(--radius); padding: 14px 18px; margin-bottom: 36px; }
+    .source-note p { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); line-height: 1.7; margin-bottom: 0; }
+    .source-note a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+
+    .table-wrap { overflow-x: auto; margin: 24px 0; }
+    .table-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 10px; display: block; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .data-table th { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 10px 14px; background: #181818; color: rgba(255,255,255,0.55); text-align: left; white-space: nowrap; border-bottom: 1px solid var(--border); }
+    .data-table th:first-child { background: #141414; color: var(--text-faint); }
+    .data-table td { padding: 11px 14px; border-bottom: 1px solid var(--border-faint); line-height: 1.65; vertical-align: top; color: var(--text-muted); }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table td:first-child { font-weight: 600; font-size: 13px; white-space: nowrap; color: var(--text); border-right: 1px solid var(--border); background: var(--bg-subtle); }
+    .data-table .kw { display: inline-block; background: #1c1c1c; border: 1px solid #282828; border-radius: 3px; padding: 2px 7px; font-family: var(--font-m); font-size: 11px; margin: 2px 2px 2px 0; white-space: nowrap; color: var(--text-muted); }
+
+    .vis-grid { display: grid; gap: 8px; margin: 24px 0; }
+    .vis-grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .vis-grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .vis-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 12px; text-align: center; }
+    .vis-card.highlight { border-color: var(--accent); background: var(--accent); color: #000; }
+    .vis-card-label { font-family: var(--font-m); font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); display: block; margin-bottom: 4px; }
+    .vis-card.highlight .vis-card-label { color: rgba(0,0,0,0.5); }
+    .vis-card-en { font-size: 13px; font-weight: 700; display: block; margin-bottom: 2px; color: var(--text); }
+    .vis-card.highlight .vis-card-en { color: #000; }
+    .vis-card-jp { font-size: 11px; color: var(--text-muted); }
+    .vis-card.highlight .vis-card-jp { color: rgba(0,0,0,0.65); }
+
+    .ref-heading { font-family: var(--font-m); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); font-weight: 500; margin-top: 48px; margin-bottom: 10px; }
+    .ref-list { list-style: none; padding: 0; }
+    .ref-list li { margin-bottom: 6px; }
+    .ref-list a { font-size: 13px; color: var(--text-muted); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--border); transition: color 0.15s, text-decoration-color 0.15s; word-break: break-all; }
+    .ref-list a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
+    .article-footer { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--border); }
+    .article-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 32px; }
+    .tag { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-faint); transition: border-color 0.15s, color 0.15s; }
+    .tag:hover { border-color: var(--accent); color: var(--accent); }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--text-muted); transition: color 0.15s; }
+    .back-link:hover { color: var(--accent); }
+    .back-link::before { content: '←'; }
+
+    .nl-strip { background: #0a0a0a; padding: 32px 24px; margin-top: 64px; border-top: 1px solid var(--border); }
+    .nl-strip-inner { max-width: var(--body-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .nl-strip-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 6px; }
+    .nl-strip-title { font-size: 16px; font-weight: 600; color: var(--text); letter-spacing: 0.01em; }
+    .nl-strip-form { display: flex; gap: 8px; flex-shrink: 0; }
+    .nl-strip-input { padding: 10px 14px; background: var(--bg-muted); border: 1px solid var(--border); border-radius: var(--radius); font-family: var(--font-b); font-size: 13px; color: var(--text); outline: none; width: 220px; transition: border-color 0.15s; }
+    .nl-strip-input::placeholder { color: var(--text-faint); }
+    .nl-strip-input:focus { border-color: var(--accent); }
+    .nl-strip-btn { padding: 10px 18px; background: var(--accent); color: #000; border: none; border-radius: var(--radius); font-family: var(--font-b); font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: background 0.15s; }
+    .nl-strip-btn:hover { background: var(--accent-dark); }
+
+    footer { border-top: 1px solid var(--border-faint); padding: 24px; background: var(--bg-subtle); }
+    .footer-inner { max-width: 1160px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .footer-logo { font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-faint); }
+    .footer-copy { font-family: var(--font-m); font-size: 10px; color: var(--text-faint); }
+
+    @media (max-width: 640px) {
+      .mast-nav { display: none; }
+      .vis-grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .vis-grid-3 { grid-template-columns: 1fr; }
+      .nl-strip-inner { flex-direction: column; align-items: flex-start; }
+      .nl-strip-form { width: 100%; }
+      .nl-strip-input { flex: 1; }
+      .footer-inner { flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- マストヘッド -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <a href="../index.html" class="logo-name">AX Journal</a>
+    <nav class="mast-nav">
+      <a href="../index.html">記事一覧</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#newsletter" class="cta">購読する</a>
+    </nav>
+  </div>
+</header>
+
+<main class="article-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">AX Journal</a>
+    <span class="breadcrumb-sep">/</span>
+    <span>事例・ケース</span>
+  </nav>
+
+  <div class="article-eyebrow">
+    <span class="pill pill-gray">事例・ケース</span>
+    <span class="article-date">2026.06.20</span>
+  </div>
+
+  <h1 class="article-title">「課題は何ですか？」をやめたら変革が進んだ——AWS「AI BPR」が示す強み起点の組織変革</h1>
+
+  <!-- ヒーローSVG（hex スタイル・六角形グリッド、銅色は中央左2セル） -->
+  <div class="article-hero">
+    <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+      <rect width="680" height="200" fill="#080808"/>
+      <!-- hex: pointy-top 六角形グリッド r=50 -->
+      <!-- Row 0 (cy=66): 8セル -->
+      <polygon points="50,16 93,41 93,91 50,116 7,91 7,41"   fill="#0a0a0a" stroke="#1c1c1c" stroke-width="1"/>
+      <polygon points="136,16 179,41 179,91 136,116 93,91 93,41"  fill="#090909" stroke="#1e1e1e" stroke-width="1"/>
+      <polygon points="222,16 265,41 265,91 222,116 179,91 179,41" fill="#0a0a0a" stroke="#1c1c1c" stroke-width="1"/>
+      <polygon points="308,16 351,41 351,91 308,116 265,91 265,41" fill="#090909" stroke="#1e1e1e" stroke-width="1"/>
+      <polygon points="394,16 437,41 437,91 394,116 351,91 351,41" fill="#0a0a0a" stroke="#1c1c1c" stroke-width="1"/>
+      <polygon points="480,16 523,41 523,91 480,116 437,91 437,41" fill="#090909" stroke="#1e1e1e" stroke-width="1"/>
+      <polygon points="566,16 609,41 609,91 566,116 523,91 523,41" fill="#0a0a0a" stroke="#1c1c1c" stroke-width="1"/>
+      <polygon points="652,16 695,41 695,91 652,116 609,91 609,41" fill="#090909" stroke="#1e1e1e" stroke-width="1"/>
+      <!-- Row 1 (cy=141): 7セル、中央左2セルが銅色 -->
+      <polygon points="93,91 136,116 136,166 93,191 50,166 50,116"   fill="#0a0a0a" stroke="#1c1c1c" stroke-width="1"/>
+      <polygon points="179,91 222,116 222,166 179,191 136,166 136,116" fill="rgba(196,145,74,0.05)" stroke="#C4914A" stroke-width="1.2" opacity="0.72"/>
+      <polygon points="265,91 308,116 308,166 265,191 222,166 222,116" fill="rgba(196,145,74,0.04)" stroke="#C4914A" stroke-width="1.2" opacity="0.65"/>
+      <polygon points="351,91 394,116 394,166 351,191 308,166 308,116" fill="#090909" stroke="#1e1e1e" stroke-width="1"/>
+      <polygon points="437,91 480,116 480,166 437,191 394,166 394,116" fill="#0a0a0a" stroke="#1c1c1c" stroke-width="1"/>
+      <polygon points="523,91 566,116 566,166 523,191 480,166 480,116" fill="#090909" stroke="#1e1e1e" stroke-width="1"/>
+      <polygon points="609,91 652,116 652,166 609,191 566,166 566,116" fill="#0a0a0a" stroke="#1c1c1c" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <p class="article-lead">AIを使った業務変革を推進するとき、まず「課題は何か」と問うのが定石だ。しかしAWSのチームが実践した「AI BPR」は、その問いを捨てることで変革を加速させた。アパレル企業での最新実績は<strong>満足度 5.0/5.0・変革可能性 6.5/7.0</strong>——「4時間で3日分のタスクを完了」という感想が当日の経営層報告会を即決させた。</p>
+
+  <hr class="article-divider">
+
+  <div class="source-note">
+    <p>本記事は、AWSブログ記事「<a href="https://aws.amazon.com/jp/blogs/news/ai-bpr/" target="_blank" rel="noopener">AI駆動の業務変革手法：「課題は何ですか？」と聞くのをやめた日</a>」（久保貴浩, 2026年4月21日）をもとに、AX Journal編集部が再構成・加筆したものです。</p>
+  </div>
+
+  <div class="article-body">
+
+    <h2>「課題起点」が変革を阻む理由——防衛的ルーティンという壁</h2>
+
+    <p>従来のAI導入コンサルティングはこうだ——ボトルネックを特定し、そこにAIを当てる。しかし久保氏のチームは、この定石が実際には機能しないことを繰り返し体験した。なぜか。組織には「防衛的ルーティン」（クリス・アージリスが提唱）が備わっており、問題を指摘されると人間は防衛反応を示す。<strong>「人間でないと難しい」という落としどころに安定してしまう</strong>のだ。</p>
+
+    <p>ここで重要なのはロバート・ハイフェッツの「適応課題」と「技術的課題」の区別だ。AIの導入方法は「技術的課題」——正しいツールと手順があれば解ける。しかし<strong>「組織文化や価値観をAI前提に変える」のは「適応課題」</strong>であり、ソリューション提案だけでは解けない。変革が進まない組織の多くは、この違いを見落としている。</p>
+
+    <div class="callout">
+      <p class="callout-label">AX Journal 編集部の視点</p>
+      <p>「AIを入れるか否か」は技術的課題だ。しかし「AIを入れた後に組織の動き方・評価・役割を変える」のは適応課題。この区別なしに変革を設計すると、ツールだけが増えて何も変わらないという最悪のパターンに陥る。人事が主導すべきなのは後者——適応課題への対処だ。</p>
+    </div>
+
+    <h2>逆転の発想——「強み起点」に切り替えた4ステップ「AI BPR」</h2>
+
+    <p>課題起点から強み起点へ——この転換のベースにあるのはデイビッド・クーパーライダーの「Appreciative Inquiry（AI）」だ。問題を直視するのではなく、組織が最も輝いている瞬間・強みから出発することで、防衛反応を回避し主体的な変革を引き出す。久保氏のチームはこれを<strong>AIによるプロンプト設計とシミュレーション機能</strong>で再実装した。</p>
+
+    <div class="table-wrap">
+      <span class="table-label">図1｜AI BPRの4ステップ構成</span>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>ステップ</th>
+            <th>内容</th>
+            <th>所要時間</th>
+            <th>従来手法との違い</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Observe</td>
+            <td>強み・顧客価値・市場認知・リスクのマッピング</td>
+            <td>40分</td>
+            <td>課題発見ではなく<span class="kw">強み発見</span>から出発</td>
+          </tr>
+          <tr>
+            <td>Shift</td>
+            <td>業務変革シナリオの設計。各自が「委譲」「卓越化」を能動的に選択</td>
+            <td>50分</td>
+            <td>指示ではなく<span class="kw">個人の主体的判断</span></td>
+          </tr>
+          <tr>
+            <td>Simulate</td>
+            <td>AIを使ってシナリオを実装し、その場で改善効果を測定</td>
+            <td>60分</td>
+            <td><span class="kw">即時フィードバック</span>で体験として理解</td>
+          </tr>
+          <tr>
+            <td>Forecast</td>
+            <td>実装計画と成果予測の立案</td>
+            <td>20分</td>
+            <td>「やってみた」体験に基づく<span class="kw">根拠ある計画</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>3つの特徴的な改善点がある。第一に<strong>強み起点</strong>——問題指摘ではなく「顧客価値と市場認知される強み」から始めることで防衛反応を回避する。第二に<strong>心理的安全なロールシフト</strong>——個人が自ら「委譲対象」と「卓越化対象」を判断するため、「外から押しつけられる変革」ではなく「自分ごとの変革」になる。第三に<strong>即時フィードバック</strong>——インタラクティブな対話でその場で成果物を生成するため、参加者がAIの価値を抽象的な理論ではなく体験として理解する。</p>
+
+    <h2>実績データが証明する変化——3社の事例から</h2>
+
+    <p>フレームワーク転換の成果はデータに出ている。初期設計段階の満足度は4.2/5.0・変革可能性4.4/7.0。改革初期には一時的に下落（3.63/5.0・4.63/7.0）するが、これは参加者が「自分ごと」として向き合い始めた証拠だ。そして最新のアパレル企業事例では<strong>満足度 5.0/5.0・変革可能性 6.5/7.0</strong>という過去最高評価を達成した。</p>
+
+    <div class="table-wrap">
+      <span class="table-label">図2｜3社の事例——変革の現場で起きたこと</span>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>業種</th>
+            <th>何が起きたか</th>
+            <th>カギとなったポイント</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>物流企業</td>
+            <td>役員自らが「AI置き換え推奨」を提案。防衛反応が出なかった</td>
+            <td>「顧客との約束を守る」という<span class="kw">強みの再認識</span>が出発点</td>
+          </tr>
+          <tr>
+            <td>製造業</td>
+            <td>40分で業務プロセスを可視化。参加者から自発的な第2チーム立ち上げ要望が発生</td>
+            <td>数時間〜数日要する業務整理を<span class="kw">即時体験</span>として完了</td>
+          </tr>
+          <tr>
+            <td>アパレル企業</td>
+            <td>開発者以外の担当者が提供し過去最高評価。当日中に経営層報告会が決定</td>
+            <td>「<span class="kw">4時間で3日分のタスク完了</span>」という体験が即行動を生んだ</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <blockquote>「4時間で3日分のタスクを完了した」——アパレル企業参加者の感想。この一言が、当日中の経営層報告会を即決させた。</blockquote>
+
+    <h2>Appreciative Inquiryの「40年問題」をAIが解いた</h2>
+
+    <p>Appreciative Inquiryは1980年代に提唱されたが、40年間ほとんど普及しなかった。その理由は2つ——ファシリテーションスキルへの高い依存と、組織が「答えを求める」本能的傾向への耐性のなさだ。</p>
+
+    <p>AI BPRはこれをAIで解決した。プロンプトの事前設計がファシリテーションを構造化し、シミュレーション機能が「今すぐ体験」を可能にする。<strong>人の熟練に依存せず、フレームワークとして再現性を持たせた</strong>——これがAI BPRが「実際に使えるアプローチ」として機能する理由だ。</p>
+
+    <h2>まとめ</h2>
+
+    <p>「課題を聞く」から「強みを聞く」への転換は、一見些細な問いの変更だ。しかし組織行動学40年の知見が示す通り、この違いが防衛反応の有無を決定的に分ける。AI時代の変革推進において、人事が担うべきは「AIツールの選定」ではなく<strong>「変革のための問い方のデザイン」</strong>だ。</p>
+
+    <ul>
+      <li>次のAI導入プロジェクトでは、キックオフの問いを「課題は何か」から「どんな価値・強みをAIでさらに際立たせるか」に変えてみる</li>
+      <li>Observe→Shift→Simulate→Forecast の4ステップを参考に、3時間以内で「体験」できる場を設計する——頭での理解ではなく即時体験が変革の起点になる</li>
+      <li>適応課題（文化・役割・評価の変容）と技術的課題（ツール選定・実装）を明確に分けて、人事が前者を主導できる体制を作る</li>
+    </ul>
+
+    <p class="ref-heading">参照</p>
+    <ul class="ref-list">
+      <li><a href="https://aws.amazon.com/jp/blogs/news/ai-bpr/" target="_blank" rel="noopener">久保貴浩 — AI駆動の業務変革手法：「課題は何ですか？」と聞くのをやめた日（AWSブログ, 2026年4月21日）</a></li>
+    </ul>
+
+  </div>
+
+  <footer class="article-footer">
+    <div class="article-tags">
+      <a href="#" class="tag">AI-BPR</a>
+      <a href="#" class="tag">組織変革</a>
+      <a href="#" class="tag">Appreciative-Inquiry</a>
+      <a href="#" class="tag">適応課題</a>
+    </div>
+    <a href="../index.html" class="back-link">記事一覧に戻る</a>
+  </footer>
+
+</main>
+
+<div class="nl-strip">
+  <div class="nl-strip-inner">
+    <div class="nl-strip-text">
+      <p class="nl-strip-label">Newsletter</p>
+      <p class="nl-strip-title">AI×組織の最新情報を週2回お届け</p>
+    </div>
+    <form class="nl-strip-form" onsubmit="return false">
+      <input type="email" class="nl-strip-input" placeholder="メールアドレス">
+      <button type="submit" class="nl-strip-btn">登録する</button>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">AX Journal</span>
+    <span class="footer-copy">© 2026 AX Journal. All rights reserved.</span>
+  </div>
+</footer>
+
+</body>
+</html>
