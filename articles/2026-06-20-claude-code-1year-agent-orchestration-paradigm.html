@@ -78,9 +78,22 @@
     .callout-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
     .callout p { font-size: 14px; color: var(--text-muted); margin-bottom: 0; line-height: 1.75; }
 
-    .source-note { background: rgba(196,145,74,0.06); border: 1px solid rgba(196,145,74,0.18); border-radius: var(--radius); padding: 14px 18px; margin-bottom: 36px; }
+    .source-note { background: rgba(196,145,74,0.06); border: 1px solid rgba(196,145,74,0.18); border-radius: var(--radius); padding: 14px 18px; margin-bottom: 12px; }
     .source-note p { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); line-height: 1.7; margin-bottom: 0; }
     .source-note a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+
+    .yt-card { display: flex; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 28px; text-decoration: none; transition: border-color 0.15s; background: var(--bg-card); }
+    .yt-card:hover { border-color: rgba(196,145,74,0.5); }
+    .yt-thumb-wrap { position: relative; flex-shrink: 0; width: 192px; min-height: 108px; background: #111; }
+    .yt-thumb-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .yt-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.42); transition: background 0.15s; }
+    .yt-card:hover .yt-play { background: rgba(0,0,0,0.2); }
+    .yt-play-icon { width: 38px; height: 38px; background: rgba(196,145,74,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .yt-meta { padding: 14px 18px; display: flex; flex-direction: column; justify-content: center; gap: 6px; flex: 1; min-width: 0; }
+    .yt-badge { font-family: var(--font-m); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-faint); }
+    .yt-card-title { font-size: 13px; font-weight: 600; color: var(--text); line-height: 1.45; }
+    .yt-channel { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); }
+    @media (max-width: 480px) { .yt-card { flex-direction: column; } .yt-thumb-wrap { width: 100%; min-height: 180px; } }
 
     .table-wrap { overflow-x: auto; margin: 24px 0; }
     .table-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 10px; display: block; }
@@ -236,6 +249,22 @@
   <div class="source-note">
     <p>本記事はAnthropic公式YouTube動画「<a href="https://www.youtube.com/watch?v=Hth_tLaC2j8" target="_blank" rel="noopener">Reflecting on a year of Claude Code</a>」をもとに、AX Journal編集部が日本語で再構成・加筆したものです。</p>
   </div>
+
+  <a href="https://www.youtube.com/watch?v=Hth_tLaC2j8" target="_blank" rel="noopener" class="yt-card">
+    <div class="yt-thumb-wrap">
+      <img src="https://img.youtube.com/vi/Hth_tLaC2j8/hqdefault.jpg" alt="Reflecting on a year of Claude Code" loading="lazy">
+      <div class="yt-play">
+        <div class="yt-play-icon">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 2l9 5-9 5V2z" fill="#000"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="yt-meta">
+      <span class="yt-badge">YouTube</span>
+      <p class="yt-card-title">Reflecting on a year of Claude Code</p>
+      <p class="yt-channel">Anthropic</p>
+    </div>
+  </a>
 
   <div class="article-body">
 
