@@ -288,6 +288,10 @@
     .vis-card-jp { font-size: 11px; color: var(--text-muted); }
     .vis-card.highlight .vis-card-jp { color: rgba(255,255,255,0.7); }
 
+    /* ── article hero image ── */
+    .article-hero { margin: 0 0 28px; border-radius: var(--radius); overflow: hidden; line-height: 0; }
+    .article-hero svg { display: block; width: 100%; height: auto; }
+
     @media (max-width: 640px) {
       .vis-grid-5 { grid-template-columns: repeat(3, 1fr); }
       .vis-grid-4 { grid-template-columns: repeat(2, 1fr); }
@@ -482,6 +486,10 @@
   </div>
 
   <h1 class="article-title">{{TITLE}}</h1>
+
+  <div class="article-hero">
+    {{HERO_SVG}}
+  </div>
 
   <p class="article-lead">{{LEAD}}</p>
 
