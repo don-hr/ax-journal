@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>「採用凍結」が育成パイプラインを壊す——AIエージェント時代に企業が静かに失うもの — AX Journal</title>
+  <meta name="description" content="AIが採用を凍結させる今こそ、次世代リーダーの育成パイプラインが崩壊するリスクに目を向けよ。スーパースター経済の固定化が始まる前に動くべき3つのアクション。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#080808; --bg-card:#111111; --bg-subtle:#0d0d0d; --bg-muted:#141414;
+      --text:#EDE9E2; --text-muted:#888880; --text-faint:#4E4E4A;
+      --accent:#C4914A; --accent-dark:#A87840; --accent-light:rgba(196,145,74,0.12);
+      --red:#C4914A; --red-light:rgba(196,145,74,0.10);
+      --border:#1E1E1E; --border-faint:#161616; --radius:3px;
+      --font-b:'Inter','Noto Sans JP',sans-serif; --font-m:'DM Mono','Courier New',monospace;
+      --body-width:680px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{font-size:16px;scroll-behavior:smooth;}
+    body{font-family:var(--font-b);background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;}
+    a{color:inherit;text-decoration:none;}
+    .masthead{border-bottom:1px solid var(--border-faint);padding:0 24px;background:var(--bg);}
+    .masthead-inner{max-width:1160px;margin:0 auto;height:58px;display:flex;align-items:center;justify-content:space-between;}
+    .logo-name{font-size:14px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--text);}
+    .mast-nav{display:flex;align-items:center;gap:2px;}
+    .mast-nav a{font-size:12px;font-weight:500;color:var(--text-muted);padding:6px 12px;border-radius:var(--radius);transition:color 0.15s;}
+    .mast-nav a:hover{color:var(--text);}
+    .mast-nav .cta{background:var(--accent);color:#000;font-weight:700;margin-left:8px;padding:6px 18px;letter-spacing:0.04em;}
+    .article-wrap{max-width:var(--body-width);margin:0 auto;padding:56px 24px 80px;}
+    .breadcrumb{display:flex;align-items:center;gap:8px;font-family:var(--font-m);font-size:11px;letter-spacing:0.06em;color:var(--text-faint);margin-bottom:36px;}
+    .breadcrumb-sep{opacity:0.35;}
+    .article-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:18px;}
+    .pill{font-family:var(--font-m);font-size:8px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;padding:3px 7px;border-radius:2px;}
+    .pill-gray{background:#181818;color:var(--text-muted);border:1px solid #242424;}
+    .pill-red{background:var(--red-light);color:var(--accent);border:1px solid rgba(196,145,74,0.22);}
+    .article-date{font-family:var(--font-m);font-size:11px;color:var(--text-faint);}
+    .article-title{font-size:clamp(26px,4vw,38px);font-weight:700;line-height:1.2;letter-spacing:0.01em;color:var(--text);margin-bottom:20px;}
+    .article-lead{font-size:17px;color:var(--text-muted);line-height:1.88;border-left:3px solid var(--accent);padding-left:18px;margin-bottom:40px;}
+    .article-divider{border:none;border-top:1px solid var(--border);margin:40px 0;}
+    .article-hero{margin:0 0 28px;border-radius:var(--radius);overflow:hidden;line-height:0;}
+    .article-hero svg{display:block;width:100%;height:auto;}
+    .article-body{font-size:16px;line-height:1.9;color:var(--text);}
+    .article-body h2{font-size:20px;font-weight:700;letter-spacing:0.01em;margin:48px 0 14px;color:var(--text);}
+    .article-body p{margin-bottom:20px;}
+    .article-body ul,.article-body ol{padding-left:20px;margin-bottom:20px;}
+    .article-body li{margin-bottom:8px;line-height:1.75;}
+    .article-body strong{font-weight:600;color:var(--text);}
+    .article-body blockquote{border-left:3px solid var(--accent);padding:4px 0 4px 18px;margin:28px 0;color:var(--text-muted);font-size:15px;font-style:italic;}
+    .callout{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:var(--radius);padding:20px 22px;margin:28px 0;}
+    .callout-label{font-family:var(--font-m);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+    .callout p{font-size:14px;color:var(--text-muted);margin-bottom:0;line-height:1.75;}
+    .source-note{background:rgba(196,145,74,0.06);border:1px solid rgba(196,145,74,0.18);border-radius:var(--radius);padding:14px 18px;margin-bottom:36px;}
+    .source-note p{font-family:var(--font-m);font-size:11px;color:var(--text-faint);line-height:1.7;margin-bottom:0;}
+    .source-note a{color:var(--accent);text-decoration:underline;text-underline-offset:2px;}
+    .table-wrap{overflow-x:auto;margin:24px 0;}
+    .table-label{font-family:var(--font-m);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-faint);margin-bottom:10px;display:block;}
+    .data-table{width:100%;border-collapse:collapse;font-size:14px;}
+    .data-table th{font-family:var(--font-m);font-size:10px;letter-spacing:0.06em;text-transform:uppercase;padding:10px 14px;background:#181818;color:rgba(255,255,255,0.55);text-align:left;white-space:nowrap;border-bottom:1px solid var(--border);}
+    .data-table th:first-child{background:#141414;color:var(--text-faint);}
+    .data-table td{padding:11px 14px;border-bottom:1px solid var(--border-faint);line-height:1.65;vertical-align:top;color:var(--text-muted);}
+    .data-table tr:last-child td{border-bottom:none;}
+    .data-table td:first-child{font-weight:600;font-size:13px;white-space:nowrap;color:var(--text);border-right:1px solid var(--border);background:var(--bg-subtle);}
+    .data-table .kw{display:inline-block;background:#1c1c1c;border:1px solid #282828;border-radius:3px;padding:2px 7px;font-family:var(--font-m);font-size:11px;margin:2px 2px 2px 0;white-space:nowrap;color:var(--text-muted);}
+    .vis-grid{display:grid;gap:8px;margin:24px 0;}
+    .vis-grid-3{grid-template-columns:repeat(3,1fr);}
+    .vis-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 14px;}
+    .vis-card.highlight{border-color:var(--accent);}
+    .vis-card-num{font-family:var(--font-m);font-size:22px;font-weight:700;color:var(--border);line-height:1;margin-bottom:10px;}
+    .vis-card.highlight .vis-card-num{color:rgba(196,145,74,0.35);}
+    .vis-card-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px;line-height:1.4;}
+    .vis-card-body{font-size:12px;color:var(--text-muted);line-height:1.65;}
+    .ref-heading{font-family:var(--font-m);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-faint);font-weight:500;margin-top:48px;margin-bottom:10px;}
+    .ref-list{list-style:none;padding:0;}
+    .ref-list li{margin-bottom:6px;}
+    .ref-list a{font-size:13px;color:var(--text-muted);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--border);transition:color 0.15s,text-decoration-color 0.15s;word-break:break-all;}
+    .ref-list a:hover{color:var(--accent);text-decoration-color:var(--accent);}
+    .article-footer{margin-top:56px;padding-top:28px;border-top:1px solid var(--border);}
+    .article-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:32px;}
+    .tag{font-family:var(--font-m);font-size:10px;letter-spacing:0.06em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--border);border-radius:var(--radius);color:var(--text-faint);transition:border-color 0.15s,color 0.15s;}
+    .tag:hover{border-color:var(--accent);color:var(--accent);}
+    .back-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--text-muted);transition:color 0.15s;}
+    .back-link:hover{color:var(--accent);}
+    .back-link::before{content:'←';}
+    footer{border-top:1px solid var(--border-faint);padding:24px;background:var(--bg-subtle);}
+    .footer-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;}
+    .footer-logo{font-size:12px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-faint);}
+    .footer-copy{font-family:var(--font-m);font-size:10px;color:var(--text-faint);}
+    @media(max-width:640px){.mast-nav{display:none;}.vis-grid-3{grid-template-columns:1fr;}}
+  </style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <a href="../index.html" class="logo-name">AX Journal</a>
+    <nav class="mast-nav">
+      <a href="../index.html">記事一覧</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#newsletter" class="cta">購読する</a>
+    </nav>
+  </div>
+</header>
+
+<main class="article-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">AX Journal</a>
+    <span class="breadcrumb-sep">/</span>
+    <span>トレンド</span>
+  </nav>
+
+  <div class="article-eyebrow">
+    <span class="pill pill-gray">トレンド</span>
+    <span class="article-date">2026.06.21</span>
+  </div>
+
+  <h1 class="article-title">「採用凍結」が育成パイプラインを壊す——AIエージェント時代に企業が静かに失うもの</h1>
+
+  <!-- ヒーローSVG: orbital スタイル（同心楕円+スポーク、パラメータ変化版） -->
+  <div class="article-hero">
+    <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+      <rect width="680" height="200" fill="#080808"/>
+      <defs>
+        <pattern id="g2" width="36" height="36" patternUnits="userSpaceOnUse">
+          <path d="M36 0L0 0 0 36" fill="none" stroke="#131313" stroke-width="0.5"/>
+        </pattern>
+      </defs>
+      <rect width="680" height="200" fill="url(#g2)"/>
+      <!-- 同心楕円（外→内） -->
+      <ellipse cx="340" cy="100" rx="305" ry="88" fill="none" stroke="#181818" stroke-width="1"/>
+      <ellipse cx="340" cy="100" rx="225" ry="65" fill="none" stroke="#1c1c1c" stroke-width="1"/>
+      <ellipse cx="340" cy="100" rx="145" ry="44" fill="none" stroke="#222222" stroke-width="1"/>
+      <!-- 銅色最内楕円 -->
+      <ellipse cx="340" cy="100" rx="68" ry="21" fill="none" stroke="#C4914A" stroke-width="1.2" opacity="0.72"/>
+      <!-- スポーク 6本 -->
+      <line x1="340" y1="100" x2="35" y2="100" stroke="#1b1b1b" stroke-width="0.5" stroke-dasharray="4 5"/>
+      <line x1="340" y1="100" x2="645" y2="100" stroke="#1b1b1b" stroke-width="0.5" stroke-dasharray="4 5"/>
+      <line x1="340" y1="100" x2="340" y2="12" stroke="#1b1b1b" stroke-width="0.5" stroke-dasharray="4 5"/>
+      <line x1="340" y1="100" x2="340" y2="188" stroke="#1b1b1b" stroke-width="0.5" stroke-dasharray="4 5"/>
+      <line x1="340" y1="100" x2="607" y2="15" stroke="#181818" stroke-width="0.5" stroke-dasharray="3 6"/>
+      <line x1="340" y1="100" x2="73" y2="15" stroke="#181818" stroke-width="0.5" stroke-dasharray="3 6"/>
+      <!-- スポーク端点マーカー -->
+      <circle cx="35" cy="100" r="2" fill="none" stroke="#282828" stroke-width="1"/>
+      <circle cx="645" cy="100" r="2" fill="none" stroke="#282828" stroke-width="1"/>
+      <circle cx="340" cy="12" r="2" fill="none" stroke="#282828" stroke-width="1"/>
+      <circle cx="340" cy="188" r="2" fill="none" stroke="#282828" stroke-width="1"/>
+      <!-- 銅色中心ドット -->
+      <circle cx="340" cy="100" r="5" fill="#C4914A" opacity="0.82"/>
+      <circle cx="340" cy="100" r="10" fill="none" stroke="#C4914A" stroke-width="0.5" opacity="0.22"/>
+    </svg>
+  </div>
+
+  <p class="article-lead">AIが採用を凍結させる今、企業は「コストを抑えながら生産性を維持できている」と安堵しているかもしれない。<strong>しかしその静かな決断が、次世代リーダーを育てる人材パイプラインをじわじわと破壊している。</strong>スーパースター経済の固定化が始まる前に、人事はこのパラドックスに正面から向き合う必要がある。</p>
+
+  <hr class="article-divider">
+
+  <div class="source-note">
+    <p>本記事は、リクルートワークス研究所「Future of Work」コラム「<a href="https://www.works-i.com/research/labour/column/future-of-work/detail007.html" target="_blank" rel="noopener">AIが自律協業する『エージェント・オートノミー』の時代がやってくる</a>」（著：デイヴィッド・ティミス氏）をもとに、AX Journal編集部が再構成・加筆したものです。</p>
+  </div>
+
+  <div class="article-body">
+
+    <h2>AIの進化4段階——企業はいま「試験段階」にいる</h2>
+
+    <p>2023年から2026年にかけて、AIの能力は急速に段階を踏んで拡大してきた。デイヴィッド・ティミス氏がまとめる進化の軌跡は次のとおりだ。</p>
+
+    <div class="table-wrap">
+      <span class="table-label">図1｜AIの進化4段階と労働市場への影響</span>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>年</th>
+            <th>AIの能力段階</th>
+            <th>労働市場への影響</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2023年</td>
+            <td>対話型チャットボットの普及</td>
+            <td>補助ツールとして活用開始。採用への影響は限定的</td>
+          </tr>
+          <tr>
+            <td>2024年</td>
+            <td>高度な理論的推論の実現</td>
+            <td>ナレッジワーカー業務の一部代替が始まる</td>
+          </tr>
+          <tr>
+            <td>2025年</td>
+            <td>自律AIエージェントの台頭</td>
+            <td><span class="kw">戦略的採用凍結</span>が主流化。エントリー職の削減加速</td>
+          </tr>
+          <tr>
+            <td>2026年</td>
+            <td>複数エージェントの統合管理（エージェント・オートノミー）</td>
+            <td>ソフトウェア・法律・カスタマーサポートで自動完結が進む</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>注目すべきは2025〜2026年のフェーズだ。企業は大規模解雇ではなく「<strong>戦略的採用凍結</strong>」という形でAI生産性を試験している。大きな痛みを伴わない分、意思決定者はリスクを実感しにくい。しかしその副作用は、静かに、確実に積み上がっている。</p>
+
+    <h2>「認知的筋肉記憶」の剥奪——パイプライン崩壊の本質</h2>
+
+    <p>ティミス氏が最も重要なパラドックスとして指摘するのが、エントリーレベル職務の消失がもたらす長期的ダメージだ。</p>
+
+    <blockquote>「若手社員から、将来のリーダーに必要な『認知的筋肉記憶』を奪う」——デイヴィッド・ティミス（リクルートワークス研究所「Future of Work」コラム）</blockquote>
+
+    <p>コンサルティングファームの若手が数百件の提案書を書くことで身につける「判断の勘所」、営業担当者が数千回の顧客対話を通じて培う「空気を読む力」——こうした<strong>経験の積み上げによってのみ習得できる能力</strong>が、AIによるジュニアポジションの代替によって次世代から失われていく。</p>
+
+    <p>10年後に「高度な判断ができる中堅・シニア」が不足するという予測は、単なる人手不足の話ではない。組織の判断力そのものが空洞化するリスクだ。</p>
+
+    <div class="callout">
+      <p class="callout-label">AX Journal 編集部の視点</p>
+      <p>人事部門がいま最も問い直すべきは「採用計画」ではなく「育成設計」だ。AIが効率化できる業務から順にエントリー職を削るという経営判断は短期的には正しい。しかしそれが「次のリーダー候補が育つ場」を同時に削っているとしたら、10年後の競争力にどう答えるのか。採用凍結の意思決定には、必ず「その職務を通じて何が育っていたか」のアセスメントを組み込む必要がある。</p>
+    </div>
+
+    <h2>グレート・デカップリング——利益と賃金が切り離される</h2>
+
+    <p>AIの進化は、経済全体で「<strong>グレート・デカップリング（大いなる切り離し）</strong>」を引き起こすとティミス氏は警告する。企業利益やGDPは拡大する一方で、特定の大規模職種が集中的に破壊される構造だ。</p>
+
+    <p>具体例として挙げられるのが米国のトラック運転手だ。自動運転技術の普及により、1,000〜1,500万人規模の雇用が脅威にさらされている。単なる職種消失にとどまらず、地域税収の減少・消費支出の冷え込み・地域コミュニティの崩壊という波及効果が生じる。</p>
+
+    <p>賃金構造の二極化も深刻だ。AIを使いこなすシニアコンサルタント層は生産性が飛躍的に向上し報酬も上昇する一方、エントリー層は買い叩きに直面する。データセンター産業の調査では、現場求職者に求められるスキルの約60%が技術系ではなく「<strong>非技術系コミュニケーション能力</strong>」であることが示されており、スキルの非対称性が拡大している。</p>
+
+    <h2>AI時代に必要な「3層スキル」フレームワーク</h2>
+
+    <p>ティミス氏は個人・組織双方の処方箋として、時間軸の異なる3層のスキル戦略を提示している。</p>
+
+    <div class="vis-grid vis-grid-3">
+      <div class="vis-card highlight">
+        <div class="vis-card-num">L1</div>
+        <div class="vis-card-title">AIコンピテンシー<br><small style="font-weight:400;font-size:11px;color:var(--text-faint)">2〜3年視点</small></div>
+        <div class="vis-card-body">正確なプロンプト設計・AI出力の批判的評価。かつての「表計算ソフトの使い方」と同格の基礎要件。全社員に必須化される</div>
+      </div>
+      <div class="vis-card highlight">
+        <div class="vis-card-num">L2</div>
+        <div class="vis-card-title">判断力と共感力<br><small style="font-weight:400;font-size:11px;color:var(--text-faint)">3〜5年視点</small></div>
+        <div class="vis-card-body">前例なき不確実性での意思決定、ステークホルダーへの戦略的ナラティブ構築。AIが超コモディティ化する時代の究極の競争優位</div>
+      </div>
+      <div class="vis-card">
+        <div class="vis-card-num">L3</div>
+        <div class="vis-card-title">グロースマインドセット<br><small style="font-weight:400;font-size:11px;color:var(--text-faint)">継続的</small></div>
+        <div class="vis-card-body">技術基盤の継続的変化に適応する心理的レジリエンス。困難を「脅威」ではなく「最適化問題」として捉え直す姿勢</div>
+      </div>
+    </div>
+
+    <p>ティミス氏はまた、教育・育成の「<strong>ラストワンマイル問題</strong>」にも警鐘を鳴らす。オンライン修了証の発行だけでは不十分であり、難民・シングルマザーなど社会的弱者への就職支援、信頼性の高いネットワークを活用した雇用主との直接マッチングが不可欠だと述べている。スキル習得の機会格差が放置されれば、「スーパースター経済」はより固定化する。</p>
+
+    <h2>まとめ</h2>
+
+    <p>採用凍結→人材パイプライン破壊→判断力ギャップ発生→スーパースター経済固定化——この負の連鎖は、個別企業が気づかないうちに静かに進行する。人事・経営層がいま取るべきアクションは次の3点だ。</p>
+
+    <ul>
+      <li><strong>採用凍結の影響評価を義務化する</strong>：削減するポジションが「何を育てていたか」をアセスメントし、その育成機能を別の形で代替する設計を同時に行う</li>
+      <li><strong>L2スキル（判断力・共感力）の育成プログラムを前倒しで設計する</strong>：3〜5年後に需要が急増する能力は、今から仕込まなければ間に合わない。メンタリング・擬似意思決定演習・クロスファンクショナルなプロジェクト経験が有効だ</li>
+      <li><strong>スキル格差の見える化と公平な機会設計に投資する</strong>：AIリテラシーの習得機会は全社員に均等に提供されなければ、組織内格差がそのまま社会格差に転化する。研修設計は「受けやすさ」を最重要指標に置くこと</li>
+    </ul>
+
+    <p class="ref-heading">参照</p>
+    <ul class="ref-list">
+      <li><a href="https://www.works-i.com/research/labour/column/future-of-work/detail007.html" target="_blank" rel="noopener">デイヴィッド・ティミス「AIが自律協業する『エージェント・オートノミー』の時代がやってくる」— リクルートワークス研究所 Future of Work</a></li>
+    </ul>
+
+  </div>
+
+  <footer class="article-footer">
+    <div class="article-tags">
+      <a href="#" class="tag">AIエージェント</a>
+      <a href="#" class="tag">人材パイプライン</a>
+      <a href="#" class="tag">スキル戦略</a>
+      <a href="#" class="tag">労働市場</a>
+    </div>
+    <a href="../index.html" class="back-link">記事一覧に戻る</a>
+  </footer>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">AX Journal</span>
+    <span class="footer-copy">© 2026 AX Journal. All rights reserved.</span>
+  </div>
+</footer>
+
+</body>
+</html>
