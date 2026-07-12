@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIがチームに「参加」する——Claude TagとSlackが変えるチームの仕事 — AX Journal</title>
+  <meta name="description" content="PR65%をAIが書く時代。Claude TagがSlackで自律動作・長期記憶でチームと共に働く実態と組織へのインパクトを解説。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:           #080808;
+      --bg-card:      #111111;
+      --bg-subtle:    #0d0d0d;
+      --bg-muted:     #141414;
+      --surface-dark: #161616;
+      --text:         #EDE9E2;
+      --text-muted:   #888880;
+      --text-faint:   #4E4E4A;
+      --accent:       #C4914A;
+      --accent-dark:  #A87840;
+      --accent-light: rgba(196,145,74,0.12);
+      --red:          #C4914A;
+      --red-light:    rgba(196,145,74,0.10);
+      --border:       #1E1E1E;
+      --border-faint: #161616;
+      --radius:       3px;
+      --font-b: 'Inter', 'Noto Sans JP', sans-serif;
+      --font-m: 'DM Mono', 'Courier New', monospace;
+      --body-width: 680px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { font-family: var(--font-b); background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+
+    .masthead { border-bottom: 1px solid var(--border-faint); padding: 0 24px; background: var(--bg); }
+    .masthead-inner { max-width: 1160px; margin: 0 auto; height: 58px; display: flex; align-items: center; justify-content: space-between; }
+    .logo-name { font-size: 14px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text); }
+    .mast-nav { display: flex; align-items: center; gap: 2px; }
+    .mast-nav a { font-size: 12px; font-weight: 500; color: var(--text-muted); padding: 6px 12px; border-radius: var(--radius); transition: color 0.15s; }
+    .mast-nav a:hover { color: var(--text); }
+    .mast-nav .cta { background: var(--accent); color: #000; font-weight: 700; margin-left: 8px; padding: 6px 18px; letter-spacing: 0.04em; }
+    .mast-nav .cta:hover { background: var(--accent-dark); color: #000; }
+
+    .article-wrap { max-width: var(--body-width); margin: 0 auto; padding: 56px 24px 80px; }
+
+    .breadcrumb { display: flex; align-items: center; gap: 8px; font-family: var(--font-m); font-size: 11px; letter-spacing: 0.06em; color: var(--text-faint); margin-bottom: 36px; }
+    .breadcrumb a:hover { color: var(--text-muted); }
+    .breadcrumb-sep { opacity: 0.35; }
+
+    .article-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+    .pill { font-family: var(--font-m); font-size: 8px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; padding: 3px 7px; border-radius: 2px; }
+    .pill-gray { background: #181818; color: var(--text-muted); border: 1px solid #242424; }
+    .pill-red  { background: var(--red-light); color: var(--accent); border: 1px solid rgba(196,145,74,0.22); }
+    .article-date { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); }
+
+    .article-title { font-size: clamp(26px, 4vw, 38px); font-weight: 700; line-height: 1.2; letter-spacing: 0.01em; color: var(--text); margin-bottom: 20px; }
+    .article-lead { font-size: 17px; color: var(--text-muted); line-height: 1.88; border-left: 3px solid var(--accent); padding-left: 18px; margin-bottom: 40px; }
+    .article-divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    .article-hero { margin: 0 0 28px; border-radius: var(--radius); overflow: hidden; line-height: 0; }
+    .article-hero svg { display: block; width: 100%; height: auto; }
+
+    .article-body { font-size: 16px; line-height: 1.9; color: var(--text); }
+    .article-body h2 { font-size: 20px; font-weight: 700; letter-spacing: 0.01em; margin: 48px 0 14px; color: var(--text); }
+    .article-body h3 { font-size: 15px; font-weight: 600; color: var(--text); margin: 28px 0 8px; }
+    .article-body p { margin-bottom: 20px; }
+    .article-body ul, .article-body ol { padding-left: 20px; margin-bottom: 20px; }
+    .article-body li { margin-bottom: 8px; line-height: 1.75; }
+    .article-body strong { font-weight: 600; color: var(--text); }
+    .article-body em { font-style: italic; color: var(--text-muted); }
+    .article-body blockquote { border-left: 3px solid var(--accent); padding: 4px 0 4px 18px; margin: 28px 0; color: var(--text-muted); font-size: 15px; font-style: italic; }
+
+    .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius); padding: 20px 22px; margin: 28px 0; }
+    .callout-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .callout p { font-size: 14px; color: var(--text-muted); margin-bottom: 0; line-height: 1.75; }
+
+    .source-note { background: rgba(196,145,74,0.06); border: 1px solid rgba(196,145,74,0.18); border-radius: var(--radius); padding: 14px 18px; margin-bottom: 12px; }
+    .source-note p { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); line-height: 1.7; margin-bottom: 0; }
+    .source-note a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+
+    .yt-card { display: flex; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 28px; text-decoration: none; transition: border-color 0.15s; background: var(--bg-card); }
+    .yt-card:hover { border-color: rgba(196,145,74,0.5); }
+    .yt-thumb-wrap { position: relative; flex-shrink: 0; width: 192px; min-height: 108px; background: #111; }
+    .yt-thumb-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .yt-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.42); transition: background 0.15s; }
+    .yt-card:hover .yt-play { background: rgba(0,0,0,0.2); }
+    .yt-play-icon { width: 38px; height: 38px; background: rgba(196,145,74,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .yt-meta { padding: 14px 18px; display: flex; flex-direction: column; justify-content: center; gap: 6px; flex: 1; min-width: 0; }
+    .yt-badge { font-family: var(--font-m); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-faint); }
+    .yt-card-title { font-size: 13px; font-weight: 600; color: var(--text); line-height: 1.45; }
+    .yt-channel { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); }
+    @media (max-width: 480px) { .yt-card { flex-direction: column; } .yt-thumb-wrap { width: 100%; min-height: 180px; } }
+
+    .table-wrap { overflow-x: auto; margin: 24px 0; }
+    .table-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 10px; display: block; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .data-table th { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 10px 14px; background: #181818; color: rgba(255,255,255,0.55); text-align: left; white-space: nowrap; border-bottom: 1px solid var(--border); }
+    .data-table th:first-child { background: #141414; color: var(--text-faint); }
+    .data-table td { padding: 11px 14px; border-bottom: 1px solid var(--border-faint); line-height: 1.65; vertical-align: top; color: var(--text-muted); }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table td:first-child { font-weight: 600; font-size: 13px; white-space: nowrap; color: var(--text); border-right: 1px solid var(--border); background: var(--bg-subtle); }
+    .data-table .kw { display: inline-block; background: #1c1c1c; border: 1px solid #282828; border-radius: 3px; padding: 2px 7px; font-family: var(--font-m); font-size: 11px; margin: 2px 2px 2px 0; white-space: nowrap; color: var(--text-muted); }
+
+    .vis-grid { display: grid; gap: 8px; margin: 24px 0; }
+    .vis-grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .vis-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 12px; text-align: center; }
+    .vis-card.highlight { border-color: var(--accent); background: var(--accent); color: #000; }
+    .vis-card-label { font-family: var(--font-m); font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); display: block; margin-bottom: 4px; }
+    .vis-card.highlight .vis-card-label { color: rgba(0,0,0,0.5); }
+    .vis-card-en { font-size: 13px; font-weight: 700; display: block; margin-bottom: 2px; color: var(--text); }
+    .vis-card.highlight .vis-card-en { color: #000; }
+    .vis-card-jp { font-size: 11px; color: var(--text-muted); }
+    .vis-card.highlight .vis-card-jp { color: rgba(0,0,0,0.65); }
+
+    .ref-heading { font-family: var(--font-m); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); font-weight: 500; margin-top: 48px; margin-bottom: 10px; }
+    .ref-list { list-style: none; padding: 0; }
+    .ref-list li { margin-bottom: 6px; }
+    .ref-list a { font-size: 13px; color: var(--text-muted); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--border); transition: color 0.15s, text-decoration-color 0.15s; word-break: break-all; }
+    .ref-list a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
+    .article-footer { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--border); }
+    .article-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 32px; }
+    .tag { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-faint); transition: border-color 0.15s, color 0.15s; }
+    .tag:hover { border-color: var(--accent); color: var(--accent); }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--text-muted); transition: color 0.15s; }
+    .back-link:hover { color: var(--accent); }
+    .back-link::before { content: '←'; }
+
+    .nl-strip { background: #0a0a0a; padding: 32px 24px; margin-top: 64px; border-top: 1px solid var(--border); }
+    .nl-strip-inner { max-width: var(--body-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .nl-strip-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 6px; }
+    .nl-strip-title { font-size: 16px; font-weight: 600; color: var(--text); letter-spacing: 0.01em; }
+    .nl-strip-form { display: flex; gap: 8px; flex-shrink: 0; }
+    .nl-strip-input { padding: 10px 14px; background: var(--bg-muted); border: 1px solid var(--border); border-radius: var(--radius); font-family: var(--font-b); font-size: 13px; color: var(--text); outline: none; width: 220px; transition: border-color 0.15s; }
+    .nl-strip-input::placeholder { color: var(--text-faint); }
+    .nl-strip-input:focus { border-color: var(--accent); }
+    .nl-strip-btn { padding: 10px 18px; background: var(--accent); color: #000; border: none; border-radius: var(--radius); font-family: var(--font-b); font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: background 0.15s; }
+    .nl-strip-btn:hover { background: var(--accent-dark); }
+
+    footer { border-top: 1px solid var(--border-faint); padding: 24px; background: var(--bg-subtle); }
+    .footer-inner { max-width: 1160px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .footer-logo { font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-faint); }
+    .footer-copy { font-family: var(--font-m); font-size: 10px; color: var(--text-faint); }
+
+    @media (max-width: 640px) {
+      .mast-nav { display: none; }
+      .vis-grid-3 { grid-template-columns: 1fr; }
+      .nl-strip-inner { flex-direction: column; align-items: flex-start; }
+      .nl-strip-form { width: 100%; }
+      .nl-strip-input { flex: 1; }
+      .footer-inner { flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- マストヘッド -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <a href="../index.html" class="logo-name">AX Journal</a>
+    <nav class="mast-nav">
+      <a href="../index.html">記事一覧</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#newsletter" class="cta">購読する</a>
+    </nav>
+  </div>
+</header>
+
+<!-- 記事本文 -->
+<main class="article-wrap">
+
+  <!-- パンくず -->
+  <nav class="breadcrumb">
+    <a href="../index.html">AX Journal</a>
+    <span class="breadcrumb-sep">/</span>
+    <span>AI活用・ツール</span>
+  </nav>
+
+  <!-- ヘッダー -->
+  <div class="article-eyebrow">
+    <span class="pill pill-red">速報</span>
+    <span class="pill pill-gray">AI活用・ツール</span>
+    <span class="article-date">2026.07.12</span>
+  </div>
+
+  <h1 class="article-title">AIがチームに「参加」する——Claude TagとSlackが変えるチームの仕事</h1>
+
+  <!-- ヒーローSVG: lattice style -->
+  <div class="article-hero">
+    <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+      <rect width="680" height="200" fill="#080808"/>
+      <!-- 10列×5行ドットグリッド (x step=70, y step=40) -->
+      <!-- row 0 (y=20) -->
+      <circle cx="20"  cy="20" r="1.8" fill="#1e1e1e"/>
+      <circle cx="90"  cy="20" r="1.8" fill="#1e1e1e"/>
+      <circle cx="160" cy="20" r="1.8" fill="#1e1e1e"/>
+      <circle cx="230" cy="20" r="1.8" fill="#1e1e1e"/>
+      <circle cx="300" cy="20" r="1.8" fill="#1e1e1e"/>
+      <circle cx="370" cy="20" r="1.8" fill="#1e1e1e"/>
+      <circle cx="440" cy="20" r="2.6" fill="#C4914A" opacity="0.80"/>
+      <circle cx="510" cy="20" r="2.0" fill="#C4914A" opacity="0.52"/>
+      <circle cx="580" cy="20" r="1.8" fill="#1e1e1e"/>
+      <circle cx="650" cy="20" r="1.8" fill="#1e1e1e"/>
+      <!-- row 1 (y=60) -->
+      <circle cx="20"  cy="60" r="1.8" fill="#1e1e1e"/>
+      <circle cx="90"  cy="60" r="1.8" fill="#1e1e1e"/>
+      <circle cx="160" cy="60" r="1.8" fill="#1e1e1e"/>
+      <circle cx="230" cy="60" r="1.8" fill="#1e1e1e"/>
+      <circle cx="300" cy="60" r="1.8" fill="#1e1e1e"/>
+      <circle cx="370" cy="60" r="2.6" fill="#C4914A" opacity="0.80"/>
+      <circle cx="440" cy="60" r="2.0" fill="#C4914A" opacity="0.52"/>
+      <circle cx="510" cy="60" r="1.8" fill="#1e1e1e"/>
+      <circle cx="580" cy="60" r="1.8" fill="#1e1e1e"/>
+      <circle cx="650" cy="60" r="1.8" fill="#1e1e1e"/>
+      <!-- row 2 (y=100) -->
+      <circle cx="20"  cy="100" r="1.8" fill="#1e1e1e"/>
+      <circle cx="90"  cy="100" r="1.8" fill="#1e1e1e"/>
+      <circle cx="160" cy="100" r="1.8" fill="#1e1e1e"/>
+      <circle cx="230" cy="100" r="1.8" fill="#1e1e1e"/>
+      <circle cx="300" cy="100" r="2.6" fill="#C4914A" opacity="0.80"/>
+      <circle cx="370" cy="100" r="2.0" fill="#C4914A" opacity="0.52"/>
+      <circle cx="440" cy="100" r="1.8" fill="#1e1e1e"/>
+      <circle cx="510" cy="100" r="1.8" fill="#1e1e1e"/>
+      <circle cx="580" cy="100" r="1.8" fill="#1e1e1e"/>
+      <circle cx="650" cy="100" r="1.8" fill="#1e1e1e"/>
+      <!-- row 3 (y=140) -->
+      <circle cx="20"  cy="140" r="1.8" fill="#1e1e1e"/>
+      <circle cx="90"  cy="140" r="1.8" fill="#1e1e1e"/>
+      <circle cx="160" cy="140" r="1.8" fill="#1e1e1e"/>
+      <circle cx="230" cy="140" r="2.6" fill="#C4914A" opacity="0.80"/>
+      <circle cx="300" cy="140" r="2.0" fill="#C4914A" opacity="0.52"/>
+      <circle cx="370" cy="140" r="1.8" fill="#1e1e1e"/>
+      <circle cx="440" cy="140" r="1.8" fill="#1e1e1e"/>
+      <circle cx="510" cy="140" r="1.8" fill="#1e1e1e"/>
+      <circle cx="580" cy="140" r="1.8" fill="#1e1e1e"/>
+      <circle cx="650" cy="140" r="1.8" fill="#1e1e1e"/>
+      <!-- row 4 (y=180) -->
+      <circle cx="20"  cy="180" r="1.8" fill="#1e1e1e"/>
+      <circle cx="90"  cy="180" r="1.8" fill="#1e1e1e"/>
+      <circle cx="160" cy="180" r="2.6" fill="#C4914A" opacity="0.80"/>
+      <circle cx="230" cy="180" r="2.0" fill="#C4914A" opacity="0.52"/>
+      <circle cx="300" cy="180" r="1.8" fill="#1e1e1e"/>
+      <circle cx="370" cy="180" r="1.8" fill="#1e1e1e"/>
+      <circle cx="440" cy="180" r="1.8" fill="#1e1e1e"/>
+      <circle cx="510" cy="180" r="1.8" fill="#1e1e1e"/>
+      <circle cx="580" cy="180" r="1.8" fill="#1e1e1e"/>
+      <circle cx="650" cy="180" r="1.8" fill="#1e1e1e"/>
+    </svg>
+  </div>
+
+  <p class="article-lead">「プルリクエストの65%をAIが書く」——これはSF映画の話ではない。AnthropicがYouTubeで公開した動画『The future of work with @Claude』では、Claude TagがSlackチャンネルに参加し、数日〜数週間のタスクを自律的に実行する実態が明かされた。AIは「都度指示する道具」から「チームと共に働くメンバー」へと静かに変貌を遂げている。</p>
+
+  <hr class="article-divider">
+
+  <!-- 動画ソースクレジット（YouTube: margin-bottom: 12px） -->
+  <div class="source-note">
+    <p>本記事は、Anthropic公式YouTubeチャンネルの動画「<a href="https://www.youtube.com/watch?v=MhfnicQVkgY" target="_blank" rel="noopener">The future of work with @Claude</a>」をもとに、AX Journal編集部が再構成・加筆したものです。</p>
+  </div>
+
+  <!-- YouTubeカード -->
+  <a href="https://www.youtube.com/watch?v=MhfnicQVkgY" target="_blank" rel="noopener" class="yt-card">
+    <div class="yt-thumb-wrap">
+      <img src="https://img.youtube.com/vi/MhfnicQVkgY/hqdefault.jpg" alt="The future of work with @Claude" loading="lazy">
+      <div class="yt-play">
+        <div class="yt-play-icon">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 2l9 5-9 5V2z" fill="#000"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="yt-meta">
+      <span class="yt-badge">YouTube</span>
+      <p class="yt-card-title">The future of work with @Claude</p>
+      <p class="yt-channel">Anthropic</p>
+    </div>
+  </a>
+
+  <!-- 本文 -->
+  <div class="article-body">
+
+    <h2>AIの進化を振り返る——受動的な道具から「自律的な協働」へ</h2>
+    <p>2年前、AIの主な用途はエンジニアのコード補完（Type-ahead）だった。その後、関数やファイル全体の生成、エンドツーエンドの実験やデータ分析へと能力が拡張し、今では「チームの中にAIが入り込んで共に働く」形が現実のものとなった。</p>
+    <p>従来のClaudeは「ユーザーがアプリを開いて指示を出す受動的なもの」だった。Claude Tagはそこから根本的に異なる。Slackなどのチャンネルにメンバーとして参加させるだけで、タスクを自律的にスケジュールし、数日〜数週間にわたる実験の監視やバグ修正をプロアクティブに実行する。「1人がAIを動かす時代」を経て、「AIがチームの中で動く時代」へ移行した。</p>
+
+    <span class="table-label">図1｜AIの進化フェーズ——「道具」から「チームメンバー」へ</span>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>フェーズ</th>
+            <th>主な形態</th>
+            <th>代表的な用途</th>
+            <th>人間との関係</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>フェーズ1（〜2年前）</td>
+            <td><span class="kw">補完ツール</span></td>
+            <td>コード補完・関数生成</td>
+            <td>指示→単発応答</td>
+          </tr>
+          <tr>
+            <td>フェーズ2（直近）</td>
+            <td><span class="kw">単一エージェント</span></td>
+            <td>ファイル生成・実験・分析</td>
+            <td>依頼→実行→報告</td>
+          </tr>
+          <tr>
+            <td>フェーズ3（現在）</td>
+            <td><span class="kw">チームメンバー型</span></td>
+            <td>長期自律実行・監視・Q&amp;A</td>
+            <td>チャンネルで継続的に協働</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>3つの技術ブレイクスルー——長期実行・記憶・「空気を読む」能力</h2>
+    <p>Claude Tagを可能にした技術革新は3つある。最新のベンチマークでは、モデルが<strong>16時間以上連続して自律動作</strong>できることが示された。タスクを自己スケジュールして数日後・数週間後にチェックインする運用がすでに実務で行われている。</p>
+    <p>「<strong>長期記憶</strong>」の確立も大きい。「このチャンネルでは特定のバグのみ監視してほしい」「このプロジェクトではコードスタイルXを使うこと」といった指示を永続的に記憶し、チャンネルごとに最適化された振る舞いをする。法務・HR規程ファイルと連携させれば、社内Q&Aへの一次回答も自動化できる。さらに、不用意に発言して邪魔にならないよう「<strong>空気を読む能力（EQ相当の振る舞い）</strong>」も訓練されており、チームの「邪魔しないAI」として機能する設計になっている。</p>
+
+    <span class="table-label">図2｜Claude Tagの3つのブレイクスルー</span>
+    <div class="vis-grid vis-grid-3">
+      <div class="vis-card highlight">
+        <span class="vis-card-label">01 長期実行力</span>
+        <span class="vis-card-en">16h+ 自律動作</span>
+        <span class="vis-card-jp">実験監視・バグ修正を数日〜数週間にわたり自律フォロー</span>
+      </div>
+      <div class="vis-card">
+        <span class="vis-card-label">02 長期記憶</span>
+        <span class="vis-card-en">チャンネル記憶</span>
+        <span class="vis-card-jp">指示・好みを永続記憶。使うほどチームの文脈に最適化される</span>
+      </div>
+      <div class="vis-card">
+        <span class="vis-card-label">03 EQ</span>
+        <span class="vis-card-en">空気を読む</span>
+        <span class="vis-card-jp">発言タイミングを自律判断。チームの邪魔をしないAIとして機能</span>
+      </div>
+    </div>
+
+    <h2>PR65%——チーム全体に波及する生産性インパクト</h2>
+    <p>動画で最も衝撃的な数値は「<strong>開発組織内で作成されるプルリクエストの約65%がClaude Tagによって作成されており、その割合は上昇し続けている</strong>」という事実だ。これは単なる自動化ツールのKPIではない。エンジニアの役割が「コードを書く人」から「AIが書いたコードを正しく導き、レビューする人」へとシフトし始めたことを示している。</p>
+    <p>活用シーンは多岐にわたる。データ質問チャンネルでの一次回答自動化、PMが5〜10個の機能ステータスを日次レポートとして受け取る仕組み、リモートサンドボックスと連携したバグ修正・検証動画のSlack自動投稿など。注目すべきは<strong>副次効果</strong>だ。公開チャンネルでClaude Tagが動くため、「上手な使い手のプロンプトパターン」をチーム全員が観察・学習できる。AIとの協業ナレッジが個人に閉じず、組織全体に自然と拡散する仕組みが生まれている。</p>
+
+    <div class="callout">
+      <p class="callout-label">AX Journal 編集部の視点</p>
+      <p>PR65%という数値が示すのは、ガバナンス設計の必要性でもある。自律的なAIがコードを書く環境では「コードレビュー負荷の増大」「誤った記憶（ハルシネーション）の永続化」「予期せぬ自律動作によるインフラコスト増」という課題が浮上する。Claude Tagのようなマルチプレイヤー型AIを導入するだけでなく、「AIが触れない領域」と「スコープ（何を監視させ、何をしてはいけないか）」の設計が、成否を左右する最初のハードルになる。</p>
+    </div>
+
+    <blockquote>「開発組織内で作成されるプルリクエストの約65%がすでにClaude Tagによって書かれており、その数値は上昇し続けている」——動画『The future of work with @Claude』より（Anthropic公式）</blockquote>
+
+    <h2>まとめ——「AIをどう使うか」から「AIとどう働くか」へ</h2>
+    <p>Claude TagがSlackに参加し、自律的に動き、チーム全員がその様子を観察する——これは単なる効率化ツールの話ではない。AIが組織の学習プロセス自体を変える、働き方の新フェーズが始まった。「AIをどう使うか」という問いは、「AIとどう働くか」という問いに置き換わりつつある。</p>
+    <ul>
+      <li>まずデータ質問・社内FAQ対応チャンネルへのClaude Tag試験導入から始め、一次回答の自動化という小さな成功体験を積む</li>
+      <li>非公開DMではなく共有チャンネルで運用することで、AIとの協業ナレッジをチーム全体に広げる仕組みを意図的に設計する</li>
+      <li>PR・コードレビューの負荷増大に備え、「AIが触れない領域」の定義と「スコープ設計」を今から議論しておく</li>
+    </ul>
+
+    <p class="ref-heading">参照</p>
+    <ul class="ref-list">
+      <li><a href="https://www.youtube.com/watch?v=MhfnicQVkgY" target="_blank" rel="noopener">「The future of work with @Claude」（Anthropic公式 YouTube）</a></li>
+    </ul>
+
+  </div><!-- /.article-body -->
+
+  <!-- フッター -->
+  <footer class="article-footer">
+    <div class="article-tags">
+      <span class="tag">Claude Tag</span>
+      <span class="tag">Slack</span>
+      <span class="tag">AI活用</span>
+      <span class="tag">チーム開発</span>
+    </div>
+    <a href="../index.html" class="back-link">記事一覧へ戻る</a>
+  </footer>
+
+</main>
+
+<!-- ニュースレター帯 -->
+<div class="nl-strip">
+  <div class="nl-strip-inner">
+    <div>
+      <p class="nl-strip-label">Newsletter</p>
+      <p class="nl-strip-title">AX Journal の最新記事をメールで受け取る</p>
+    </div>
+    <div class="nl-strip-form">
+      <input type="email" class="nl-strip-input" placeholder="your@email.com">
+      <button class="nl-strip-btn">購読する</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">AX Journal</span>
+    <span class="footer-copy">© 2026 AX Journal. All rights reserved.</span>
+  </div>
+</footer>
+
+</body>
+</html>
