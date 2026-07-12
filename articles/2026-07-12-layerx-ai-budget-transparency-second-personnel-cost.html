@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI費用を「全社員に丸見え」にする理由——LayerXが示す「第二の人件費」という発想 — AX Journal</title>
+  <meta name="description" content="CEOの利用額まで実名・金額で全社公開するLayerXの哲学。AI費用を「第二の人件費」と捉え、トークン代で費用感覚を育てる組織変革の実像。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:           #080808;
+      --bg-card:      #111111;
+      --bg-subtle:    #0d0d0d;
+      --bg-muted:     #141414;
+      --surface-dark: #161616;
+      --text:         #EDE9E2;
+      --text-muted:   #888880;
+      --text-faint:   #4E4E4A;
+      --accent:       #C4914A;
+      --accent-dark:  #A87840;
+      --accent-light: rgba(196,145,74,0.12);
+      --red:          #C4914A;
+      --red-light:    rgba(196,145,74,0.10);
+      --border:       #1E1E1E;
+      --border-faint: #161616;
+      --radius:       3px;
+      --font-b: 'Inter', 'Noto Sans JP', sans-serif;
+      --font-m: 'DM Mono', 'Courier New', monospace;
+      --body-width: 680px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { font-family: var(--font-b); background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+
+    .masthead { border-bottom: 1px solid var(--border-faint); padding: 0 24px; background: var(--bg); }
+    .masthead-inner { max-width: 1160px; margin: 0 auto; height: 58px; display: flex; align-items: center; justify-content: space-between; }
+    .logo-name { font-size: 14px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text); }
+    .mast-nav { display: flex; align-items: center; gap: 2px; }
+    .mast-nav a { font-size: 12px; font-weight: 500; color: var(--text-muted); padding: 6px 12px; border-radius: var(--radius); transition: color 0.15s; }
+    .mast-nav a:hover { color: var(--text); }
+    .mast-nav .cta { background: var(--accent); color: #000; font-weight: 700; margin-left: 8px; padding: 6px 18px; letter-spacing: 0.04em; }
+    .mast-nav .cta:hover { background: var(--accent-dark); color: #000; }
+
+    .article-wrap { max-width: var(--body-width); margin: 0 auto; padding: 56px 24px 80px; }
+
+    .breadcrumb { display: flex; align-items: center; gap: 8px; font-family: var(--font-m); font-size: 11px; letter-spacing: 0.06em; color: var(--text-faint); margin-bottom: 36px; }
+    .breadcrumb a:hover { color: var(--text-muted); }
+    .breadcrumb-sep { opacity: 0.35; }
+
+    .article-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+    .pill { font-family: var(--font-m); font-size: 8px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; padding: 3px 7px; border-radius: 2px; }
+    .pill-gray { background: #181818; color: var(--text-muted); border: 1px solid #242424; }
+    .pill-red  { background: var(--red-light); color: var(--accent); border: 1px solid rgba(196,145,74,0.22); }
+    .article-date { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); }
+
+    .article-title { font-size: clamp(26px, 4vw, 38px); font-weight: 700; line-height: 1.2; letter-spacing: 0.01em; color: var(--text); margin-bottom: 20px; }
+    .article-lead { font-size: 17px; color: var(--text-muted); line-height: 1.88; border-left: 3px solid var(--accent); padding-left: 18px; margin-bottom: 40px; }
+    .article-divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    .article-hero { margin: 0 0 28px; border-radius: var(--radius); overflow: hidden; line-height: 0; }
+    .article-hero svg { display: block; width: 100%; height: auto; }
+
+    .article-body { font-size: 16px; line-height: 1.9; color: var(--text); }
+    .article-body h2 { font-size: 20px; font-weight: 700; letter-spacing: 0.01em; margin: 48px 0 14px; color: var(--text); }
+    .article-body h3 { font-size: 15px; font-weight: 600; color: var(--text); margin: 28px 0 8px; }
+    .article-body p { margin-bottom: 20px; }
+    .article-body ul, .article-body ol { padding-left: 20px; margin-bottom: 20px; }
+    .article-body li { margin-bottom: 8px; line-height: 1.75; }
+    .article-body strong { font-weight: 600; color: var(--text); }
+    .article-body em { font-style: italic; color: var(--text-muted); }
+    .article-body blockquote { border-left: 3px solid var(--accent); padding: 4px 0 4px 18px; margin: 28px 0; color: var(--text-muted); font-size: 15px; font-style: italic; }
+
+    .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius); padding: 20px 22px; margin: 28px 0; }
+    .callout-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .callout p { font-size: 14px; color: var(--text-muted); margin-bottom: 0; line-height: 1.75; }
+
+    .source-note { background: rgba(196,145,74,0.06); border: 1px solid rgba(196,145,74,0.18); border-radius: var(--radius); padding: 14px 18px; margin-bottom: 36px; }
+    .source-note p { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); line-height: 1.7; margin-bottom: 0; }
+    .source-note a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+
+    .table-wrap { overflow-x: auto; margin: 24px 0; }
+    .table-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 10px; display: block; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .data-table th { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 10px 14px; background: #181818; color: rgba(255,255,255,0.55); text-align: left; white-space: nowrap; border-bottom: 1px solid var(--border); }
+    .data-table th:first-child { background: #141414; color: var(--text-faint); }
+    .data-table td { padding: 11px 14px; border-bottom: 1px solid var(--border-faint); line-height: 1.65; vertical-align: top; color: var(--text-muted); }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table td:first-child { font-weight: 600; font-size: 13px; white-space: nowrap; color: var(--text); border-right: 1px solid var(--border); background: var(--bg-subtle); }
+    .data-table .kw { display: inline-block; background: #1c1c1c; border: 1px solid #282828; border-radius: 3px; padding: 2px 7px; font-family: var(--font-m); font-size: 11px; margin: 2px 2px 2px 0; white-space: nowrap; color: var(--text-muted); }
+
+    .vis-grid { display: grid; gap: 8px; margin: 24px 0; }
+    .vis-grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .vis-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 12px; text-align: center; }
+    .vis-card.highlight { border-color: var(--accent); background: var(--accent); color: #000; }
+    .vis-card-label { font-family: var(--font-m); font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); display: block; margin-bottom: 4px; }
+    .vis-card.highlight .vis-card-label { color: rgba(0,0,0,0.5); }
+    .vis-card-en { font-size: 13px; font-weight: 700; display: block; margin-bottom: 2px; color: var(--text); }
+    .vis-card.highlight .vis-card-en { color: #000; }
+    .vis-card-jp { font-size: 11px; color: var(--text-muted); }
+    .vis-card.highlight .vis-card-jp { color: rgba(0,0,0,0.65); }
+
+    .ref-heading { font-family: var(--font-m); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); font-weight: 500; margin-top: 48px; margin-bottom: 10px; }
+    .ref-list { list-style: none; padding: 0; }
+    .ref-list li { margin-bottom: 6px; }
+    .ref-list a { font-size: 13px; color: var(--text-muted); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--border); transition: color 0.15s, text-decoration-color 0.15s; word-break: break-all; }
+    .ref-list a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
+    .article-footer { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--border); }
+    .article-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 32px; }
+    .tag { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-faint); transition: border-color 0.15s, color 0.15s; }
+    .tag:hover { border-color: var(--accent); color: var(--accent); }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--text-muted); transition: color 0.15s; }
+    .back-link:hover { color: var(--accent); }
+    .back-link::before { content: '←'; }
+
+    .nl-strip { background: #0a0a0a; padding: 32px 24px; margin-top: 64px; border-top: 1px solid var(--border); }
+    .nl-strip-inner { max-width: var(--body-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .nl-strip-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 6px; }
+    .nl-strip-title { font-size: 16px; font-weight: 600; color: var(--text); letter-spacing: 0.01em; }
+    .nl-strip-form { display: flex; gap: 8px; flex-shrink: 0; }
+    .nl-strip-input { padding: 10px 14px; background: var(--bg-muted); border: 1px solid var(--border); border-radius: var(--radius); font-family: var(--font-b); font-size: 13px; color: var(--text); outline: none; width: 220px; transition: border-color 0.15s; }
+    .nl-strip-input::placeholder { color: var(--text-faint); }
+    .nl-strip-input:focus { border-color: var(--accent); }
+    .nl-strip-btn { padding: 10px 18px; background: var(--accent); color: #000; border: none; border-radius: var(--radius); font-family: var(--font-b); font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: background 0.15s; }
+    .nl-strip-btn:hover { background: var(--accent-dark); }
+
+    footer { border-top: 1px solid var(--border-faint); padding: 24px; background: var(--bg-subtle); }
+    .footer-inner { max-width: 1160px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .footer-logo { font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-faint); }
+    .footer-copy { font-family: var(--font-m); font-size: 10px; color: var(--text-faint); }
+
+    @media (max-width: 640px) {
+      .mast-nav { display: none; }
+      .vis-grid-3 { grid-template-columns: 1fr; }
+      .nl-strip-inner { flex-direction: column; align-items: flex-start; }
+      .nl-strip-form { width: 100%; }
+      .nl-strip-input { flex: 1; }
+      .footer-inner { flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- マストヘッド -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <a href="../index.html" class="logo-name">AX Journal</a>
+    <nav class="mast-nav">
+      <a href="../index.html">記事一覧</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#newsletter" class="cta">購読する</a>
+    </nav>
+  </div>
+</header>
+
+<!-- 記事本文 -->
+<main class="article-wrap">
+
+  <!-- パンくず -->
+  <nav class="breadcrumb">
+    <a href="../index.html">AX Journal</a>
+    <span class="breadcrumb-sep">/</span>
+    <span>事例・ケース</span>
+  </nav>
+
+  <!-- ヘッダー -->
+  <div class="article-eyebrow">
+    <span class="pill pill-gray">事例・ケース</span>
+    <span class="article-date">2026.07.12</span>
+  </div>
+
+  <h1 class="article-title">AI費用を「全社員に丸見え」にする理由——LayerXが示す「第二の人件費」という発想</h1>
+
+  <!-- ヒーローSVG: flow style -->
+  <div class="article-hero">
+    <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+      <rect width="680" height="200" fill="#080808"/>
+      <!-- 上段ライン群（暗色） -->
+      <path d="M0,18 C140,6 300,28 460,12 C560,2 620,16 680,10" fill="none" stroke="#1c1c1c" stroke-width="1"/>
+      <path d="M0,44 C140,32 300,54 460,38 C560,28 620,42 680,36" fill="none" stroke="#1f1f1f" stroke-width="1"/>
+      <path d="M0,70 C140,58 300,80 460,64 C560,54 620,68 680,62" fill="none" stroke="#222" stroke-width="1"/>
+      <!-- 銅色ライン（中段） -->
+      <path d="M0,96 C140,82 300,108 460,90 C560,80 620,96 680,88" fill="none" stroke="#C4914A" stroke-width="1.5" opacity="0.72"/>
+      <circle cx="0"   cy="96" r="3.2" fill="#C4914A" opacity="0.72"/>
+      <circle cx="680" cy="88" r="3.2" fill="#C4914A" opacity="0.72"/>
+      <!-- 下段ライン群（暗色） -->
+      <path d="M0,122 C140,110 300,134 460,118 C560,108 620,122 680,116" fill="none" stroke="#262626" stroke-width="1"/>
+      <path d="M0,148 C140,138 300,158 460,144 C560,136 620,148 680,142" fill="none" stroke="#292929" stroke-width="1"/>
+      <path d="M0,174 C140,166 300,182 460,170 C560,163 620,174 680,168" fill="none" stroke="#2c2c2c" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <p class="article-lead">「全社員のAI利用額を、実名と金額で全員に公開する」——AIの費用管理に慎重な企業が多い中、LayerXはまったく逆の発想で組織変革を進めている。CEO福島良典氏の利用額まで全社員がリアルタイムで確認できる体制を整え、AIを「第二の人件費」と位置付ける同社の哲学に、AI時代の組織マネジメントの一つの答えがある。</p>
+
+  <hr class="article-divider">
+
+  <!-- ソースクレジット（非YouTube: margin-bottom: 36px） -->
+  <div class="source-note">
+    <p>本記事は、<a href="https://www.itmedia.co.jp/business/articles/2607/09/news022.html" target="_blank" rel="noopener">ITmedia ビジネスオンライン（2026年7月9日公開）</a>の記事「CEOの利用額も『全社員に丸見え』　LayerXがAI予算を『第二の人件費』にした真意」（著者：斎藤健二氏）をもとに、AX Journal編集部が再構成・加筆したものです。</p>
+  </div>
+
+  <!-- 本文 -->
+  <div class="article-body">
+
+    <h2>「Bet AI」——AIを使い倒す全社宣言と、その結果</h2>
+    <p>バックオフィス向けAIエージェント「バクラク」シリーズとAIエージェント事業「Ai Workforce」を手掛けるLayerXは、2025年4月に創業以来の行動指針「Bet Technology」を<strong>「Bet AI」</strong>に改めた。対象を広げるのではなく、AIへ絞り込む方向の改定だ。以降の1年は、全社でAIを使い倒す「<strong>トークンマキシング</strong>」の期間と位置付けた。</p>
+    <p>AI活用の推進は評価体系にも組み込まれた。月間MVPと連動する四半期の重点行動指針を「AIをまず試す」の1つに絞り、AIで業務成果を出した社員しか表彰しない状態を意図的に作った。その結果、2026年2〜3月にはトークン利用が事業計画上の予算を<strong>10倍ほど上回る</strong>という事態が生じた。しかし共同代表の福島CEOと松本CTOはとがめなかった。CHRO石黒卓弥氏は当時をこう振り返る。</p>
+
+    <blockquote>「使いすぎだと怒ることはなく、この現実を透明に従業員へ説明して、次は使って分かったことを価値に転換していこうと示してくれた」——石黒卓弥氏（LayerX 執行役員 CHRO）</blockquote>
+
+    <h2>「回数」ではなく「トークン代」で測る理由——費用感覚の育成という発想</h2>
+    <p>多くの企業がAI活用を「週に何回使ったか」で測る。LayerXが最初から「<strong>トークン代</strong>」を指標としたのは、費用の肌感覚を育てるためだ。過去の商談動画から類似案件を探させれば膨大なトークンを消費する。タグで対象を絞るか、安価なモデルで足りるかを本人が自律的に判断するには、「これなら5ドル、これなら20ドル使う」という感覚が必要になる。回数のカウントでは、この判断力は育たない。</p>
+    <p>上位モデルの利用には、上長と情報システム部門が業務上の必要性を判断する申請制を設けており、統制も並走している。しかし基本方針は「試す自由を与え、コストの感覚と共に学ぶ」だ。</p>
+
+    <span class="table-label">図1｜AI活用の測り方——「回数管理」vs「トークン代管理」</span>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>指標</th>
+            <th>回数管理（一般的）</th>
+            <th>トークン代管理（LayerX）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>育てられる感覚</td>
+            <td>「使った／使わなかった」</td>
+            <td><span class="kw">費用対効果の肌感覚</span></td>
+          </tr>
+          <tr>
+            <td>コスト最適化</td>
+            <td>促進されにくい</td>
+            <td>「安価なモデルで足りるか」を自律判断</td>
+          </tr>
+          <tr>
+            <td>組織への学習効果</td>
+            <td>限定的</td>
+            <td>全社公開でナレッジが拡散</td>
+          </tr>
+          <tr>
+            <td>予算超過時の文化</td>
+            <td>萎縮・叱責</td>
+            <td>透明に説明し「価値転換」へ</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>CEO・全社員の利用額を「実名」で公開——萎縮しない組織の秘密</h2>
+    <p>LayerXの最も大胆な施策が<strong>全社員の実名・利用金額のリアルタイム公開</strong>だ。「全社員の名前と、月ごとに誰が何トークンを使ったかが全部見えている」（石黒氏）。表示はトークン数にとどまらず金額換算まで及び、共同代表の福島CEOの利用状況まで誰でも確認できる。</p>
+    <p>唐突に始めた施策ではない。LayerXでは会社の月次資金残高も全社員が閲覧できる文化があり、経営情報の透明性が先にある。AI費用の公開はその延長線上だ。そして実際の反応は萎縮とは逆に振れた。石黒氏自身は自分の数字を見て「あんまり使えていないんだな」と感じ、周囲のビジネス職には「もうちょっと使っていいんだ」という受け止めが多かったという。</p>
+
+    <span class="table-label">図2｜LayerXのAI透明化を支える3つの原則</span>
+    <div class="vis-grid vis-grid-3">
+      <div class="vis-card highlight">
+        <span class="vis-card-label">01 全公開</span>
+        <span class="vis-card-en">実名・金額</span>
+        <span class="vis-card-jp">CEO含む全社員の利用額をリアルタイムで誰でも閲覧可能</span>
+      </div>
+      <div class="vis-card">
+        <span class="vis-card-label">02 文化の連続性</span>
+        <span class="vis-card-en">経営透明性</span>
+        <span class="vis-card-jp">月次資金残高の全社公開が先にある。AI費用はその延長線上</span>
+      </div>
+      <div class="vis-card">
+        <span class="vis-card-label">03 統制との両立</span>
+        <span class="vis-card-en">申請制</span>
+        <span class="vis-card-jp">上位モデルは上長・情シスの承認制。自由と管理を両立する</span>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p class="callout-label">AX Journal 編集部の視点</p>
+      <p>石黒氏が語る「ループは閉じてるか」という社内流行語が示すように、LayerXの本質は「使う量」より「価値に転換できているか」への問いだ。AI活用を「利用率」で測る企業が多い中、トークン代という実費感覚を全社で共有する設計は、採用費・研修費と同様に「AI費用を人材投資として扱う」思想と一体だ。HR部門にとって示唆は大きい——AI費用の管理責任を情シスだけに押し込まず、人事・経営が「第二の人件費」として予算設計に組み込む時代が来ている。</p>
+    </div>
+
+    <h2>まとめ——「コスト管理」から「投資設計」へ</h2>
+    <p>予算10倍超過でも叱らず、CEO含む全利用額を実名公開し、費用感覚を全社員に育てる——LayerXのアプローチは、AI費用を「削るべきコスト」ではなく「育てるべき投資」として捉えた組織設計の実験だ。その結果は、萎縮ではなく「もっと使おう」という文化として現れた。</p>
+    <ul>
+      <li>AI費用を「情シスのコスト管理」から切り離し、人事・経営が「第二の人件費」として予算設計に関与する体制を作る</li>
+      <li>「利用率」ではなく「トークン代」を指標にし、社員が費用と価値を自律判断できる感覚を育てる</li>
+      <li>AI費用の可視化は「査定のため」ではなく「感覚の共有のため」と位置付け、経営情報透明性文化の延長として導入する</li>
+    </ul>
+
+    <p class="ref-heading">参照</p>
+    <ul class="ref-list">
+      <li><a href="https://www.itmedia.co.jp/business/articles/2607/09/news022.html" target="_blank" rel="noopener">「CEOの利用額も『全社員に丸見え』　LayerXがAI予算を『第二の人件費』にした真意」（ITmedia ビジネスオンライン、斎藤健二、2026年7月9日）</a></li>
+    </ul>
+
+  </div><!-- /.article-body -->
+
+  <!-- フッター -->
+  <footer class="article-footer">
+    <div class="article-tags">
+      <span class="tag">LayerX</span>
+      <span class="tag">AI費用管理</span>
+      <span class="tag">組織変革</span>
+      <span class="tag">CHRO</span>
+    </div>
+    <a href="../index.html" class="back-link">記事一覧へ戻る</a>
+  </footer>
+
+</main>
+
+<!-- ニュースレター帯 -->
+<div class="nl-strip">
+  <div class="nl-strip-inner">
+    <div>
+      <p class="nl-strip-label">Newsletter</p>
+      <p class="nl-strip-title">AX Journal の最新記事をメールで受け取る</p>
+    </div>
+    <div class="nl-strip-form">
+      <input type="email" class="nl-strip-input" placeholder="your@email.com">
+      <button class="nl-strip-btn">購読する</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">AX Journal</span>
+    <span class="footer-copy">© 2026 AX Journal. All rights reserved.</span>
+  </div>
+</footer>
+
+</body>
+</html>
