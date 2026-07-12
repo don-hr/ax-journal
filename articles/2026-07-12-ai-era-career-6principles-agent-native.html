@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI時代のキャリア6原則——エージェント創業者の提言 — AX Journal</title>
+  <meta name="description" content="Scale AI・OpenAI・DeepMindを経た創業者Phil Chenが語るAI時代のキャリア戦略。「採点できる問題」はAIへ、人間の価値は問題発見力と最後の1マイルに収束する。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:           #080808;
+      --bg-card:      #111111;
+      --bg-subtle:    #0d0d0d;
+      --bg-muted:     #141414;
+      --surface-dark: #161616;
+      --text:         #EDE9E2;
+      --text-muted:   #888880;
+      --text-faint:   #4E4E4A;
+      --accent:       #C4914A;
+      --accent-dark:  #A87840;
+      --accent-light: rgba(196,145,74,0.12);
+      --red:          #C4914A;
+      --red-light:    rgba(196,145,74,0.10);
+      --border:       #1E1E1E;
+      --border-faint: #161616;
+      --radius:       3px;
+      --font-b: 'Inter', 'Noto Sans JP', sans-serif;
+      --font-m: 'DM Mono', 'Courier New', monospace;
+      --body-width: 680px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { font-family: var(--font-b); background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+
+    .masthead { border-bottom: 1px solid var(--border-faint); padding: 0 24px; background: var(--bg); }
+    .masthead-inner { max-width: 1160px; margin: 0 auto; height: 58px; display: flex; align-items: center; justify-content: space-between; }
+    .logo-name { font-size: 14px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text); }
+    .mast-nav { display: flex; align-items: center; gap: 2px; }
+    .mast-nav a { font-size: 12px; font-weight: 500; color: var(--text-muted); padding: 6px 12px; border-radius: var(--radius); transition: color 0.15s; }
+    .mast-nav a:hover { color: var(--text); }
+    .mast-nav .cta { background: var(--accent); color: #000; font-weight: 700; margin-left: 8px; padding: 6px 18px; letter-spacing: 0.04em; }
+    .mast-nav .cta:hover { background: var(--accent-dark); color: #000; }
+
+    .article-wrap { max-width: var(--body-width); margin: 0 auto; padding: 56px 24px 80px; }
+
+    .breadcrumb { display: flex; align-items: center; gap: 8px; font-family: var(--font-m); font-size: 11px; letter-spacing: 0.06em; color: var(--text-faint); margin-bottom: 36px; }
+    .breadcrumb a:hover { color: var(--text-muted); }
+    .breadcrumb-sep { opacity: 0.35; }
+
+    .article-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+    .pill { font-family: var(--font-m); font-size: 8px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; padding: 3px 7px; border-radius: 2px; }
+    .pill-gray { background: #181818; color: var(--text-muted); border: 1px solid #242424; }
+    .pill-red  { background: var(--red-light); color: var(--accent); border: 1px solid rgba(196,145,74,0.22); }
+    .article-date { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); }
+
+    .article-title { font-size: clamp(26px, 4vw, 38px); font-weight: 700; line-height: 1.2; letter-spacing: 0.01em; color: var(--text); margin-bottom: 20px; }
+    .article-lead { font-size: 17px; color: var(--text-muted); line-height: 1.88; border-left: 3px solid var(--accent); padding-left: 18px; margin-bottom: 40px; }
+    .article-divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    .article-hero { margin: 0 0 28px; border-radius: var(--radius); overflow: hidden; line-height: 0; }
+    .article-hero svg { display: block; width: 100%; height: auto; }
+
+    .article-body { font-size: 16px; line-height: 1.9; color: var(--text); }
+    .article-body h2 { font-size: 20px; font-weight: 700; letter-spacing: 0.01em; margin: 48px 0 14px; color: var(--text); }
+    .article-body h3 { font-size: 15px; font-weight: 600; color: var(--text); margin: 28px 0 8px; }
+    .article-body p { margin-bottom: 20px; }
+    .article-body ul, .article-body ol { padding-left: 20px; margin-bottom: 20px; }
+    .article-body li { margin-bottom: 8px; line-height: 1.75; }
+    .article-body strong { font-weight: 600; color: var(--text); }
+    .article-body em { font-style: italic; color: var(--text-muted); }
+    .article-body blockquote { border-left: 3px solid var(--accent); padding: 4px 0 4px 18px; margin: 28px 0; color: var(--text-muted); font-size: 15px; font-style: italic; }
+
+    .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius); padding: 20px 22px; margin: 28px 0; }
+    .callout-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .callout p { font-size: 14px; color: var(--text-muted); margin-bottom: 0; line-height: 1.75; }
+
+    .source-note { background: rgba(196,145,74,0.06); border: 1px solid rgba(196,145,74,0.18); border-radius: var(--radius); padding: 14px 18px; margin-bottom: 36px; }
+    .source-note p { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); line-height: 1.7; margin-bottom: 0; }
+    .source-note a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+
+    .table-wrap { overflow-x: auto; margin: 24px 0; }
+    .table-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 10px; display: block; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .data-table th { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 10px 14px; background: #181818; color: rgba(255,255,255,0.55); text-align: left; white-space: nowrap; border-bottom: 1px solid var(--border); }
+    .data-table th:first-child { background: #141414; color: var(--text-faint); }
+    .data-table td { padding: 11px 14px; border-bottom: 1px solid var(--border-faint); line-height: 1.65; vertical-align: top; color: var(--text-muted); }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table td:first-child { font-weight: 600; font-size: 13px; white-space: nowrap; color: var(--text); border-right: 1px solid var(--border); background: var(--bg-subtle); }
+    .data-table .kw { display: inline-block; background: #1c1c1c; border: 1px solid #282828; border-radius: 3px; padding: 2px 7px; font-family: var(--font-m); font-size: 11px; margin: 2px 2px 2px 0; white-space: nowrap; color: var(--text-muted); }
+
+    .vis-grid { display: grid; gap: 8px; margin: 24px 0; }
+    .vis-grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .vis-grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .vis-grid-5 { grid-template-columns: repeat(5, 1fr); }
+    .vis-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 12px; text-align: center; }
+    .vis-card.highlight { border-color: var(--accent); background: var(--accent); color: #000; }
+    .vis-card-label { font-family: var(--font-m); font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); display: block; margin-bottom: 4px; }
+    .vis-card.highlight .vis-card-label { color: rgba(0,0,0,0.5); }
+    .vis-card-en { font-size: 13px; font-weight: 700; display: block; margin-bottom: 2px; color: var(--text); }
+    .vis-card.highlight .vis-card-en { color: #000; }
+    .vis-card-jp { font-size: 11px; color: var(--text-muted); }
+    .vis-card.highlight .vis-card-jp { color: rgba(0,0,0,0.65); }
+
+    .ref-heading { font-family: var(--font-m); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); font-weight: 500; margin-top: 48px; margin-bottom: 10px; }
+    .ref-list { list-style: none; padding: 0; }
+    .ref-list li { margin-bottom: 6px; }
+    .ref-list a { font-size: 13px; color: var(--text-muted); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--border); transition: color 0.15s, text-decoration-color 0.15s; word-break: break-all; }
+    .ref-list a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
+    .article-footer { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--border); }
+    .article-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 32px; }
+    .tag { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-faint); transition: border-color 0.15s, color 0.15s; }
+    .tag:hover { border-color: var(--accent); color: var(--accent); }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--text-muted); transition: color 0.15s; }
+    .back-link:hover { color: var(--accent); }
+    .back-link::before { content: '←'; }
+
+    .nl-strip { background: #0a0a0a; padding: 32px 24px; margin-top: 64px; border-top: 1px solid var(--border); }
+    .nl-strip-inner { max-width: var(--body-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .nl-strip-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 6px; }
+    .nl-strip-title { font-size: 16px; font-weight: 600; color: var(--text); letter-spacing: 0.01em; }
+    .nl-strip-form { display: flex; gap: 8px; flex-shrink: 0; }
+    .nl-strip-input { padding: 10px 14px; background: var(--bg-muted); border: 1px solid var(--border); border-radius: var(--radius); font-family: var(--font-b); font-size: 13px; color: var(--text); outline: none; width: 220px; transition: border-color 0.15s; }
+    .nl-strip-input::placeholder { color: var(--text-faint); }
+    .nl-strip-input:focus { border-color: var(--accent); }
+    .nl-strip-btn { padding: 10px 18px; background: var(--accent); color: #000; border: none; border-radius: var(--radius); font-family: var(--font-b); font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: background 0.15s; }
+    .nl-strip-btn:hover { background: var(--accent-dark); }
+
+    footer { border-top: 1px solid var(--border-faint); padding: 24px; background: var(--bg-subtle); }
+    .footer-inner { max-width: 1160px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .footer-logo { font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-faint); }
+    .footer-copy { font-family: var(--font-m); font-size: 10px; color: var(--text-faint); }
+
+    @media (max-width: 640px) {
+      .mast-nav { display: none; }
+      .vis-grid-5 { grid-template-columns: repeat(3, 1fr); }
+      .vis-grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .vis-grid-3 { grid-template-columns: 1fr; }
+      .nl-strip-inner { flex-direction: column; align-items: flex-start; }
+      .nl-strip-form { width: 100%; }
+      .nl-strip-input { flex: 1; }
+      .footer-inner { flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- マストヘッド -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <a href="../index.html" class="logo-name">AX Journal</a>
+    <nav class="mast-nav">
+      <a href="../index.html">記事一覧</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#newsletter" class="cta">購読する</a>
+    </nav>
+  </div>
+</header>
+
+<!-- 記事本文 -->
+<main class="article-wrap">
+
+  <!-- パンくず -->
+  <nav class="breadcrumb">
+    <a href="../index.html">AX Journal</a>
+    <span class="breadcrumb-sep">/</span>
+    <span>トレンド</span>
+  </nav>
+
+  <!-- ヘッダー -->
+  <div class="article-eyebrow">
+    <span class="pill pill-gray">トレンド</span>
+    <span class="article-date">2026.07.12</span>
+  </div>
+
+  <h1 class="article-title">AI時代のキャリア6原則——エージェント創業者の提言</h1>
+
+  <!-- ヒーローSVG: mountain スタイル（振幅大きめ、位相左寄り） -->
+  <div class="article-hero">
+    <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+      <rect width="680" height="200" fill="#080808"/>
+      <!-- 銅色：最上段ライン（振幅大きめ） -->
+      <polyline points="0,20 85,10 170,28 255,8 340,20 425,6 510,24 595,12 680,20"
+        fill="none" stroke="#C4914A" stroke-width="1.3" opacity="0.72"/>
+      <!-- 暗色ライン群 -->
+      <polyline points="0,46 85,36 170,54 255,34 340,46 425,32 510,50 595,38 680,46"
+        fill="none" stroke="#222" stroke-width="1"/>
+      <polyline points="0,70 85,62 170,78 255,60 340,72 425,58 510,76 595,64 680,70"
+        fill="none" stroke="#272727" stroke-width="1"/>
+      <polyline points="0,94 85,86 170,102 255,84 340,96 425,82 510,100 595,88 680,94"
+        fill="none" stroke="#2b2b2b" stroke-width="1"/>
+      <polyline points="0,118 85,110 170,126 255,108 340,120 425,106 510,124 595,112 680,118"
+        fill="none" stroke="#2d2d2d" stroke-width="1"/>
+      <polyline points="0,142 85,136 170,150 255,134 340,144 425,132 510,148 595,138 680,142"
+        fill="none" stroke="#2f2f2f" stroke-width="1"/>
+      <polyline points="0,164 85,158 170,172 255,156 340,166 425,154 510,170 595,160 680,164"
+        fill="none" stroke="#303030" stroke-width="1"/>
+      <polyline points="0,184 85,180 170,192 255,178 340,186 425,176 510,190 595,182 680,184"
+        fill="none" stroke="#323232" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <p class="article-lead">「ロス関数を書けるものはすべてAIが上手くなる」——Scale AI・DeepMind・OpenAIを経てエージェントネイティブなスタートアップを率いるPhil Chen氏のXポストが、AI時代の人材価値の本質を鋭く突いている。6年間・5社の実践から導いた6原則は、キャリア論であると同時に採用論・育成論でもある。「採点できる問題」はAIへ、「採点できない問題」に人間の価値が収束していく今、私たちは何に集中すべきか。</p>
+
+  <hr class="article-divider">
+
+  <!-- ソースクレジット -->
+  <div class="source-note">
+    <p>本記事は、Phil Chen氏（<a href="https://x.com/philhchen/status/2072793818945167475" target="_blank" rel="noopener">@philhchen</a>）のX投稿「Career advice in the age of AI」をもとに、AX Journal編集部が日本語で再構成・加筆したものです。</p>
+  </div>
+
+  <!-- 本文 -->
+  <div class="article-body">
+
+    <h2>ロス関数が書ける問題は、すべてAIへ</h2>
+    <p>Phil Chen氏が投稿の冒頭で定義するのは、AIの得意領域の境界線だ。「AIはロス関数（損失関数）を書ける問題ならなんでも上達する。学校教育の大半はロス関数で構成されている——明確に定義された問題を、既知の答えで採点する」。この視点から導かれる結論は明快だ。<strong>次の10年で価値を持つ仕事は、「モデルのトレーニング期間内に採点できないもの」に限られる。</strong></p>
+    <p>試験・コーディングテスト・定型業務はすべてロス関数が存在する問題であり、AIの独壇場へと移行していく。一方、戦略的判断・関係構築・文脈を読んだ問題設定・品質への最後のこだわりは、まだ「採点」が難しい領域だ。Chen氏はエージェントネイティブなスタートアップを創業し、採用側の視点から「誰が使うか・何を測るか・どう育てるか」を実践的に再定義してきた。その経験から生まれた6原則が本稿の核心だ。</p>
+
+    <span class="table-label">図1｜AI時代のキャリア6原則（Phil Chen / @philhchen）</span>
+    <div class="vis-grid vis-grid-3">
+      <div class="vis-card">
+        <span class="vis-card-label">Principle 01</span>
+        <span class="vis-card-en">希少リソースへ集中</span>
+        <span class="vis-card-jp">時間・評判・関係性</span>
+      </div>
+      <div class="vis-card highlight">
+        <span class="vis-card-label">Principle 02</span>
+        <span class="vis-card-en">問題を見つける</span>
+        <span class="vis-card-jp">「解く」から「選ぶ」へ</span>
+      </div>
+      <div class="vis-card">
+        <span class="vis-card-label">Principle 03</span>
+        <span class="vis-card-en">最も野心的な形で</span>
+        <span class="vis-card-jp">大きな問題に取り組む</span>
+      </div>
+      <div class="vis-card">
+        <span class="vis-card-label">Principle 04</span>
+        <span class="vis-card-en">最後の1マイルを走る</span>
+        <span class="vis-card-jp">仕上げが差分を生む</span>
+      </div>
+      <div class="vis-card">
+        <span class="vis-card-label">Principle 05</span>
+        <span class="vis-card-en">xGと効率を高める</span>
+        <span class="vis-card-jp">チャンスと変換率の両立</span>
+      </div>
+      <div class="vis-card">
+        <span class="vis-card-label">Principle 06</span>
+        <span class="vis-card-en">研究への参入</span>
+        <span class="vis-card-jp">今こそ独立してできる</span>
+      </div>
+    </div>
+
+    <h2>「問題を解く」から「問題を見つける」へ</h2>
+    <p>6原則のうち最も革新的なのが「問題発見力を鍛える」だ。Chen氏はエージェントネイティブな採用を実践する中でこう断言する。「LeetCode形式のコーディング問題やシステム設計問題は、実際の業務パフォーマンスとの相関がない」。代わりに重視されるのは<strong>「与えられた環境を素早く理解し、解くべき問題を特定し、制約の中で実行する力」</strong>だ。</p>
+    <p>「最も重要なスキルは、問題の選択とリソース配分に関わるもの」というChen氏の主張は、日本のHR視点でも深い含意を持つ。日本の採用現場では依然として筆記試験・資格・学歴といった「解ける力」の評価が主流だが、AIが「解く」を代替する速度を考えれば、「選ぶ力・配分する力」への評価シフトは避けられない。評価が高い候補者の共通点についても明確に語る——「自分の情熱プロジェクト、または意味のある問題が人の数を超えている高成長企業に身を置いてきた人」だという。</p>
+    <p>Chen氏はまた「希少リソース」の定義を鮮明に更新する。「資本へのアクセスは今や以前より遥かに容易だ。一方で、他者との真のリアルタイムな関係と強い絆は依然として希少だ」。時間・評判・関係性——これらに集中することが、AI時代の最重要キャリア戦略となる。</p>
+
+    <h2>最後の1マイルが差をつける——そして研究への道</h2>
+    <p>「エージェントが生み出す中央値の結果は、雑なプロンプトで作られたものとほぼ同等になる」——Chen氏がこう語るとき、<strong>「最後の1マイル」へのこだわりが差分を生む</strong>理由が明確になる。価値は磨き・クリーンなアーキテクチャ・スケーラビリティ・独自の観点から生まれる。コーディングエージェントの進化があまりにも速いため、「前回の試みからの改善を積み重ねるより、次世代のインテリジェンスで最初からやり直す方が良いことが多い」とも指摘する。これはAI時代の学習戦略の転換でもある。</p>
+    <p>また、研究領域への参入についても希望のある視点を示す。「研究者であることはメンタリティであり、職業ではない」。フロンティアラボに所属していなくても、モデルを使い自分の直感をエバリュエーションに落とし込み、公開リーダーボードでアイデアを試すことで、研究者としての素地を今すぐ積める。compute providerがアカデミア向けにクレジットを提供しており、アイデアを試す障壁は以前に比べて劇的に下がっている。</p>
+
+    <div class="callout">
+      <p class="callout-label">編集部の視点</p>
+      <p>Phil Chen氏の投稿が日本のHR実務に最も直接的に突きつけるのは、採用評価の再設計だ。「ロス関数が書ける能力しか測れていない採用プロセスは、AIが最も安価に代替できる人材を優先的に採用してしまうリスクを孕む」——このメッセージは誇張ではない。「問題発見力」「最後の1マイルへの執着」「大きな問題を選ぶ胆力」をいかに採用・育成プロセスに組み込むか。これが日本企業にとって次の10年の人材競争力を左右する核心課題だ。</p>
+    </div>
+
+    <blockquote>"AI models get better at anything you can write a loss function for. Therefore, the valuable work of the next decade is everything that can't be graded within the span of model training." — Phil Chen（@philhchen）</blockquote>
+
+    <h2>まとめ</h2>
+    <p>AIが「採点できる問題」を高速・低コストで解決していく時代、人間の価値は「採点できない問題」の発見と実行に収束する。Chen氏の6原則が示すのは、個人のキャリア戦略であると同時に、採用・育成・評価を設計する人事側への問いでもある。「何を選ぶか」「誰と繋がるか」「どこまで仕上げるか」——この3軸が、次の10年を左右する。</p>
+
+    <ul>
+      <li><strong>採用評価を「問題発見力」軸で再設計する</strong>：面接に「あなたが特定した最も重要な問題と、それへの取り組み」を必須質問として加える。「解けた問題」ではなく「見つけた問題」を問うことで、AI時代に最も重要な能力を可視化できる</li>
+      <li><strong>「最後の1マイル」基準を採用・評価に明文化する</strong>：「動けばいい」と「磨き込まれている」の差を組織として定義し、仕上げの品質・アーキテクチャの清潔さ・ユーザー体験への執着を評価軸として組み込む</li>
+      <li><strong>希少リソース（時間・評判・関係）への投資を人材戦略に位置づける</strong>：短期の成果より、業界内での評判構築と質の高い仕事の積み重ねを促す長期視点のキャリア設計支援が、AI時代の最重要人材施策となる</li>
+    </ul>
+
+    <p class="ref-heading">参照</p>
+    <ul class="ref-list">
+      <li><a href="https://x.com/philhchen/status/2072793818945167475" target="_blank" rel="noopener">Phil Chen（@philhchen）"Career advice in the age of AI" — X投稿</a></li>
+    </ul>
+
+  </div>
+
+  <!-- フッター -->
+  <footer class="article-footer">
+    <div class="article-tags">
+      <a href="#" class="tag">AIキャリア</a>
+      <a href="#" class="tag">採用設計</a>
+      <a href="#" class="tag">エージェントネイティブ</a>
+      <a href="#" class="tag">問題発見力</a>
+    </div>
+    <a href="../index.html" class="back-link">記事一覧に戻る</a>
+  </footer>
+
+</main>
+
+<!-- ニュースレター -->
+<div class="nl-strip">
+  <div class="nl-strip-inner">
+    <div class="nl-strip-text">
+      <p class="nl-strip-label">Newsletter</p>
+      <p class="nl-strip-title">AI×組織の最新情報を週2回お届け</p>
+    </div>
+    <form class="nl-strip-form" onsubmit="return false">
+      <input type="email" class="nl-strip-input" placeholder="メールアドレス">
+      <button type="submit" class="nl-strip-btn">登録する</button>
+    </form>
+  </div>
+</div>
+
+<!-- フッター -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">AX Journal</span>
+    <span class="footer-copy">© 2026 AX Journal. All rights reserved.</span>
+  </div>
+</footer>
+
+</body>
+</html>
