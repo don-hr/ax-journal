@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIコーディングツール導入の3つの落とし穴——Sansan実践報告 — AX Journal</title>
+  <meta name="description" content="Sansanが2025年1月にDevin・Claude・Cursorを導入して直面した3つの壁——浸透・効果可視化・育成への影響を現場視点で解説する。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:           #080808;
+      --bg-card:      #111111;
+      --bg-subtle:    #0d0d0d;
+      --bg-muted:     #141414;
+      --surface-dark: #161616;
+      --text:         #EDE9E2;
+      --text-muted:   #888880;
+      --text-faint:   #4E4E4A;
+      --accent:       #C4914A;
+      --accent-dark:  #A87840;
+      --accent-light: rgba(196,145,74,0.12);
+      --red:          #C4914A;
+      --red-light:    rgba(196,145,74,0.10);
+      --border:       #1E1E1E;
+      --border-faint: #161616;
+      --radius:       3px;
+      --font-b: 'Inter', 'Noto Sans JP', sans-serif;
+      --font-m: 'DM Mono', 'Courier New', monospace;
+      --body-width: 680px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { font-family: var(--font-b); background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+
+    .masthead { border-bottom: 1px solid var(--border-faint); padding: 0 24px; background: var(--bg); }
+    .masthead-inner { max-width: 1160px; margin: 0 auto; height: 58px; display: flex; align-items: center; justify-content: space-between; }
+    .logo-name { font-size: 14px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text); }
+    .mast-nav { display: flex; align-items: center; gap: 2px; }
+    .mast-nav a { font-size: 12px; font-weight: 500; color: var(--text-muted); padding: 6px 12px; border-radius: var(--radius); transition: color 0.15s; }
+    .mast-nav a:hover { color: var(--text); }
+    .mast-nav .cta { background: var(--accent); color: #000; font-weight: 700; margin-left: 8px; padding: 6px 18px; letter-spacing: 0.04em; }
+    .mast-nav .cta:hover { background: var(--accent-dark); color: #000; }
+
+    .article-wrap { max-width: var(--body-width); margin: 0 auto; padding: 56px 24px 80px; }
+
+    .breadcrumb { display: flex; align-items: center; gap: 8px; font-family: var(--font-m); font-size: 11px; letter-spacing: 0.06em; color: var(--text-faint); margin-bottom: 36px; }
+    .breadcrumb a:hover { color: var(--text-muted); }
+    .breadcrumb-sep { opacity: 0.35; }
+
+    .article-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+    .pill { font-family: var(--font-m); font-size: 8px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; padding: 3px 7px; border-radius: 2px; }
+    .pill-gray { background: #181818; color: var(--text-muted); border: 1px solid #242424; }
+    .pill-red  { background: var(--red-light); color: var(--accent); border: 1px solid rgba(196,145,74,0.22); }
+    .article-date { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); }
+
+    .article-title { font-size: clamp(26px, 4vw, 38px); font-weight: 700; line-height: 1.2; letter-spacing: 0.01em; color: var(--text); margin-bottom: 20px; }
+    .article-lead { font-size: 17px; color: var(--text-muted); line-height: 1.88; border-left: 3px solid var(--accent); padding-left: 18px; margin-bottom: 40px; }
+    .article-divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    .article-hero { margin: 0 0 28px; border-radius: var(--radius); overflow: hidden; line-height: 0; }
+    .article-hero svg { display: block; width: 100%; height: auto; }
+
+    .article-body { font-size: 16px; line-height: 1.9; color: var(--text); }
+    .article-body h2 { font-size: 20px; font-weight: 700; letter-spacing: 0.01em; margin: 48px 0 14px; color: var(--text); }
+    .article-body h3 { font-size: 15px; font-weight: 600; color: var(--text); margin: 28px 0 8px; }
+    .article-body p { margin-bottom: 20px; }
+    .article-body ul, .article-body ol { padding-left: 20px; margin-bottom: 20px; }
+    .article-body li { margin-bottom: 8px; line-height: 1.75; }
+    .article-body strong { font-weight: 600; color: var(--text); }
+    .article-body em { font-style: italic; color: var(--text-muted); }
+    .article-body blockquote { border-left: 3px solid var(--accent); padding: 4px 0 4px 18px; margin: 28px 0; color: var(--text-muted); font-size: 15px; font-style: italic; }
+
+    .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius); padding: 20px 22px; margin: 28px 0; }
+    .callout-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .callout p { font-size: 14px; color: var(--text-muted); margin-bottom: 0; line-height: 1.75; }
+
+    .source-note { background: rgba(196,145,74,0.06); border: 1px solid rgba(196,145,74,0.18); border-radius: var(--radius); padding: 14px 18px; margin-bottom: 36px; }
+    .source-note p { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); line-height: 1.7; margin-bottom: 0; }
+    .source-note a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+
+    .table-wrap { overflow-x: auto; margin: 24px 0; }
+    .table-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 10px; display: block; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .data-table th { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 10px 14px; background: #181818; color: rgba(255,255,255,0.55); text-align: left; white-space: nowrap; border-bottom: 1px solid var(--border); }
+    .data-table th:first-child { background: #141414; color: var(--text-faint); }
+    .data-table td { padding: 11px 14px; border-bottom: 1px solid var(--border-faint); line-height: 1.65; vertical-align: top; color: var(--text-muted); }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table td:first-child { font-weight: 600; font-size: 13px; white-space: nowrap; color: var(--text); border-right: 1px solid var(--border); background: var(--bg-subtle); }
+    .data-table .kw { display: inline-block; background: #1c1c1c; border: 1px solid #282828; border-radius: 3px; padding: 2px 7px; font-family: var(--font-m); font-size: 11px; margin: 2px 2px 2px 0; white-space: nowrap; color: var(--text-muted); }
+
+    .vis-grid { display: grid; gap: 8px; margin: 24px 0; }
+    .vis-grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .vis-grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .vis-grid-5 { grid-template-columns: repeat(5, 1fr); }
+    .vis-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 12px; text-align: center; }
+    .vis-card.highlight { border-color: var(--accent); background: var(--accent); color: #000; }
+    .vis-card-label { font-family: var(--font-m); font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); display: block; margin-bottom: 4px; }
+    .vis-card.highlight .vis-card-label { color: rgba(0,0,0,0.5); }
+    .vis-card-en { font-size: 13px; font-weight: 700; display: block; margin-bottom: 2px; color: var(--text); }
+    .vis-card.highlight .vis-card-en { color: #000; }
+    .vis-card-jp { font-size: 11px; color: var(--text-muted); }
+    .vis-card.highlight .vis-card-jp { color: rgba(0,0,0,0.65); }
+
+    .ref-heading { font-family: var(--font-m); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); font-weight: 500; margin-top: 48px; margin-bottom: 10px; }
+    .ref-list { list-style: none; padding: 0; }
+    .ref-list li { margin-bottom: 6px; }
+    .ref-list a { font-size: 13px; color: var(--text-muted); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--border); transition: color 0.15s, text-decoration-color 0.15s; word-break: break-all; }
+    .ref-list a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
+    .article-footer { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--border); }
+    .article-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 32px; }
+    .tag { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-faint); transition: border-color 0.15s, color 0.15s; }
+    .tag:hover { border-color: var(--accent); color: var(--accent); }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--text-muted); transition: color 0.15s; }
+    .back-link:hover { color: var(--accent); }
+    .back-link::before { content: '←'; }
+
+    .nl-strip { background: #0a0a0a; padding: 32px 24px; margin-top: 64px; border-top: 1px solid var(--border); }
+    .nl-strip-inner { max-width: var(--body-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .nl-strip-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 6px; }
+    .nl-strip-title { font-size: 16px; font-weight: 600; color: var(--text); letter-spacing: 0.01em; }
+    .nl-strip-form { display: flex; gap: 8px; flex-shrink: 0; }
+    .nl-strip-input { padding: 10px 14px; background: var(--bg-muted); border: 1px solid var(--border); border-radius: var(--radius); font-family: var(--font-b); font-size: 13px; color: var(--text); outline: none; width: 220px; transition: border-color 0.15s; }
+    .nl-strip-input::placeholder { color: var(--text-faint); }
+    .nl-strip-input:focus { border-color: var(--accent); }
+    .nl-strip-btn { padding: 10px 18px; background: var(--accent); color: #000; border: none; border-radius: var(--radius); font-family: var(--font-b); font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: background 0.15s; }
+    .nl-strip-btn:hover { background: var(--accent-dark); }
+
+    footer { border-top: 1px solid var(--border-faint); padding: 24px; background: var(--bg-subtle); }
+    .footer-inner { max-width: 1160px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .footer-logo { font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-faint); }
+    .footer-copy { font-family: var(--font-m); font-size: 10px; color: var(--text-faint); }
+
+    @media (max-width: 640px) {
+      .mast-nav { display: none; }
+      .vis-grid-5 { grid-template-columns: repeat(3, 1fr); }
+      .vis-grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .vis-grid-3 { grid-template-columns: 1fr; }
+      .nl-strip-inner { flex-direction: column; align-items: flex-start; }
+      .nl-strip-form { width: 100%; }
+      .nl-strip-input { flex: 1; }
+      .footer-inner { flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- マストヘッド -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <a href="../index.html" class="logo-name">AX Journal</a>
+    <nav class="mast-nav">
+      <a href="../index.html">記事一覧</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#newsletter" class="cta">購読する</a>
+    </nav>
+  </div>
+</header>
+
+<!-- 記事本文 -->
+<main class="article-wrap">
+
+  <!-- パンくず -->
+  <nav class="breadcrumb">
+    <a href="../index.html">AX Journal</a>
+    <span class="breadcrumb-sep">/</span>
+    <span>事例・ケース</span>
+  </nav>
+
+  <!-- ヘッダー -->
+  <div class="article-eyebrow">
+    <span class="pill pill-gray">事例・ケース</span>
+    <span class="article-date">2026.07.12</span>
+  </div>
+
+  <h1 class="article-title">AIコーディングツール導入の3つの落とし穴——Sansan実践報告</h1>
+
+  <!-- ヒーローSVG: burst スタイル（銅色：北東〜東方向3本） -->
+  <div class="article-hero">
+    <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+      <rect width="680" height="200" fill="#080808"/>
+      <!-- 暗色ライン群（西〜南方向） -->
+      <line x1="340" y1="100" x2="233" y2="100" stroke="#222" stroke-width="1"/>
+      <line x1="340" y1="100" x2="245" y2="143" stroke="#222" stroke-width="1"/>
+      <line x1="340" y1="100" x2="276" y2="178" stroke="#222" stroke-width="1"/>
+      <line x1="340" y1="100" x2="322" y2="196" stroke="#222" stroke-width="1"/>
+      <line x1="340" y1="100" x2="372" y2="195" stroke="#222" stroke-width="1"/>
+      <line x1="340" y1="100" x2="416" y2="182" stroke="#1e1e1e" stroke-width="1"/>
+      <line x1="340" y1="100" x2="450" y2="160" stroke="#1e1e1e" stroke-width="1"/>
+      <line x1="340" y1="100" x2="472" y2="132" stroke="#1e1e1e" stroke-width="1"/>
+      <line x1="340" y1="100" x2="481" y2="100" stroke="#1e1e1e" stroke-width="1"/>
+      <line x1="340" y1="100" x2="474" y2="69" stroke="#1e1e1e" stroke-width="1"/>
+      <!-- 銅色ライン（北東〜東：3本） -->
+      <line x1="340" y1="100" x2="460" y2="38" stroke="#C4914A" stroke-width="1.2" opacity="0.72"/>
+      <line x1="340" y1="100" x2="432" y2="16" stroke="#C4914A" stroke-width="1.2" opacity="0.72"/>
+      <line x1="340" y1="100" x2="397" y2="5" stroke="#C4914A" stroke-width="1.2" opacity="0.65"/>
+      <!-- 残り暗色ライン（北〜北西） -->
+      <line x1="340" y1="100" x2="358" y2="4" stroke="#222" stroke-width="1"/>
+      <line x1="340" y1="100" x2="316" y2="5" stroke="#222" stroke-width="1"/>
+      <line x1="340" y1="100" x2="277" y2="16" stroke="#222" stroke-width="1"/>
+      <line x1="340" y1="100" x2="245" y2="36" stroke="#222" stroke-width="1"/>
+      <line x1="340" y1="100" x2="220" y2="62" stroke="#222" stroke-width="1"/>
+      <line x1="340" y1="100" x2="208" y2="92" stroke="#222" stroke-width="1"/>
+      <line x1="340" y1="100" x2="210" y2="124" stroke="#222" stroke-width="1"/>
+      <line x1="340" y1="100" x2="222" y2="154" stroke="#222" stroke-width="1"/>
+      <!-- 銅色中心ドット -->
+      <circle cx="340" cy="100" r="4" fill="#C4914A" opacity="0.85"/>
+      <circle cx="340" cy="100" r="10" fill="none" stroke="#C4914A" stroke-width="0.5" opacity="0.22"/>
+    </svg>
+  </div>
+
+  <p class="article-lead">「AIコーディングツールを入れれば生産性が上がる」——この期待は2026年時点でも幻想のまま終わることが多い。Sansan株式会社の開発チームが2025年1月に本格導入したDevin・Claude・Cursorの実体験から、「浸透・可視化・育成」という3つの壁が明らかになった。ツールの選定より先に、組織としての使い方を設計できているかが問われている。</p>
+
+  <hr class="article-divider">
+
+  <!-- ソースクレジット -->
+  <div class="source-note">
+    <p>本記事は、齊藤 実氏（Sansan株式会社 技術本部 Eight Engineering Unit）の登壇資料「<a href="https://speakerdeck.com/sansantech/20260123-2" target="_blank" rel="noopener">AI開発の落とし穴 〜馬には乗ってみよAIには添うてみよ〜</a>」（Nagoya Tech Talk #2、2026年1月23日）をもとに、AX Journal編集部が再構成・加筆したものです。</p>
+  </div>
+
+  <!-- 本文 -->
+  <div class="article-body">
+
+    <h2>「馬には乗ってみよ」——2025年1月、AIコーディングの本格採用</h2>
+    <p>Sansan株式会社技術本部Eight Engineering Unitに所属する齊藤 実氏が、2026年1月開催のNagoya Tech Talk #2への登壇で公開したのは、AIコーディングツールに関する生々しい実践記録だ。タイトル「AI開発の落とし穴 〜馬には乗ってみよAIには添うてみよ〜」が示す通り、登壇の主題は成功例の展示ではなく、「体当たりしてわかったこと」の率直な共有である。</p>
+    <p>チームでは2025年1月頃からDevin・Claude・Cursorというツールを本格導入した。目標はシンプルだった——繰り返し作業の効率化、コーディング速度の向上、開発サイクル全体のスループット改善だ。しかし理想と現実のギャップは、導入直後から姿を現し始めた。約1年間の実践を通じて浮かび上がった「3つの落とし穴」は、AIコーディングツール導入を検討するすべての開発組織にとって無縁ではない。</p>
+
+    <h2>3つの落とし穴——浸透・可視化・育成の壁</h2>
+    <p>最初の落とし穴は<strong>「利用の浸透不足」</strong>だ。ツールを導入しても、メンバー全員が積極的に使うわけではない。「使い方がわからない」「AIなしでも十分に対応できる」「AIが出力するコードの精度が信頼できない」——こうした認識がチーム内に広がると、ツールは形骸化する。Sansanではセットアップ支援、週次の知見共有会の設置、ツールごとの担当者配置、そしてプロンプトに使う用語・文脈の統一という4つの対策を講じた。</p>
+    <p>第二の落とし穴は<strong>「成果の見えなさ」</strong>だ。PR数やサイクルタイムといった従来の生産性指標はほとんど動かなかった。背景には「作成の高速化」と「確認コストの増大」というトレードオフがある。AIが生成したコードのハルシネーション確認、予期せぬロジックの検証、それに伴うレビュー工数の増加——これらが生産性向上の相殺要因となった。ツールを入れることで「量」は増えても、「品質保証にかかる時間」が同等以上に膨らむジレンマは、多くのチームが直面する共通課題だ。</p>
+
+    <div class="table-wrap">
+      <span class="table-label">図1｜3つの落とし穴 × 症状・対策・教訓</span>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>落とし穴</th>
+            <th>主な症状</th>
+            <th>チームの対策</th>
+            <th>教訓</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>浸透不足</td>
+            <td>使い方不明 / <span class="kw">精度不信</span> / AIなし対応可能との認識</td>
+            <td>セットアップ支援・週次知見共有・ツール担当配置・用語統一</td>
+            <td>全員が使える環境設計が前提</td>
+          </tr>
+          <tr>
+            <td>成果不可視</td>
+            <td>PR数・サイクルタイム不変 / レビュー時間増加 / <span class="kw">ハルシネーション確認</span>コスト</td>
+            <td>効果指標の再設計・レビューフロー見直し</td>
+            <td>従来指標では効果を測れない</td>
+          </tr>
+          <tr>
+            <td>育成阻害リスク</td>
+            <td>経験浅メンバーへの効果なし / 理解度低下 / <span class="kw">成長停滞</span>の懸念</td>
+            <td>慎重なレビュー・使い所の見極め・スキル別適用方針</td>
+            <td>速度より理解度の担保が優先</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>経験値が分水嶺——スキルレベル別に異なるAI活用の効果</h2>
+    <p>最も示唆深い発見は、スキルレベルによる効果の非対称性だ。<strong>経験豊富なエンジニアにはAIコーディングツールの恩恵が明確に現れた</strong>。一方、経験の浅いメンバーや新たにチームに加わったメンバーには「大きな変化がない」という結果が出た。AIは既存のスキルを「加速」するが、ゼロベースの力を「代替」はしない——この原則がデータとして可視化された形だ。</p>
+    <p>さらに深刻なのはリスクの側面だ。スキルが十分に育っていない段階でAIによる速度向上に頼ると、コードへの理解度が低下し、エンジニアとして本来積むべき経験が蓄積されにくくなる。「AIが書いたから動く」という依存は、長期的な成長の機会を静かに奪う。これはAI導入を急ぐ組織が共通して直面している、見えにくいが深刻な問題だ。</p>
+
+    <div class="vis-grid vis-grid-3">
+      <div class="vis-card highlight">
+        <span class="vis-card-label">Senior Engineer</span>
+        <span class="vis-card-en">効果：明確</span>
+        <span class="vis-card-jp">既存スキルが加速される</span>
+      </div>
+      <div class="vis-card">
+        <span class="vis-card-label">Mid-level Engineer</span>
+        <span class="vis-card-en">効果：限定的</span>
+        <span class="vis-card-jp">スキルとの掛け算が必要</span>
+      </div>
+      <div class="vis-card">
+        <span class="vis-card-label">Junior / New Member</span>
+        <span class="vis-card-en">効果：変化なし</span>
+        <span class="vis-card-jp">成長阻害リスクあり</span>
+      </div>
+    </div>
+    <span class="table-label">図2｜スキルレベル別のAIコーディングツール活用効果（Sansan実践調査より）</span>
+
+    <div class="callout">
+      <p class="callout-label">編集部の視点</p>
+      <p>SansanのレポートはAIコーディングツールに関する多くの「楽観的な語り」へのアンチテーゼとして機能する。「ツールを入れれば生産性が上がる」という期待の裏側で、実際の組織が直面するのは「誰が使うか」「何を測るか」「どう育てるか」という普遍的な変革マネジメントの問いだ。AIは魔法のツールではなく、組織の未成熟な部分を容赦なく可視化する鏡でもある。HR視点でいえば、AIコーディングツールの導入は「採用・育成・評価」の3軸すべてを再設計するトリガーになりうる。</p>
+    </div>
+
+    <blockquote>「AIの価値は人の成長を加速させることにある」——齊藤 実氏（Sansan株式会社 技術本部 Eight Engineering Unit）</blockquote>
+
+    <h2>まとめ</h2>
+    <p>Sansanの実践は、AIコーディングツールの導入を「ツール選定」で完結させることの危うさを示している。真の価値を引き出すには、組織としての使い方の設計、効果指標の再定義、そして育成への影響を見据えた段階的な展開が必要だ。「添うてみてわかること」を、より早く・より少ないコストで学ぶために、先行事例からの学習が欠かせない。</p>
+
+    <ul>
+      <li><strong>導入前に定義する</strong>：「どのスキルレベルのメンバーが、どの業務に使うか」を具体化し、対象外の業務・人材との線引きを明示する</li>
+      <li><strong>指標を更新する</strong>：PR数・サイクルタイムではなく、「レビュー時間の変化」「コード理解度の維持率」「新人エンジニアの成長速度」など、AI時代に適した評価軸を設計する</li>
+      <li><strong>学習を組織化する</strong>：週次の知見共有会を設け、成功例・失敗例の両方を組織の資産として蓄積する。個人の試行錯誤をチームの学習サイクルに変換する仕組みが生産性の鍵となる</li>
+    </ul>
+
+    <p class="ref-heading">参照</p>
+    <ul class="ref-list">
+      <li><a href="https://speakerdeck.com/sansantech/20260123-2" target="_blank" rel="noopener">AI開発の落とし穴 〜馬には乗ってみよAIには添うてみよ〜（齊藤 実 / Sansan株式会社、Nagoya Tech Talk #2、2026.01.23）</a></li>
+    </ul>
+
+  </div>
+
+  <!-- フッター -->
+  <footer class="article-footer">
+    <div class="article-tags">
+      <a href="#" class="tag">AIコーディング</a>
+      <a href="#" class="tag">エンジニアリング組織</a>
+      <a href="#" class="tag">育成・スキル開発</a>
+      <a href="#" class="tag">Sansan</a>
+    </div>
+    <a href="../index.html" class="back-link">記事一覧に戻る</a>
+  </footer>
+
+</main>
+
+<!-- ニュースレター -->
+<div class="nl-strip">
+  <div class="nl-strip-inner">
+    <div class="nl-strip-text">
+      <p class="nl-strip-label">Newsletter</p>
+      <p class="nl-strip-title">AI×組織の最新情報を週2回お届け</p>
+    </div>
+    <form class="nl-strip-form" onsubmit="return false">
+      <input type="email" class="nl-strip-input" placeholder="メールアドレス">
+      <button type="submit" class="nl-strip-btn">登録する</button>
+    </form>
+  </div>
+</div>
+
+<!-- フッター -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">AX Journal</span>
+    <span class="footer-copy">© 2026 AX Journal. All rights reserved.</span>
+  </div>
+</footer>
+
+</body>
+</html>
