@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI×開発生産性の「回収設計」——DMMが示す予算戦略と投資対効果の可視化 — AX Journal</title>
+  <meta name="description" content="AI×開発生産性の予算配分と投資対効果。DMMが公開したROI測定・評価軸・人事制度改革の全容。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:           #080808;
+      --bg-card:      #111111;
+      --bg-subtle:    #0d0d0d;
+      --bg-muted:     #141414;
+      --surface-dark: #161616;
+      --text:         #EDE9E2;
+      --text-muted:   #888880;
+      --text-faint:   #4E4E4A;
+      --accent:       #C4914A;
+      --accent-dark:  #A87840;
+      --accent-light: rgba(196,145,74,0.12);
+      --red:          #C4914A;
+      --red-light:    rgba(196,145,74,0.10);
+      --border:       #1E1E1E;
+      --border-faint: #161616;
+      --radius:       3px;
+      --font-b: 'Inter', 'Noto Sans JP', sans-serif;
+      --font-m: 'DM Mono', 'Courier New', monospace;
+      --body-width: 680px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { font-family: var(--font-b); background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+
+    .masthead { border-bottom: 1px solid var(--border-faint); padding: 0 24px; background: var(--bg); }
+    .masthead-inner { max-width: 1160px; margin: 0 auto; height: 58px; display: flex; align-items: center; justify-content: space-between; }
+    .logo-name { font-size: 14px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text); }
+    .mast-nav { display: flex; align-items: center; gap: 2px; }
+    .mast-nav a { font-size: 12px; font-weight: 500; color: var(--text-muted); padding: 6px 12px; border-radius: var(--radius); transition: color 0.15s; }
+    .mast-nav a:hover { color: var(--text); }
+    .mast-nav .cta { background: var(--accent); color: #000; font-weight: 700; margin-left: 8px; padding: 6px 18px; letter-spacing: 0.04em; }
+    .mast-nav .cta:hover { background: var(--accent-dark); color: #000; }
+
+    .article-wrap { max-width: var(--body-width); margin: 0 auto; padding: 56px 24px 80px; }
+
+    .breadcrumb { display: flex; align-items: center; gap: 8px; font-family: var(--font-m); font-size: 11px; letter-spacing: 0.06em; color: var(--text-faint); margin-bottom: 36px; }
+    .breadcrumb a:hover { color: var(--text-muted); }
+    .breadcrumb-sep { opacity: 0.35; }
+
+    .article-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+    .pill { font-family: var(--font-m); font-size: 8px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; padding: 3px 7px; border-radius: 2px; }
+    .pill-gray { background: #181818; color: var(--text-muted); border: 1px solid #242424; }
+    .pill-red  { background: var(--red-light); color: var(--accent); border: 1px solid rgba(196,145,74,0.22); }
+    .article-date { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); }
+
+    .article-title { font-size: clamp(26px, 4vw, 38px); font-weight: 700; line-height: 1.2; letter-spacing: 0.01em; color: var(--text); margin-bottom: 20px; }
+    .article-lead { font-size: 17px; color: var(--text-muted); line-height: 1.88; border-left: 3px solid var(--accent); padding-left: 18px; margin-bottom: 40px; }
+    .article-divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    .article-hero { margin: 0 0 28px; border-radius: var(--radius); overflow: hidden; line-height: 0; }
+    .article-hero svg { display: block; width: 100%; height: auto; }
+
+    .article-body { font-size: 16px; line-height: 1.9; color: var(--text); }
+    .article-body h2 { font-size: 20px; font-weight: 700; letter-spacing: 0.01em; margin: 48px 0 14px; color: var(--text); }
+    .article-body h3 { font-size: 15px; font-weight: 600; color: var(--text); margin: 28px 0 8px; }
+    .article-body p { margin-bottom: 20px; }
+    .article-body ul, .article-body ol { padding-left: 20px; margin-bottom: 20px; }
+    .article-body li { margin-bottom: 8px; line-height: 1.75; }
+    .article-body strong { font-weight: 600; color: var(--text); }
+    .article-body em { font-style: italic; color: var(--text-muted); }
+    .article-body blockquote { border-left: 3px solid var(--accent); padding: 4px 0 4px 18px; margin: 28px 0; color: var(--text-muted); font-size: 15px; font-style: italic; }
+
+    .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius); padding: 20px 22px; margin: 28px 0; }
+    .callout-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .callout p { font-size: 14px; color: var(--text-muted); margin-bottom: 0; line-height: 1.75; }
+
+    .source-note { background: rgba(196,145,74,0.06); border: 1px solid rgba(196,145,74,0.18); border-radius: var(--radius); padding: 14px 18px; margin-bottom: 36px; }
+    .source-note p { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); line-height: 1.7; margin-bottom: 0; }
+    .source-note a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+
+    .table-wrap { overflow-x: auto; margin: 24px 0; }
+    .table-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 10px; display: block; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .data-table th { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 10px 14px; background: #181818; color: rgba(255,255,255,0.55); text-align: left; white-space: nowrap; border-bottom: 1px solid var(--border); }
+    .data-table th:first-child { background: #141414; color: var(--text-faint); }
+    .data-table td { padding: 11px 14px; border-bottom: 1px solid var(--border-faint); line-height: 1.65; vertical-align: top; color: var(--text-muted); }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table td:first-child { font-weight: 600; font-size: 13px; white-space: nowrap; color: var(--text); border-right: 1px solid var(--border); background: var(--bg-subtle); }
+    .data-table .kw { display: inline-block; background: #1c1c1c; border: 1px solid #282828; border-radius: 3px; padding: 2px 7px; font-family: var(--font-m); font-size: 11px; margin: 2px 2px 2px 0; white-space: nowrap; color: var(--text-muted); }
+
+    .vis-grid { display: grid; gap: 8px; margin: 24px 0; }
+    .vis-grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .vis-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 12px; text-align: center; }
+    .vis-card.highlight { border-color: var(--accent); background: rgba(196,145,74,0.08); }
+    .vis-card-label { font-family: var(--font-m); font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); display: block; margin-bottom: 4px; }
+    .vis-card.highlight .vis-card-label { color: var(--accent); }
+    .vis-card-en { font-size: 13px; font-weight: 700; display: block; margin-bottom: 4px; color: var(--text); }
+    .vis-card-jp { font-size: 11px; color: var(--text-muted); line-height: 1.6; }
+
+    .ref-heading { font-family: var(--font-m); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); font-weight: 500; margin-top: 48px; margin-bottom: 10px; }
+    .ref-list { list-style: none; padding: 0; }
+    .ref-list li { margin-bottom: 6px; }
+    .ref-list a { font-size: 13px; color: var(--text-muted); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--border); transition: color 0.15s, text-decoration-color 0.15s; word-break: break-all; }
+    .ref-list a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
+    .article-footer { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--border); }
+    .article-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 32px; }
+    .tag { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-faint); transition: border-color 0.15s, color 0.15s; }
+    .tag:hover { border-color: var(--accent); color: var(--accent); }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--text-muted); transition: color 0.15s; }
+    .back-link:hover { color: var(--accent); }
+    .back-link::before { content: '←'; }
+
+    .nl-strip { background: #0a0a0a; padding: 32px 24px; margin-top: 64px; border-top: 1px solid var(--border); }
+    .nl-strip-inner { max-width: var(--body-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .nl-strip-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 6px; }
+    .nl-strip-title { font-size: 16px; font-weight: 600; color: var(--text); letter-spacing: 0.01em; }
+    .nl-strip-form { display: flex; gap: 8px; flex-shrink: 0; }
+    .nl-strip-input { padding: 10px 14px; background: var(--bg-muted); border: 1px solid var(--border); border-radius: var(--radius); font-family: var(--font-b); font-size: 13px; color: var(--text); outline: none; width: 220px; transition: border-color 0.15s; }
+    .nl-strip-input::placeholder { color: var(--text-faint); }
+    .nl-strip-input:focus { border-color: var(--accent); }
+    .nl-strip-btn { padding: 10px 18px; background: var(--accent); color: #000; border: none; border-radius: var(--radius); font-family: var(--font-b); font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: background 0.15s; }
+    .nl-strip-btn:hover { background: var(--accent-dark); }
+
+    footer { border-top: 1px solid var(--border-faint); padding: 24px; background: var(--bg-subtle); }
+    .footer-inner { max-width: 1160px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .footer-logo { font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-faint); }
+    .footer-copy { font-family: var(--font-m); font-size: 10px; color: var(--text-faint); }
+
+    @media (max-width: 640px) {
+      .mast-nav { display: none; }
+      .vis-grid-3 { grid-template-columns: 1fr; }
+      .nl-strip-inner { flex-direction: column; align-items: flex-start; }
+      .nl-strip-form { width: 100%; }
+      .nl-strip-input { flex: 1; }
+      .footer-inner { flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- マストヘッド -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <a href="../index.html" class="logo-name">AX Journal</a>
+    <nav class="mast-nav">
+      <a href="../index.html">記事一覧</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#newsletter" class="cta">購読する</a>
+    </nav>
+  </div>
+</header>
+
+<!-- 記事本文 -->
+<main class="article-wrap">
+
+  <!-- パンくず -->
+  <nav class="breadcrumb">
+    <a href="../index.html">AX Journal</a>
+    <span class="breadcrumb-sep">/</span>
+    <span>事例・ケース</span>
+  </nav>
+
+  <!-- ヘッダー -->
+  <div class="article-eyebrow">
+    <span class="pill pill-red">速報</span>
+    <span class="pill pill-gray">事例・ケース</span>
+    <span class="article-date">2026.07.25</span>
+  </div>
+
+  <h1 class="article-title">AI×開発生産性の「回収設計」——DMMが示す予算戦略と投資対効果の可視化</h1>
+
+  <div class="article-hero">
+    <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+      <rect width="680" height="200" fill="#080808"/>
+      <defs>
+        <pattern id="pg" width="24" height="24" patternUnits="userSpaceOnUse">
+          <path d="M24 0L0 0 0 24" fill="none" stroke="#0e0e0e" stroke-width="0.5"/>
+        </pattern>
+      </defs>
+      <rect width="680" height="200" fill="url(#pg)"/>
+      <!-- Dark PCB traces -->
+      <path d="M30,60 H160" fill="none" stroke="#222" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M160,60 V140" fill="none" stroke="#1e1e1e" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M160,140 H330" fill="none" stroke="#222" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M30,120 H110" fill="none" stroke="#1c1c1c" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M110,120 V40" fill="none" stroke="#1c1c1c" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M110,40 H260" fill="none" stroke="#1c1c1c" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M260,40 V80" fill="none" stroke="#1e1e1e" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M450,140 H610" fill="none" stroke="#222" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M610,140 V70" fill="none" stroke="#1e1e1e" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M610,70 H650" fill="none" stroke="#222" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M520,80 V40 H650" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round"/>
+      <!-- Copper trace (highlighted) -->
+      <path d="M260,80 H450 V100 H520" fill="none" stroke="#C4914A" stroke-width="1.8" opacity="0.72" stroke-linecap="round"/>
+      <!-- Dark chip rects -->
+      <rect x="14" y="50" width="26" height="14" fill="none" stroke="#252525" stroke-width="1" rx="1"/>
+      <rect x="144" y="132" width="26" height="14" fill="none" stroke="#252525" stroke-width="1" rx="1"/>
+      <rect x="596" y="132" width="26" height="14" fill="none" stroke="#252525" stroke-width="1" rx="1"/>
+      <rect x="636" y="63" width="26" height="14" fill="none" stroke="#252525" stroke-width="1" rx="1"/>
+      <!-- Copper chip rect -->
+      <rect x="435" y="90" width="30" height="16" fill="rgba(196,145,74,0.12)" stroke="#C4914A" stroke-width="1" opacity="0.8" rx="1"/>
+      <!-- Via dots - dark -->
+      <circle cx="160" cy="60" r="3" fill="none" stroke="#2a2a2a" stroke-width="1"/>
+      <circle cx="110" cy="40" r="3" fill="none" stroke="#2a2a2a" stroke-width="1"/>
+      <circle cx="610" cy="70" r="3" fill="none" stroke="#2a2a2a" stroke-width="1"/>
+      <!-- Copper via dots -->
+      <circle cx="260" cy="80" r="3.5" fill="#C4914A" opacity="0.65"/>
+      <circle cx="450" cy="100" r="3.5" fill="#C4914A" opacity="0.65"/>
+    </svg>
+  </div>
+
+  <p class="article-lead">「1億円のAI投資に対して、いったいどれだけの価値が生まれているのか」——そう経営層に問われたとき、あなたのチームは答えられるか。AI DevEX Conference 2026にて、DMMの石垣雅人氏（プラットフォーム開発本部 副本部長）が公開した予算戦略は、開発生産性の議論を「工数削減」という点の評価から「投資資産の回収設計」という経営視点へと引き上げるものだった。</p>
+
+  <hr class="article-divider">
+
+  <div class="source-note">
+    <p>本記事は、石垣雅人氏（<a href="https://speakerdeck.com/i35_267/ai-x-kai-fa-sheng-chan-xing-woqu-rijuan-kuyu-suan-zhan-lue-totou-zi-dui-xiao-guo" target="_blank" rel="noopener">@i35_267</a>、合同会社DMM.com プラットフォーム開発本部 副本部長）の登壇資料「AI × 開発生産性を取り巻く予算戦略と投資対効果」（AI DevEX Conference 2026、2026年7月22日）をもとに、AX Journal編集部が再構成・加筆したものです。</p>
+  </div>
+
+  <!-- 本文 -->
+  <div class="article-body">
+
+    <h2>人件費中心の予算構造は終わる</h2>
+    <p>AI導入以前の開発予算は、その大半が人件費で占められていた。しかしAIエージェントの実用化が進んだ現在、<strong>ソフトウェア利用料・クラウド利用料が急速に予算の中心へとシフト</strong>しつつある。石垣氏はこの変化を「トークンコストの従量課金化」と表現し、定額制ツールの時代に比べてコスト予測が根本的に難しくなっていると指摘する。</p>
+    <p>さらに問題を複雑にするのが、会計処理の視点だ。AIツール費用は通常は費用計上（Opex）となり、表面上は営業利益を悪化させる。一方、AIソフトウェアを資産として仮勘定扱いし5年償却にすると、同じ支出でも営業利益が改善して見える——この「会計上の見え方の差」が、経営層との対話を難しくしているという。</p>
+
+    <span class="table-label">図1｜生産性ツリー——3層の言語変換</span>
+    <div class="vis-grid vis-grid-3">
+      <div class="vis-card highlight">
+        <span class="vis-card-label">Layer 01 · 経営層</span>
+        <span class="vis-card-en">B/S · P/L</span>
+        <span class="vis-card-jp">資産・減価償却で語る<br>投資回収率が唯一の共通言語</span>
+      </div>
+      <div class="vis-card">
+        <span class="vis-card-label">Layer 02 · 事業責任者</span>
+        <span class="vis-card-en">コスト管理</span>
+        <span class="vis-card-jp">金額ベースで語る<br>予算消化と費用対効果が主軸</span>
+      </div>
+      <div class="vis-card">
+        <span class="vis-card-label">Layer 03 · 開発組織</span>
+        <span class="vis-card-en">工数 · スループット</span>
+        <span class="vis-card-jp">内部品質で語る<br>リードタイムと不具合率が指標</span>
+      </div>
+    </div>
+    <p>石垣氏が強調するのは、この3層を「翻訳」する能力だ。開発現場の「スループットが上がった」という事実を、経営層が理解できる「B/S上の資産価値」に変換できなければ、投資判断のテーブルに乗れない。AI導入の予算獲得に苦しむ組織の多くは、この翻訳力の欠如が根本原因だという。</p>
+
+    <h2>「1.5倍化」の方程式——DMMの二大戦略</h2>
+    <p>DMMが採用したのは、<strong>出口と入口の両面から開発キャパシティを拡張する</strong>という二大戦略だ。まず「戦略1」はValueStream高速化による出口（アウトプット量）の1.5倍化。AIネイティブなプロセス設計ツール「PF-Spec-Kit」を導入し、仕様策定から実装までのリードタイムを圧縮する。ここで重要なのは「品質を先行指標、スピードを遅行指標とする」という意識転換だ——AIが書くコードの入口（コンテキスト設計）と出口（品質・セキュリティ担保）は人間が握り続ける。</p>
+    <p>「戦略2」は運用工数のAI置き換えによる入口（Capacity）の1.5倍化だ。保守開発・管理業務の自動化に加え、「Modifius」ツールによる評価情報の自動生成を実施。現場のエンジニアが人事評価のための報告書作成に費やしていた時間をゼロに近づけ、解放されたCapacityを新規開発へ振り向ける。</p>
+
+    <span class="table-label">図2｜DMMが設定した定量目標（AI DevEX Conference 2026発表時点）</span>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>指標カテゴリ</th>
+            <th>目標値</th>
+            <th>補足</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>財務</td>
+            <td><span class="kw">投資回収率 6ヶ月以内</span></td>
+            <td>AI投資の損益分岐点を半期以内に設定。経営承認の前提条件として明示</td>
+          </tr>
+          <tr>
+            <td>採用</td>
+            <td><span class="kw">採用計画 0.7倍削減</span></td>
+            <td>AI活用による生産性向上分を採用ヘッドカウントの削減に転換</td>
+          </tr>
+          <tr>
+            <td>開発（Capex）</td>
+            <td><span class="kw">新規開発 +30%</span></td>
+            <td>運用工数圧縮で捻出した時間を新規開発に再配分</td>
+          </tr>
+          <tr>
+            <td>運用（Opex）</td>
+            <td><span class="kw">−50%削減</span></td>
+            <td>AI自動化による保守・管理業務の半減を目標値として設定</td>
+          </tr>
+          <tr>
+            <td>バリューストリーム</td>
+            <td><span class="kw">新規 −30%</span> <span class="kw">既存 −20%</span></td>
+            <td>リードタイム圧縮目標。新規は機能開発、既存は改修・バグ修正を対象</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>人事評価軸の再設計——AIコスト投入量を「成果」として測る</h2>
+    <p>DMMの取り組みで特に注目すべきは、<strong>人事評価にAI活用度を組み込んだ</strong>点だ。石垣氏はこれを明快な等式で示した：「従来は年収800万円 ＝ 800万円の価値だった。しかし今は（年収500万）＋（AIエージェントへの投資500万）＝ 1,000万円の価値として判断できる」。</p>
+    <p>評価軸に追加されたのは、①AIコスト投入量（どれだけのAIリソースを使いこなしているか）と②AIスキルレベル（ツールを戦略的に使えているか）の2軸だ。単にAIを使っているかどうかではなく、<strong>使いこなしている量と質を可視化し、評価に反映させる</strong>という設計思想が根底にある。また、「人→人」という従来の育成モデルから「スキル→スキル」というチーム全体の技術スケーリングへの転換も同時に進めている。</p>
+
+    <div class="callout">
+      <p class="callout-label">編集部の視点</p>
+      <p>石垣氏が提示した「認知的負債（Cognitive Debt）」という概念は、AI時代の開発現場が直面する最も本質的なリスクを言語化している。コードが動き、テストが通っていても、AIの生成速度が人間の理解速度を上回る状況では、チームの「理解資産」は急速に劣化する。速ければ速いほど負債が積み上がるという逆説——これはAIコーディングツールを導入した多くの組織で既に起きている現象だが、「認知的負債」という言葉で定義されたことで、初めて測定・管理の対象になる。DMMの取り組みで最も先進的なのは、この無形の負債をヘルスチェック指標として扱い始めた点だろう。</p>
+    </div>
+
+    <h2>測れなければ投資できない——5つのヘルスチェック指標</h2>
+    <p>どれだけ優れた戦略も、測定できなければPDCAが回らない。石垣氏が設計した「ヘルスチェックレポート」は、以下の5軸で組織のAI投資状況を定期的に可視化するものだ：①財務指標（予算消化率・AIエージェントコスト）、②人員構成（雇用形態・等級分布）、③採用・育成計画の進捗、④投入工数分布（新規開発vs運用比率）、⑤プロジェクト詳細（BigQuery→Looker連携での自動集計）。</p>
+    <p>このレポートが機能する前提として石垣氏が挙げるのが「AI-Readyな状態への準備」だ。AIが読みやすい粒度でコードが整理されているか、データ基盤が整備されているかが、AI活用の上限を決める。「AIを入れれば生産性が上がる」という単純な等式が成り立たない現場では、まずAIが活躍できる土台を作ることが先決という主張は、多くの導入事例が裏付けている。</p>
+
+    <blockquote>「動いている・テストも通る」でも理解が追いつかないと負債は加速する——AIの速度が人間の理解力を上回るとき、チームは静かに「認知的負債」を積み上げていく。<br>— 石垣雅人氏（合同会社DMM.com、AI DevEX Conference 2026）</blockquote>
+
+    <h2>まとめ</h2>
+    <p>DMMが示した予算戦略の核心は、AI投資を「コスト」ではなく「資産設計」として再定義することにある。1.5倍化の方程式、人事評価軸の更新、ヘルスチェックレポートの整備——これらは単独では機能しない。「測定→翻訳→経営承認→投資拡大」という循環を回すためのエコシステムとして設計されている点が、この取り組みを他の事例と分ける。</p>
+
+    <ul>
+      <li><strong>予算会話の言語を統一する</strong>：開発指標を経営層が理解できるB/S・P/L言語に翻訳する「3層の言語変換」スキルを、エンジニアリングマネージャー層に育てる</li>
+      <li><strong>Opex削減とCapex投資を連動させる</strong>：運用工数のAI置き換えで生まれた余力を、数値として可視化し、新規開発への再配分として経営に報告するサイクルを設計する</li>
+      <li><strong>認知的負債を指標化する</strong>：AIコード比率の上昇に合わせて「チームがコードを理解している割合」を測定項目に加え、速度と理解のバランスをモニタリングする</li>
+    </ul>
+
+    <p class="ref-heading">参照</p>
+    <ul class="ref-list">
+      <li><a href="https://speakerdeck.com/i35_267/ai-x-kai-fa-sheng-chan-xing-woqu-rijuan-kuyu-suan-zhan-lue-totou-zi-dui-xiao-guo" target="_blank" rel="noopener">石垣雅人（@i35_267）「AI × 開発生産性を取り巻く予算戦略と投資対効果」— SpeakerDeck（AI DevEX Conference 2026、2026年7月22日）</a></li>
+    </ul>
+
+  </div>
+
+  <!-- フッター -->
+  <footer class="article-footer">
+    <div class="article-tags">
+      <a href="#" class="tag">AI投資</a>
+      <a href="#" class="tag">開発生産性</a>
+      <a href="#" class="tag">予算戦略</a>
+      <a href="#" class="tag">投資対効果</a>
+    </div>
+    <a href="../index.html" class="back-link">記事一覧に戻る</a>
+  </footer>
+
+</main>
+
+<!-- ニュースレター -->
+<div class="nl-strip">
+  <div class="nl-strip-inner">
+    <div class="nl-strip-text">
+      <p class="nl-strip-label">Newsletter</p>
+      <p class="nl-strip-title">AI×組織の最新情報を週2回お届け</p>
+    </div>
+    <form class="nl-strip-form" onsubmit="return false">
+      <input type="email" class="nl-strip-input" placeholder="メールアドレス">
+      <button type="submit" class="nl-strip-btn">登録する</button>
+    </form>
+  </div>
+</div>
+
+<!-- フッター -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">AX Journal</span>
+    <span class="footer-copy">© 2026 AX Journal. All rights reserved.</span>
+  </div>
+</footer>
+
+</body>
+</html>
