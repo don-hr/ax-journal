@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>「AIをたくさん使う会社」と「AIで事業が伸びる会社」は別物——ファインディ185社調査が示す「開発資本」という視点 — AX Journal</title>
+  <meta name="description" content="AI活用の広さと事業成果は無関連。ファインディ185社調査が示す「トークンマキシング」から「アウトカムマキシング」への転換とは。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:           #080808;
+      --bg-card:      #111111;
+      --bg-subtle:    #0d0d0d;
+      --bg-muted:     #141414;
+      --surface-dark: #161616;
+      --text:         #EDE9E2;
+      --text-muted:   #888880;
+      --text-faint:   #4E4E4A;
+      --accent:       #C4914A;
+      --accent-dark:  #A87840;
+      --accent-light: rgba(196,145,74,0.12);
+      --red:          #C4914A;
+      --red-light:    rgba(196,145,74,0.10);
+      --border:       #1E1E1E;
+      --border-faint: #161616;
+      --radius:       3px;
+      --font-b: 'Inter', 'Noto Sans JP', sans-serif;
+      --font-m: 'DM Mono', 'Courier New', monospace;
+      --body-width: 680px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { font-family: var(--font-b); background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    .masthead { border-bottom: 1px solid var(--border-faint); padding: 0 24px; background: var(--bg); }
+    .masthead-inner { max-width: 1160px; margin: 0 auto; height: 58px; display: flex; align-items: center; justify-content: space-between; }
+    .logo-name { font-size: 14px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text); }
+    .mast-nav { display: flex; align-items: center; gap: 2px; }
+    .mast-nav a { font-size: 12px; font-weight: 500; color: var(--text-muted); padding: 6px 12px; border-radius: var(--radius); transition: color 0.15s; }
+    .mast-nav a:hover { color: var(--text); }
+    .mast-nav .cta { background: var(--accent); color: #000; font-weight: 700; margin-left: 8px; padding: 6px 18px; letter-spacing: 0.04em; }
+    .mast-nav .cta:hover { background: var(--accent-dark); color: #000; }
+    .article-wrap { max-width: var(--body-width); margin: 0 auto; padding: 56px 24px 80px; }
+    .breadcrumb { display: flex; align-items: center; gap: 8px; font-family: var(--font-m); font-size: 11px; letter-spacing: 0.06em; color: var(--text-faint); margin-bottom: 36px; }
+    .breadcrumb a:hover { color: var(--text-muted); }
+    .breadcrumb-sep { opacity: 0.35; }
+    .article-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+    .pill { font-family: var(--font-m); font-size: 8px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; padding: 3px 7px; border-radius: 2px; }
+    .pill-gray { background: #181818; color: var(--text-muted); border: 1px solid #242424; }
+    .pill-red  { background: var(--red-light); color: var(--accent); border: 1px solid rgba(196,145,74,0.22); }
+    .article-date { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); }
+    .article-title { font-size: clamp(24px, 4vw, 36px); font-weight: 700; line-height: 1.2; letter-spacing: 0.01em; color: var(--text); margin-bottom: 20px; }
+    .article-lead { font-size: 17px; color: var(--text-muted); line-height: 1.88; border-left: 3px solid var(--accent); padding-left: 18px; margin-bottom: 40px; }
+    .article-divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+    .article-hero { margin: 0 0 28px; border-radius: var(--radius); overflow: hidden; line-height: 0; }
+    .article-hero svg { display: block; width: 100%; height: auto; }
+    .article-body { font-size: 16px; line-height: 1.9; color: var(--text); }
+    .article-body h2 { font-size: 20px; font-weight: 700; letter-spacing: 0.01em; margin: 48px 0 14px; color: var(--text); }
+    .article-body p { margin-bottom: 20px; }
+    .article-body ul, .article-body ol { padding-left: 20px; margin-bottom: 20px; }
+    .article-body li { margin-bottom: 8px; line-height: 1.75; }
+    .article-body strong { font-weight: 600; color: var(--text); }
+    .article-body blockquote { border-left: 3px solid var(--accent); padding: 4px 0 4px 18px; margin: 28px 0; color: var(--text-muted); font-size: 15px; font-style: italic; }
+    .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius); padding: 20px 22px; margin: 28px 0; }
+    .callout-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .callout p { font-size: 14px; color: var(--text-muted); margin-bottom: 0; line-height: 1.75; }
+    .source-note { background: rgba(196,145,74,0.06); border: 1px solid rgba(196,145,74,0.18); border-radius: var(--radius); padding: 14px 18px; margin-bottom: 36px; }
+    .source-note p { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); line-height: 1.7; margin-bottom: 0; }
+    .source-note a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+    .table-wrap { overflow-x: auto; margin: 24px 0; }
+    .table-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 10px; display: block; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .data-table th { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 10px 14px; background: #181818; color: rgba(255,255,255,0.55); text-align: left; white-space: nowrap; border-bottom: 1px solid var(--border); }
+    .data-table th:first-child { background: #141414; color: var(--text-faint); }
+    .data-table td { padding: 11px 14px; border-bottom: 1px solid var(--border-faint); line-height: 1.65; vertical-align: top; color: var(--text-muted); }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table td:first-child { font-weight: 600; font-size: 13px; white-space: nowrap; color: var(--text); border-right: 1px solid var(--border); background: var(--bg-subtle); }
+    .data-table .kw { display: inline-block; background: #1c1c1c; border: 1px solid #282828; border-radius: 3px; padding: 2px 7px; font-family: var(--font-m); font-size: 11px; margin: 2px 2px 2px 0; white-space: nowrap; color: var(--text-muted); }
+    .data-table .highlight td { background: rgba(196,145,74,0.05); }
+    .data-table .highlight td:first-child { background: rgba(196,145,74,0.08); color: var(--accent); }
+    .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 24px 0; }
+    .stat-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 14px; text-align: center; }
+    .stat-num { font-size: 32px; font-weight: 800; color: var(--accent); letter-spacing: -0.02em; display: block; margin-bottom: 4px; }
+    .stat-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.06em; color: var(--text-faint); line-height: 1.5; }
+    .ref-heading { font-family: var(--font-m); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); font-weight: 500; margin-top: 48px; margin-bottom: 10px; }
+    .ref-list { list-style: none; padding: 0; }
+    .ref-list li { margin-bottom: 6px; }
+    .ref-list a { font-size: 13px; color: var(--text-muted); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--border); transition: color 0.15s, text-decoration-color 0.15s; word-break: break-all; }
+    .ref-list a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+    .article-footer { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--border); }
+    .article-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 32px; }
+    .tag { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-faint); transition: border-color 0.15s, color 0.15s; }
+    .tag:hover { border-color: var(--accent); color: var(--accent); }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--text-muted); transition: color 0.15s; }
+    .back-link:hover { color: var(--accent); }
+    .back-link::before { content: '←'; }
+    .nl-strip { background: #0a0a0a; padding: 32px 24px; margin-top: 64px; border-top: 1px solid var(--border); }
+    .nl-strip-inner { max-width: var(--body-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .nl-strip-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 6px; }
+    .nl-strip-title { font-size: 16px; font-weight: 600; color: var(--text); letter-spacing: 0.01em; }
+    .nl-strip-form { display: flex; gap: 8px; flex-shrink: 0; }
+    .nl-strip-input { padding: 10px 14px; background: var(--bg-muted); border: 1px solid var(--border); border-radius: var(--radius); font-family: var(--font-b); font-size: 13px; color: var(--text); outline: none; width: 220px; transition: border-color 0.15s; }
+    .nl-strip-input::placeholder { color: var(--text-faint); }
+    .nl-strip-input:focus { border-color: var(--accent); }
+    .nl-strip-btn { padding: 10px 18px; background: var(--accent); color: #000; border: none; border-radius: var(--radius); font-family: var(--font-b); font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: background 0.15s; }
+    .nl-strip-btn:hover { background: var(--accent-dark); }
+    footer { border-top: 1px solid var(--border-faint); padding: 24px; background: var(--bg-subtle); }
+    .footer-inner { max-width: 1160px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .footer-logo { font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-faint); }
+    .footer-copy { font-family: var(--font-m); font-size: 10px; color: var(--text-faint); }
+    @media (max-width: 640px) {
+      .mast-nav { display: none; }
+      .stat-row { grid-template-columns: 1fr; }
+      .nl-strip-inner { flex-direction: column; align-items: flex-start; }
+      .nl-strip-form { width: 100%; }
+      .nl-strip-input { flex: 1; }
+      .footer-inner { flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <a href="../index.html" class="logo-name">AX Journal</a>
+    <nav class="mast-nav">
+      <a href="../index.html">記事一覧</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#newsletter" class="cta">購読する</a>
+    </nav>
+  </div>
+</header>
+
+<main class="article-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">AX Journal</a>
+    <span class="breadcrumb-sep">/</span>
+    <span>トレンド</span>
+  </nav>
+
+  <div class="article-eyebrow">
+    <span class="pill pill-red">速報</span>
+    <span class="pill pill-gray">トレンド</span>
+    <span class="article-date">2026.07.26</span>
+  </div>
+
+  <h1 class="article-title">「AIをたくさん使う会社」と「AIで事業が伸びる会社」は別物——ファインディ185社調査が示す「開発資本」という視点</h1>
+
+  <div class="article-hero">
+    <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+      <rect width="680" height="200" fill="#080808"/>
+      <!-- Dot grid (11×5) -->
+      <circle cx="20"  cy="20"  r="1.4" fill="#1e1e1e"/><circle cx="84"  cy="20"  r="1.4" fill="#1e1e1e"/><circle cx="148" cy="20"  r="1.4" fill="#1e1e1e"/><circle cx="212" cy="20"  r="1.4" fill="#1e1e1e"/><circle cx="276" cy="20"  r="1.4" fill="#1e1e1e"/><circle cx="340" cy="20"  r="1.4" fill="#1e1e1e"/><circle cx="404" cy="20"  r="1.4" fill="#1e1e1e"/><circle cx="468" cy="20"  r="1.4" fill="#1e1e1e"/><circle cx="532" cy="20"  r="1.4" fill="#1e1e1e"/><circle cx="596" cy="20"  r="1.4" fill="#1e1e1e"/><circle cx="660" cy="20"  r="1.4" fill="#1e1e1e"/>
+      <circle cx="20"  cy="60"  r="1.4" fill="#1e1e1e"/><circle cx="84"  cy="60"  r="1.4" fill="#1e1e1e"/><circle cx="148" cy="60"  r="1.4" fill="#1e1e1e"/><circle cx="212" cy="60"  r="1.4" fill="#1e1e1e"/><circle cx="276" cy="60"  r="1.4" fill="#1e1e1e"/><circle cx="340" cy="60"  r="1.4" fill="#1e1e1e"/><circle cx="404" cy="60"  r="1.4" fill="#1e1e1e"/><circle cx="468" cy="60"  r="1.4" fill="#1e1e1e"/><circle cx="532" cy="60"  r="1.4" fill="#1e1e1e"/><circle cx="596" cy="60"  r="1.4" fill="#1e1e1e"/><circle cx="660" cy="60"  r="1.4" fill="#1e1e1e"/>
+      <circle cx="20"  cy="100" r="1.4" fill="#1e1e1e"/><circle cx="84"  cy="100" r="1.4" fill="#1e1e1e"/><circle cx="148" cy="100" r="1.4" fill="#1e1e1e"/><circle cx="212" cy="100" r="1.4" fill="#1e1e1e"/><circle cx="276" cy="100" r="1.4" fill="#1e1e1e"/><circle cx="340" cy="100" r="1.4" fill="#1e1e1e"/><circle cx="404" cy="100" r="1.4" fill="#1e1e1e"/><circle cx="468" cy="100" r="1.4" fill="#1e1e1e"/><circle cx="532" cy="100" r="1.4" fill="#1e1e1e"/><circle cx="596" cy="100" r="1.4" fill="#1e1e1e"/><circle cx="660" cy="100" r="1.4" fill="#1e1e1e"/>
+      <circle cx="20"  cy="140" r="1.4" fill="#1e1e1e"/><circle cx="84"  cy="140" r="1.4" fill="#1e1e1e"/><circle cx="148" cy="140" r="1.4" fill="#1e1e1e"/><circle cx="212" cy="140" r="1.4" fill="#1e1e1e"/><circle cx="276" cy="140" r="1.4" fill="#1e1e1e"/><circle cx="340" cy="140" r="1.4" fill="#1e1e1e"/><circle cx="404" cy="140" r="1.4" fill="#1e1e1e"/><circle cx="468" cy="140" r="1.4" fill="#1e1e1e"/><circle cx="532" cy="140" r="1.4" fill="#1e1e1e"/><circle cx="596" cy="140" r="1.4" fill="#1e1e1e"/><circle cx="660" cy="140" r="1.4" fill="#1e1e1e"/>
+      <circle cx="20"  cy="180" r="1.4" fill="#1e1e1e"/><circle cx="84"  cy="180" r="1.4" fill="#1e1e1e"/><circle cx="148" cy="180" r="1.4" fill="#1e1e1e"/><circle cx="212" cy="180" r="1.4" fill="#1e1e1e"/><circle cx="276" cy="180" r="1.4" fill="#1e1e1e"/><circle cx="340" cy="180" r="1.4" fill="#1e1e1e"/><circle cx="404" cy="180" r="1.4" fill="#1e1e1e"/><circle cx="468" cy="180" r="1.4" fill="#1e1e1e"/><circle cx="532" cy="180" r="1.4" fill="#1e1e1e"/><circle cx="596" cy="180" r="1.4" fill="#1e1e1e"/><circle cx="660" cy="180" r="1.4" fill="#1e1e1e"/>
+      <!-- AX letterforms (dark silhouette) -->
+      <text x="60" y="188" font-family="Impact, Arial Black, sans-serif" font-size="186" font-weight="900" fill="#141414">A</text>
+      <text x="368" y="188" font-family="Impact, Arial Black, sans-serif" font-size="186" font-weight="900" fill="#141414">X</text>
+      <!-- Copper horizontal accent line -->
+      <line x1="20" y1="100" x2="660" y2="100" stroke="#C4914A" stroke-width="1.3" opacity="0.60"/>
+      <!-- Endpoint dots -->
+      <circle cx="20"  cy="100" r="4"   fill="#C4914A" opacity="0.80"/>
+      <circle cx="660" cy="100" r="4"   fill="#C4914A" opacity="0.80"/>
+      <circle cx="20"  cy="100" r="9"   fill="none" stroke="#C4914A" stroke-width="0.5" opacity="0.20"/>
+      <circle cx="660" cy="100" r="9"   fill="none" stroke="#C4914A" stroke-width="0.5" opacity="0.20"/>
+    </svg>
+  </div>
+
+  <p class="article-lead">「AIをたくさん使っている」と「AIで事業が伸びている」——この二つは別物だ。ファインディが開発責任者・マネジメント層185名に実施した調査は、この不都合な事実をデータで示した。使用量という指標がいかに事業成果と無関係であるかが明らかになった今、開発組織の評価軸を根本から問い直す必要がある。</p>
+
+  <hr class="article-divider">
+
+  <div class="source-note">
+    <p>本記事は、西澤恭介氏（<a href="https://note.com/kyosukenishizawa/n/n8413f22dfeb0" target="_blank" rel="noopener">ファインディ株式会社 執行役員</a>）のnote記事「AIをたくさん使っている会社」と「AIで事業を伸ばしている会社」の、決定的な違い。」（2026年7月21日公開）をもとに、AX Journal編集部が再構成・加筆したものです。</p>
+  </div>
+
+  <div class="article-body">
+
+    <h2>185社・15日間調査が示した「無相関」という事実</h2>
+    <p>西澤氏がこの調査を着想したのは、AI DevEx Conference 2026（第4回、テーマ：「AI時代の開発生産性と開発組織の未来」）の準備過程だった。「AIをどれだけ使っているか」という指標の有効性への疑問が出発点だったという。</p>
+    <p>調査対象はFindy Team+導入企業の開発責任者・マネジメント層185名。実施時期は2026年7月1日〜15日。測定軸として「開発資本」を3軸で定義した——<strong>Speed（開発速度）</strong>、<strong>Quality（品質）</strong>、<strong>Control（制御能力）</strong>だ。この3軸で各社の「開発資本スコア（α版）」を算出し、事業成果との相関を分析した。</p>
+    <p>結論は明快だった。「AIをたくさん使っていること」と「事業が伸びること」に相関関係はなかった。事業成果と結びついていたのは、<strong>「事業が求めるスピードへの追従能力」と「品質（Quality軸）」</strong>であり、特にQualityの相関が顕著だった。</p>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <span class="stat-num">185</span>
+        <span class="stat-label">調査対象<br>開発責任者・マネジメント層</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">36%</span>
+        <span class="stat-label">AI生成コードのバグ状況を<br>「把握していない」企業比率</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">0</span>
+        <span class="stat-label">AI使用量と事業成果の<br>相関（無関連）</span>
+      </div>
+    </div>
+
+    <h2>3社に1社が「AI生成コードのバグを把握していない」</h2>
+    <p>調査から浮かび上がった最も深刻な発見の一つが、<strong>36%の企業がAI生成コードのバグ発生状況を把握していない</strong>という事実だ。役職による差異がなく、開発者からマネジメント層まで組織全体として観測の仕組みが未整備であることを意味する。</p>
+    <p>AIツールを積極的に導入して使用量を増やしても、その出力品質を検証する仕組みが存在しなければ、「使っている」という事実だけが積み上がり、品質負債が水面下で蓄積される。使用量が増えるほどリスクが増大するという逆説が、この36%という数字に凝縮されている。</p>
+
+    <span class="table-label">図1｜「開発資本」3軸と事業成果との関係</span>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>軸</th>
+            <th>定義</th>
+            <th>事業成果との相関</th>
+            <th>現状の課題</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Speed</td>
+            <td>事業が求めるスピードへの追従能力</td>
+            <td><span class="kw">高い相関あり</span></td>
+            <td>AI活用量では測定不可。追従能力そのものを測る必要</td>
+          </tr>
+          <tr class="highlight">
+            <td>Quality</td>
+            <td>AI生成コードを含む出力品質の担保</td>
+            <td><span class="kw">最も高い相関</span></td>
+            <td>36%がバグ発生状況を未把握。観測インフラが未整備</td>
+          </tr>
+          <tr>
+            <td>Control</td>
+            <td>開発プロセス全体の制御能力</td>
+            <td>間接的に相関</td>
+            <td>ログ・監査証跡の整備が遅れている領域</td>
+          </tr>
+          <tr>
+            <td>AI使用量</td>
+            <td>AIツールのトークン消費・利用頻度</td>
+            <td><span class="kw" style="color:var(--accent)">無関連</span></td>
+            <td>多くの組織がこれを主指標として使い続けている</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>エンジニア定着と事業成果は連動しない——定着の鍵は「知見共有速度」</h2>
+    <p>もう一つの反直感的な発見が、エンジニア定着と事業成果の乖離だ。「事業が好調な組織＝エンジニアが定着している」という仮説は成立しなかった。エンジニアの定着に関連する要因として調査が特定したのは、<strong>Quality軸と「組織内の知見共有速度」</strong>だった。</p>
+    <p>この発見が示す示唆は実務的だ。採用強化よりも、既存メンバーの業務環境改善が優先課題であることが多い。AI活用で生産性を上げながら、その知見を組織内に速やかに伝播させる仕組みが、結果的にエンジニアの定着率を高める——という経路だ。採用コストをかける前に問うべきは「今いるエンジニアが学んでいることが、組織の中を流れているか」だ。</p>
+
+    <div class="callout">
+      <p class="callout-label">編集部の視点</p>
+      <p>「トークンマキシング（使用量の最大化）」から「アウトカムマキシング（事業成果の最大化）」への転換——西澤氏が提示するこのフレームは、HR・人事領域の評価指標にも直接対応する。「研修受講率」が「スキル習得率」や「現場適用率」と無関係なのと同じ構造だ。使った量ではなく、積み上がった力を測定する段階への移行は、開発組織だけでなく人事機能においても緊急の課題だ。開発資本スコアのアナロジーとして「人材資本スコア」を設計することが、次の人事の仕事になりつつある。</p>
+    </div>
+
+    <h2>明日から実装すべき3つの転換</h2>
+    <p>西澤氏の調査が示す処方箋は「データに基づく経営判断」という一点に集約される。勘と経験によるAI投資の正当化は、もはや組織リスクだ。</p>
+
+    <ul>
+      <li><strong>Quality観測インフラを整備する</strong>：AIが生成したコードのバグ発生率・レビュー指摘率・本番障害との相関を計測する仕組みをまず作る。計測できていないものは改善できない。36%の無把握企業の一員であることを自覚することが出発点だ</li>
+      <li><strong>AI使用量を主指標から外す</strong>：「月あたりのAI活用セッション数」「トークン消費量」を成果指標として扱うことをやめる。代わりに「事業スピードへの追従率」「品質インシデント件数の推移」「知見共有速度（ドキュメント参照率・社内勉強会頻度など）」を置く</li>
+      <li><strong>採用の前に環境を問う</strong>：エンジニアが定着しない原因を採用プロセスに求める前に、Quality軸と知見共有速度を計測する。定着問題の多くは採用ではなく環境設計の問題として現れる</li>
+    </ul>
+
+    <blockquote>「AIをたくさん使っている会社」と「AIで事業を伸ばしている会社」の、決定的な違い——それは使用量ではなく、積み上がった開発資本の質と、その質を観測できているかどうかだ。<br>——西澤恭介氏（ファインディ株式会社 執行役員）</blockquote>
+
+    <p class="ref-heading">参照</p>
+    <ul class="ref-list">
+      <li><a href="https://note.com/kyosukenishizawa/n/n8413f22dfeb0" target="_blank" rel="noopener">西澤恭介（ファインディ執行役員）「『AIをたくさん使っている会社』と『AIで事業を伸ばしている会社』の、決定的な違い。」— note（2026年7月21日）</a></li>
+    </ul>
+
+  </div>
+
+  <footer class="article-footer">
+    <div class="article-tags">
+      <a href="#" class="tag">開発生産性</a>
+      <a href="#" class="tag">AI投資対効果</a>
+      <a href="#" class="tag">開発資本</a>
+      <a href="#" class="tag">品質管理</a>
+    </div>
+    <a href="../index.html" class="back-link">記事一覧に戻る</a>
+  </footer>
+
+</main>
+
+<div class="nl-strip">
+  <div class="nl-strip-inner">
+    <div class="nl-strip-text">
+      <p class="nl-strip-label">Newsletter</p>
+      <p class="nl-strip-title">AI×組織の最新情報を週2回お届け</p>
+    </div>
+    <form class="nl-strip-form" onsubmit="return false">
+      <input type="email" class="nl-strip-input" placeholder="メールアドレス">
+      <button type="submit" class="nl-strip-btn">登録する</button>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">AX Journal</span>
+    <span class="footer-copy">© 2026 AX Journal. All rights reserved.</span>
+  </div>
+</footer>
+
+</body>
+</html>
