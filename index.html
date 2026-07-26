@@ -468,6 +468,92 @@
     .footer-links a:hover { color: var(--text-muted); }
     .footer-copy { font-family: var(--font-m); font-size: 10px; color: var(--text-faint); }
 
+    /* ── Search ── */
+    .search-btn {
+      display: flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px; border-radius: var(--radius);
+      background: none; border: 1px solid var(--border);
+      color: var(--text-muted); cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+      flex-shrink: 0; margin-right: 4px;
+    }
+    .search-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .search-btn svg { display: block; }
+    .search-overlay {
+      position: fixed; inset: 0; z-index: 900;
+      display: flex; align-items: flex-start; justify-content: center;
+      padding-top: 80px;
+    }
+    .search-overlay[hidden] { display: none; }
+    .search-backdrop {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.72);
+      backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    }
+    .search-panel {
+      position: relative; z-index: 1;
+      width: 100%; max-width: 580px; margin: 0 24px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 6px; overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+    }
+    .search-input-wrap {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 18px; border-bottom: 1px solid var(--border-faint);
+    }
+    .search-input-icon { flex-shrink: 0; color: var(--text-faint); }
+    #search-input {
+      flex: 1; background: none; border: none; outline: none;
+      font-family: var(--font-b); font-size: 16px;
+      color: var(--text); caret-color: var(--accent);
+    }
+    #search-input::placeholder { color: var(--text-faint); }
+    .search-kbd {
+      flex-shrink: 0; font-family: var(--font-m); font-size: 10px;
+      color: var(--text-faint); background: #181818;
+      border: 1px solid #282828; border-radius: 3px;
+      padding: 2px 7px; cursor: pointer;
+    }
+    .search-results { overflow-y: auto; max-height: 400px; }
+    .search-result {
+      display: block; padding: 14px 18px;
+      border-bottom: 1px solid var(--border-faint);
+      transition: background 0.1s; cursor: pointer; text-decoration: none;
+      color: var(--text);
+    }
+    .search-result:last-child { border-bottom: none; }
+    .search-result:hover, .search-result.focused { background: #181818; }
+    .sr-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+    .sr-cat {
+      font-family: var(--font-m); font-size: 9px; letter-spacing: 0.06em;
+      padding: 2px 6px; background: #181818; border: 1px solid #282828;
+      border-radius: 2px; color: var(--text-muted); white-space: nowrap;
+    }
+    .sr-date { font-family: var(--font-m); font-size: 10px; color: var(--text-faint); }
+    .sr-title { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.4; margin-bottom: 4px; }
+    .sr-excerpt { font-size: 12px; color: var(--text-faint); line-height: 1.6; }
+    .sr-title mark, .sr-excerpt mark {
+      background: rgba(196,145,74,0.2); color: var(--accent); border-radius: 2px; padding: 0 1px;
+    }
+    .search-empty, .search-hint {
+      padding: 32px 18px; text-align: center;
+      font-family: var(--font-m); font-size: 12px; color: var(--text-faint);
+    }
+    .search-foot {
+      padding: 8px 18px; border-top: 1px solid var(--border-faint);
+      display: flex; align-items: center; gap: 14px;
+      font-family: var(--font-m); font-size: 10px; color: var(--text-faint);
+    }
+    .search-foot kbd {
+      background: #181818; border: 1px solid #282828; border-radius: 2px;
+      padding: 1px 5px; font-family: var(--font-m); font-size: 9px; color: var(--text-faint);
+    }
+    @media (max-width: 860px) {
+      .search-overlay { padding-top: 0; align-items: flex-start; }
+      .search-panel { margin: 0; border-radius: 0 0 6px 6px; border-left: none; border-right: none; border-top: none; }
+      .search-results { max-height: calc(100dvh - 160px); }
+    }
+
     /* ── responsive ── */
     @media (max-width: 860px) {
       .hero-inner { grid-template-columns: 1fr; gap: 32px; }
@@ -510,10 +596,42 @@
     <nav class="mast-nav">
       <a href="#articles">記事一覧</a>
       <a href="#about">About</a>
+      <button class="search-btn" onclick="openSearch()" aria-label="記事を検索">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.3"/>
+          <path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+      </button>
       <a href="#newsletter" class="cta">購読する</a>
     </nav>
   </div>
 </header>
+
+<!-- 検索オーバーレイ -->
+<div id="search-overlay" class="search-overlay" hidden>
+  <div class="search-backdrop" id="search-backdrop"></div>
+  <div class="search-panel" role="dialog" aria-label="記事検索">
+    <div class="search-input-wrap">
+      <span class="search-input-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.3"/>
+          <path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <input id="search-input" type="search" placeholder="キーワードで記事を検索..." autocomplete="off" spellcheck="false">
+      <kbd class="search-kbd" onclick="closeSearch()">Esc</kbd>
+    </div>
+    <div id="search-results" class="search-results" role="listbox"></div>
+    <div id="search-empty" class="search-empty" hidden>キーワードに一致する記事が見つかりませんでした</div>
+    <div id="search-hint" class="search-hint">キーワードを入力してください（例：LayerX、CHRO、採用、Sansan）</div>
+    <div class="search-foot">
+      <span><kbd>↑↓</kbd> 移動</span>
+      <span><kbd>Enter</kbd> 開く</span>
+      <span><kbd>Esc</kbd> 閉じる</span>
+      <span><kbd>⌘K</kbd> ショートカット</span>
+    </div>
+  </div>
+</div>
 
 <!-- ヒーロー -->
 <section class="hero">
@@ -1470,6 +1588,126 @@
     btn.disabled = true;
     e.target.querySelector('.nl-input').disabled = true;
   }
+
+  // ── Search ──
+  let searchIndex = null;
+  let focusedIdx = -1;
+
+  async function loadIndex() {
+    if (searchIndex) return;
+    try {
+      const r = await fetch('search-index.json');
+      searchIndex = await r.json();
+    } catch(e) { searchIndex = []; }
+  }
+
+  function openSearch() {
+    document.getElementById('search-overlay').removeAttribute('hidden');
+    document.getElementById('search-input').focus();
+    document.body.style.overflow = 'hidden';
+    loadIndex();
+  }
+
+  function closeSearch() {
+    document.getElementById('search-overlay').setAttribute('hidden', '');
+    document.getElementById('search-input').value = '';
+    document.getElementById('search-results').innerHTML = '';
+    document.getElementById('search-empty').hidden = true;
+    document.getElementById('search-hint').hidden = false;
+    document.body.style.overflow = '';
+    focusedIdx = -1;
+  }
+
+  function highlight(text, terms) {
+    if (!text || !terms.length) return text;
+    const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const re = new RegExp('(' + terms.map(esc).join('|') + ')', 'gi');
+    return text.replace(re, '<mark>$1</mark>');
+  }
+
+  function scoreArticle(article, terms) {
+    let score = 0;
+    const check = (text, weight) => {
+      if (!text) return;
+      const lower = text.toLowerCase();
+      terms.forEach(t => { if (lower.includes(t)) score += weight; });
+    };
+    check(article.title, 10);
+    (article.tags || []).forEach(tag => check(tag, 7));
+    check(article.lead, 4);
+    check(article.body, 2);
+    check(article.category, 3);
+    return score;
+  }
+
+  function runSearch(query) {
+    if (!searchIndex) return;
+    const terms = query.toLowerCase().split(/\s+/).filter(t => t.length > 0);
+    const resultsEl = document.getElementById('search-results');
+    const emptyEl   = document.getElementById('search-empty');
+    const hintEl    = document.getElementById('search-hint');
+    focusedIdx = -1;
+
+    if (!terms.length) {
+      resultsEl.innerHTML = '';
+      emptyEl.hidden = true;
+      hintEl.hidden = false;
+      return;
+    }
+    hintEl.hidden = true;
+
+    const scored = searchIndex
+      .map(a => ({ ...a, score: scoreArticle(a, terms) }))
+      .filter(a => a.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 8);
+
+    if (!scored.length) {
+      resultsEl.innerHTML = '';
+      emptyEl.hidden = false;
+      return;
+    }
+    emptyEl.hidden = true;
+
+    resultsEl.innerHTML = scored.map((a, i) => {
+      const hl = t => highlight(t, terms);
+      const excerpt = (a.lead || a.description || '').slice(0, 100) + '…';
+      return '<a href="articles/' + a.url + '" class="search-result" data-idx="' + i + '" tabindex="-1">' +
+        '<div class="sr-meta"><span class="sr-cat">' + a.category + '</span><span class="sr-date">' + a.date + '</span></div>' +
+        '<div class="sr-title">' + hl(a.title) + '</div>' +
+        '<div class="sr-excerpt">' + hl(excerpt) + '</div>' +
+        '</a>';
+    }).join('');
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openSearch(); return; }
+    if (e.key === '/' && !['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) { e.preventDefault(); openSearch(); return; }
+    var overlay = document.getElementById('search-overlay');
+    if (overlay.hasAttribute('hidden')) return;
+    if (e.key === 'Escape') { closeSearch(); return; }
+    var results = overlay.querySelectorAll('.search-result');
+    if (!results.length) return;
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      focusedIdx = Math.min(focusedIdx + 1, results.length - 1);
+      results.forEach(function(r, i) { r.classList.toggle('focused', i === focusedIdx); });
+      results[focusedIdx].scrollIntoView({ block: 'nearest' });
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      focusedIdx = Math.max(focusedIdx - 1, 0);
+      results.forEach(function(r, i) { r.classList.toggle('focused', i === focusedIdx); });
+      results[focusedIdx].scrollIntoView({ block: 'nearest' });
+    } else if (e.key === 'Enter' && focusedIdx >= 0) {
+      results[focusedIdx].click();
+    }
+  });
+
+  document.getElementById('search-input').addEventListener('input', function(e) {
+    runSearch(e.target.value.trim());
+  });
+
+  document.getElementById('search-backdrop').addEventListener('click', closeSearch);
 </script>
 </body>
 </html>
