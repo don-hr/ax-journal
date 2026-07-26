@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIを「制御」できる組織だけが勝つ——ビズリーチCTOが示すHOTL型統治設計の全貌 — AX Journal</title>
+  <meta name="description" content="月間2,300億トークン消費・日本トップクラスのビズリーチが実証。HITLからHOTLへの転換と三権分立型AI統治設計の全貌。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:           #080808;
+      --bg-card:      #111111;
+      --bg-subtle:    #0d0d0d;
+      --bg-muted:     #141414;
+      --surface-dark: #161616;
+      --text:         #EDE9E2;
+      --text-muted:   #888880;
+      --text-faint:   #4E4E4A;
+      --accent:       #C4914A;
+      --accent-dark:  #A87840;
+      --accent-light: rgba(196,145,74,0.12);
+      --red:          #C4914A;
+      --red-light:    rgba(196,145,74,0.10);
+      --border:       #1E1E1E;
+      --border-faint: #161616;
+      --radius:       3px;
+      --font-b: 'Inter', 'Noto Sans JP', sans-serif;
+      --font-m: 'DM Mono', 'Courier New', monospace;
+      --body-width: 680px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { font-family: var(--font-b); background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    .masthead { border-bottom: 1px solid var(--border-faint); padding: 0 24px; background: var(--bg); }
+    .masthead-inner { max-width: 1160px; margin: 0 auto; height: 58px; display: flex; align-items: center; justify-content: space-between; }
+    .logo-name { font-size: 14px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text); }
+    .mast-nav { display: flex; align-items: center; gap: 2px; }
+    .mast-nav a { font-size: 12px; font-weight: 500; color: var(--text-muted); padding: 6px 12px; border-radius: var(--radius); transition: color 0.15s; }
+    .mast-nav a:hover { color: var(--text); }
+    .mast-nav .cta { background: var(--accent); color: #000; font-weight: 700; margin-left: 8px; padding: 6px 18px; letter-spacing: 0.04em; }
+    .mast-nav .cta:hover { background: var(--accent-dark); color: #000; }
+    .article-wrap { max-width: var(--body-width); margin: 0 auto; padding: 56px 24px 80px; }
+    .breadcrumb { display: flex; align-items: center; gap: 8px; font-family: var(--font-m); font-size: 11px; letter-spacing: 0.06em; color: var(--text-faint); margin-bottom: 36px; }
+    .breadcrumb a:hover { color: var(--text-muted); }
+    .breadcrumb-sep { opacity: 0.35; }
+    .article-eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+    .pill { font-family: var(--font-m); font-size: 8px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; padding: 3px 7px; border-radius: 2px; }
+    .pill-gray { background: #181818; color: var(--text-muted); border: 1px solid #242424; }
+    .pill-red  { background: var(--red-light); color: var(--accent); border: 1px solid rgba(196,145,74,0.22); }
+    .article-date { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); }
+    .article-title { font-size: clamp(26px, 4vw, 38px); font-weight: 700; line-height: 1.2; letter-spacing: 0.01em; color: var(--text); margin-bottom: 20px; }
+    .article-lead { font-size: 17px; color: var(--text-muted); line-height: 1.88; border-left: 3px solid var(--accent); padding-left: 18px; margin-bottom: 40px; }
+    .article-divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+    .article-hero { margin: 0 0 28px; border-radius: var(--radius); overflow: hidden; line-height: 0; }
+    .article-hero svg { display: block; width: 100%; height: auto; }
+    .article-body { font-size: 16px; line-height: 1.9; color: var(--text); }
+    .article-body h2 { font-size: 20px; font-weight: 700; letter-spacing: 0.01em; margin: 48px 0 14px; color: var(--text); }
+    .article-body p { margin-bottom: 20px; }
+    .article-body ul, .article-body ol { padding-left: 20px; margin-bottom: 20px; }
+    .article-body li { margin-bottom: 8px; line-height: 1.75; }
+    .article-body strong { font-weight: 600; color: var(--text); }
+    .article-body blockquote { border-left: 3px solid var(--accent); padding: 4px 0 4px 18px; margin: 28px 0; color: var(--text-muted); font-size: 15px; font-style: italic; }
+    .callout { background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius); padding: 20px 22px; margin: 28px 0; }
+    .callout-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .callout p { font-size: 14px; color: var(--text-muted); margin-bottom: 0; line-height: 1.75; }
+    .source-note { background: rgba(196,145,74,0.06); border: 1px solid rgba(196,145,74,0.18); border-radius: var(--radius); padding: 14px 18px; margin-bottom: 36px; }
+    .source-note p { font-family: var(--font-m); font-size: 11px; color: var(--text-faint); line-height: 1.7; margin-bottom: 0; }
+    .source-note a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+    .table-wrap { overflow-x: auto; margin: 24px 0; }
+    .table-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 10px; display: block; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .data-table th { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 10px 14px; background: #181818; color: rgba(255,255,255,0.55); text-align: left; white-space: nowrap; border-bottom: 1px solid var(--border); }
+    .data-table th:first-child { background: #141414; color: var(--text-faint); }
+    .data-table td { padding: 11px 14px; border-bottom: 1px solid var(--border-faint); line-height: 1.65; vertical-align: top; color: var(--text-muted); }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table td:first-child { font-weight: 600; font-size: 13px; white-space: nowrap; color: var(--text); border-right: 1px solid var(--border); background: var(--bg-subtle); }
+    .data-table .kw { display: inline-block; background: #1c1c1c; border: 1px solid #282828; border-radius: 3px; padding: 2px 7px; font-family: var(--font-m); font-size: 11px; margin: 2px 2px 2px 0; white-space: nowrap; color: var(--text-muted); }
+    .vis-grid { display: grid; gap: 8px; margin: 24px 0; }
+    .vis-grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .vis-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 12px; text-align: center; }
+    .vis-card.highlight { border-color: var(--accent); background: rgba(196,145,74,0.08); }
+    .vis-card-label { font-family: var(--font-m); font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); display: block; margin-bottom: 6px; }
+    .vis-card.highlight .vis-card-label { color: var(--accent); }
+    .vis-card-en { font-size: 14px; font-weight: 700; display: block; margin-bottom: 4px; color: var(--text); }
+    .vis-card-jp { font-size: 11px; color: var(--text-muted); line-height: 1.65; }
+    .ref-heading { font-family: var(--font-m); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); font-weight: 500; margin-top: 48px; margin-bottom: 10px; }
+    .ref-list { list-style: none; padding: 0; }
+    .ref-list li { margin-bottom: 6px; }
+    .ref-list a { font-size: 13px; color: var(--text-muted); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--border); transition: color 0.15s, text-decoration-color 0.15s; word-break: break-all; }
+    .ref-list a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+    .article-footer { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--border); }
+    .article-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 32px; }
+    .tag { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-faint); transition: border-color 0.15s, color 0.15s; }
+    .tag:hover { border-color: var(--accent); color: var(--accent); }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: var(--text-muted); transition: color 0.15s; }
+    .back-link:hover { color: var(--accent); }
+    .back-link::before { content: '←'; }
+    .nl-strip { background: #0a0a0a; padding: 32px 24px; margin-top: 64px; border-top: 1px solid var(--border); }
+    .nl-strip-inner { max-width: var(--body-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .nl-strip-label { font-family: var(--font-m); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 6px; }
+    .nl-strip-title { font-size: 16px; font-weight: 600; color: var(--text); letter-spacing: 0.01em; }
+    .nl-strip-form { display: flex; gap: 8px; flex-shrink: 0; }
+    .nl-strip-input { padding: 10px 14px; background: var(--bg-muted); border: 1px solid var(--border); border-radius: var(--radius); font-family: var(--font-b); font-size: 13px; color: var(--text); outline: none; width: 220px; transition: border-color 0.15s; }
+    .nl-strip-input::placeholder { color: var(--text-faint); }
+    .nl-strip-input:focus { border-color: var(--accent); }
+    .nl-strip-btn { padding: 10px 18px; background: var(--accent); color: #000; border: none; border-radius: var(--radius); font-family: var(--font-b); font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: background 0.15s; }
+    .nl-strip-btn:hover { background: var(--accent-dark); }
+    footer { border-top: 1px solid var(--border-faint); padding: 24px; background: var(--bg-subtle); }
+    .footer-inner { max-width: 1160px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .footer-logo { font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-faint); }
+    .footer-copy { font-family: var(--font-m); font-size: 10px; color: var(--text-faint); }
+    @media (max-width: 640px) {
+      .mast-nav { display: none; }
+      .vis-grid-3 { grid-template-columns: 1fr; }
+      .nl-strip-inner { flex-direction: column; align-items: flex-start; }
+      .nl-strip-form { width: 100%; }
+      .nl-strip-input { flex: 1; }
+      .footer-inner { flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <a href="../index.html" class="logo-name">AX Journal</a>
+    <nav class="mast-nav">
+      <a href="../index.html">記事一覧</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#newsletter" class="cta">購読する</a>
+    </nav>
+  </div>
+</header>
+
+<main class="article-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">AX Journal</a>
+    <span class="breadcrumb-sep">/</span>
+    <span>事例・ケース</span>
+  </nav>
+
+  <div class="article-eyebrow">
+    <span class="pill pill-red">速報</span>
+    <span class="pill pill-gray">事例・ケース</span>
+    <span class="article-date">2026.07.25</span>
+  </div>
+
+  <h1 class="article-title">AIを「制御」できる組織だけが勝つ——ビズリーチCTOが示すHOTL型統治設計の全貌</h1>
+
+  <div class="article-hero">
+    <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+      <rect width="680" height="200" fill="#080808"/>
+      <!-- Dark spiral segments -->
+      <polyline points="340,100 341.1,100.5 341.7,101.7 341.4,103.3 340,104.7 337.7,105.4 335,105 332.4,103.2 330.6,100 330.2,95.9 331.7,91.7 335,88 340,85.9 345.9,85.9 351.7,88.3 356.3,93.2 358.9,100 359.5,107.7 355,115 348.6,120.7 340,123.6 330.5,122.9 321.7,118.3 315,110.4 311.7,100 312.8,88.7 318.4,78.4 327.8,70.6 340,67 353.1,68.4 365,75 373.8,86 377.7,100 375.9,114.9 368.3,128.3 355.8,138.1 340,142.4 323.3,140.3 308.3,131.7 297.5,117.6 292.9,100 295.4,81.5 305,65 320.6,53.2"
+        fill="none" stroke="#1e1e1e" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Copper segments (末端6セグメント) -->
+      <polyline points="320.6,53.2 340,48.2 360.3,51 378.3,61.7 391.2,78.8 396.5,100"
+        fill="none" stroke="#C4914A" stroke-width="1.8" opacity="0.75" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Endpoint dot -->
+      <circle cx="396.5" cy="100" r="4" fill="#C4914A" opacity="0.82"/>
+      <circle cx="396.5" cy="100" r="8" fill="none" stroke="#C4914A" stroke-width="0.5" opacity="0.25"/>
+      <!-- Center dot -->
+      <circle cx="340" cy="100" r="2" fill="#2a2a2a"/>
+    </svg>
+  </div>
+
+  <p class="article-lead">月間2,300億トークン——これはビズリーチが2026年5月にCodexだけで消費したトークン数だ（350ユーザー）。しかし外山英幸CTO（執行役員、DX本部長）が強調するのは「競争力を決めるのはAI使用量ではない」という逆説だった。AI Engineering Summit Tokyo 2026で公開された講演は、AIエージェントを制御できる組織設計——「HOTL型統治」の実装論として、開発組織のあり方を根本から問い直す内容だった。</p>
+
+  <hr class="article-divider">
+
+  <div class="source-note">
+    <p>本記事は、外山英幸氏（<a href="https://speakerdeck.com/visional_engineering_and_design/aie2026" target="_blank" rel="noopener">株式会社ビズリーチ 執行役員CTO・DX本部長</a>）の登壇資料「AI駆動開発が変える、大規模開発の前提——Human in the Loop から Human on the Loop へ」（AI Engineering Summit Tokyo 2026、2026年6月9日）をもとに、AX Journal編集部が再構成・加筆したものです。</p>
+  </div>
+
+  <div class="article-body">
+
+    <h2>HITLからHOTLへ——「制御位置」という根本の違い</h2>
+    <p>外山氏が示した最も重要な概念は「Human in the Loop（HITL）」から「Human on the Loop（HOTL）」への転換だ。この二者の違いは、単純に「AIをどれだけ使うか」ではなく、<strong>「人間がどこに位置するか」という制御位置の構造的な違い</strong>にある。</p>
+    <p>HITLでは人間がフロー「内部」に介在し、すべての判断点を通過する必要がある。AIがどれだけ高速でも、人間のレビューという律速点が存在する限り、スループットは人間の処理能力の上限に縛られる。一方HOTLでは、人間がループ「外部」から監督する。AIエージェントが設計判断・実装・検証・統合監視を自律的に行い、人間は例外処理や方針決定に専念する。外山氏は明言する——「違いは速度ではない。制御位置と最適化対象の差だ」。</p>
+
+    <span class="table-label">図1｜HITL vs HOTL——制御位置の構造比較</span>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>観点</th>
+            <th>HITL（Human in the Loop）</th>
+            <th>HOTL（Human on the Loop）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>人間の位置</td>
+            <td>フロー内部に介在。全判断点を通過</td>
+            <td>フロー外部から監督。介在しない</td>
+          </tr>
+          <tr>
+            <td>律速点</td>
+            <td>人間のレビュー速度がボトルネック</td>
+            <td>AIの実行速度とインフラが上限</td>
+          </tr>
+          <tr>
+            <td>最適化対象</td>
+            <td>人間の判断精度と速度</td>
+            <td><span class="kw">AI実行密度</span>（自律連続稼働時間）</td>
+          </tr>
+          <tr>
+            <td>スケール特性</td>
+            <td>人員増加に比例して拡張</td>
+            <td>エージェント数で非線形に拡張</td>
+          </tr>
+          <tr>
+            <td>前提条件</td>
+            <td>AIへの逐次指示設計</td>
+            <td>統治設計（Harness + 三権分立）</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>「桁違いの差」が示す構造の力——社内実証データ</h2>
+    <p>抽象論に留まらないのが、外山氏の講演の強みだ。ビズリーチ社内においてHOTL型で運用しているチームは、月別PR数とCodexトークン消費量の両指標において、<strong>他チームと「桁違いに突出」した外れ値</strong>として測定されている。この差は、チームの人数の違いでも、個人のAI習熟度の違いでも説明できない。外山氏の結論は明快だ——「差の源は『AI利用量』ではなく、AIエージェントの自律実行を可能にする構造の有無だ」。</p>
+    <p>ここで鍵となる概念が「AI実行密度」だ。AIエージェントが人間の介入なしに自律的に走り続けられる密度——これが競争力を決定する。Harness（AIエージェントが動くための統合的な足場）はその必要条件だが、それだけでは不十分だ。<strong>統治設計こそが十分条件</strong>として機能する。</p>
+
+    <h2>AI統治の三権分立——立法・司法・行政とSSoT</h2>
+    <p>外山氏が提示したのは、国家統治の三権分立をAI実行の統治に応用したモデルだ。この設計なしにはHOTLは実現しないという強い主張を持つ。</p>
+
+    <span class="table-label">図2｜AI統治の三権分立モデル</span>
+    <div class="vis-grid vis-grid-3">
+      <div class="vis-card highlight">
+        <span class="vis-card-label">01 · 立法（Legislative）</span>
+        <span class="vis-card-en">ルール定義</span>
+        <span class="vis-card-jp">何が正しいかを定義。SSOT（Single Source of Truth）としてルールを整備。AI提案・人間承認で制定・改正</span>
+      </div>
+      <div class="vis-card">
+        <span class="vis-card-label">02 · 司法（Judicial）</span>
+        <span class="vis-card-en">検証・裁定</span>
+        <span class="vis-card-jp">ルール適合性を裁定。セマンティックチェック（LLM）＋決定性チェック（Grep / AST）で二層判定</span>
+      </div>
+      <div class="vis-card">
+        <span class="vis-card-label">03 · 行政（Administrative）</span>
+        <span class="vis-card-en">実行・制御</span>
+        <span class="vis-card-jp">ワークフロー定義と実際の実行。スキル＋ツールでエージェントを拡張。三権を縛る憲法層は人間のみが改正可能</span>
+      </div>
+    </div>
+
+    <p>さらにこの三権を機械的に連結するのが二つのグラフ構造だ。<strong>Authority Provenance Graph</strong>はルールの由来を追跡し、「ADRルール↔検証テスト」「ドメインルール↔違反検知assertion」「設計原則↔Linterルール」を双方向に接続する。<strong>Specification Provenance Graph</strong>は機能の成立を追跡し、feature・requirement・proofの依存関係と変更影響を機械可読に管理する。これらは「書かれているルール」を「効いているルール」に変えるための接続層だ。</p>
+
+    <div class="callout">
+      <p class="callout-label">編集部の視点</p>
+      <p>外山氏が設計の最重要原則として挙げた「SSoTと派生データの分離」は、HR・人事領域でも直ちに応用可能な思考フレームだ。評価基準（SSOT）とAIが自動生成した評価サマリー（派生データ）を混在させると、「AIが出した評価」が「制度が定めた評価」と等価に扱われる事態が起きる。同様に、採用基準（SSOT）とAIによる候補者スコアリング（派生データ）の混在は、統治の崩壊を招く。外山氏の表現を借りれば「便利だからとSSoTと派生が混在すると、統治は必ず崩壊する」——この警告はAIを導入するあらゆる組織プロセスに刺さる。</p>
+    </div>
+
+    <h2>明日から問うべき3つの問い</h2>
+    <p>外山氏は抽象的な設計論を実装の「問い」として具体化した。HOTLを実現できているかどうかを、次の3つで自己診断できる。第一に「判断根拠は機械的にチェック可能か」——ドキュメントが「存在する」だけでなく、違反したらCI失敗・エージェント停止という状態になっているか。第二に「派生情報と原典は機械的に区別されているか」——自動生成情報が判断根拠として参照可能な状態になっていないか。第三に「ルール・検証・実行の繋がりは、エージェントが追跡・停止可能か」——人間の記憶によって繋いでいる箇所はないか。</p>
+    <p>これら3つに自信を持って「YES」と答えられる組織が、HOTL型の自律実行に踏み込める組織だという。今後の課題として外山氏は、機能以外の領域（セキュリティ・保守品質・インフラ・DevOps）への統治拡張と、AI-Native前提での組織・プロセスの全面再設計を挙げた。</p>
+
+    <blockquote>「AI Building AI時代、競争力を決めるのはAI使用量ではなく、AI実行を統治できるかどうか。これは開発の話に見えて、事業と組織のあり方の話に接続する」<br>——外山英幸氏（株式会社ビズリーチ 執行役員CTO、AI Engineering Summit Tokyo 2026）</blockquote>
+
+    <h2>まとめ</h2>
+    <p>ビズリーチが月間2,300億トークンという数値を誇るのに、外山CTOが「使用量は競争力ではない」と断言する——この逆説こそが今の論点の本質だ。Harness（足場）を整えてAIが動ける環境を作ることは業界共通の必要条件であり、差別化にならない。差を作るのは統治設計——三権分立モデルとSSoT管理によって、エージェントが「自律的に走り続けられる」構造を組織に埋め込めるかどうかだ。</p>
+
+    <ul>
+      <li><strong>制御位置を問い直す</strong>：現在の開発フローを棚卸しし、「人間がフロー内部にいる判断点」を列挙する。そのうち人間が不要なものを特定し、エージェントへ委任する順番を設計する</li>
+      <li><strong>SSOTと派生データを分離する</strong>：組織内のルール・評価基準・設計原則を「原典」として明示的に管理し、AIが自動生成したサマリー・スコア・分析レポートを「派生データ」として明確に区別する運用を整備する</li>
+      <li><strong>統治を「効いている」状態にする</strong>：ドキュメントにルールを書くだけでなく、違反時にCI・テスト・エージェントが自動停止するように接続する。「書かれている」を「効いている」に変えることが、HOTL実現の最初の一歩だ</li>
+    </ul>
+
+    <p class="ref-heading">参照</p>
+    <ul class="ref-list">
+      <li><a href="https://speakerdeck.com/visional_engineering_and_design/aie2026" target="_blank" rel="noopener">外山英幸（ビズリーチ執行役員CTO）「AI駆動開発が変える、大規模開発の前提——Human in the Loop から Human on the Loop へ」— SpeakerDeck（AI Engineering Summit Tokyo 2026、2026年6月9日）</a></li>
+    </ul>
+
+  </div>
+
+  <footer class="article-footer">
+    <div class="article-tags">
+      <a href="#" class="tag">HOTL</a>
+      <a href="#" class="tag">AI統治</a>
+      <a href="#" class="tag">Harness Engineering</a>
+      <a href="#" class="tag">ビズリーチ</a>
+    </div>
+    <a href="../index.html" class="back-link">記事一覧に戻る</a>
+  </footer>
+
+</main>
+
+<div class="nl-strip">
+  <div class="nl-strip-inner">
+    <div class="nl-strip-text">
+      <p class="nl-strip-label">Newsletter</p>
+      <p class="nl-strip-title">AI×組織の最新情報を週2回お届け</p>
+    </div>
+    <form class="nl-strip-form" onsubmit="return false">
+      <input type="email" class="nl-strip-input" placeholder="メールアドレス">
+      <button type="submit" class="nl-strip-btn">登録する</button>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">AX Journal</span>
+    <span class="footer-copy">© 2026 AX Journal. All rights reserved.</span>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,5 +1,15 @@
 [
   {
+    "url": "articles/2026-07-25-bizreach-cto-hotl-ai-governance-harness-engineering.html",
+    "title": "AIを「制御」できる組織だけが勝つ——ビズリーチCTOが示すHOTL型統治設計の全貌",
+    "description": "月間2,300億トークン消費のビズリーチが実証。HITLからHOTLへの転換と三権分立型AI統治設計の全貌。",
+    "date": "2026.07.25",
+    "category": "事例・ケース",
+    "tags": ["HOTL", "AI統治", "Harness Engineering", "ビズリーチ"],
+    "lead": "月間2,300億トークン消費のビズリーチが実証。「桁違いの差」を生む構造の正体は、AI使用量ではなく三権分立型の統治設計だった。HITLからHOTLへの転換が組織競争力を決定する。",
+    "body": "外山英幸CTO（ビズリーチ）が示したHOTL（Human on the Loop）は、人間がフロー外部から監督する統治設計。HITL（Human in the Loop）との違いは速度ではなく制御位置の構造的差異。AI統治の三権分立モデル：立法（ルール定義・SSOT）・司法（セマンティック+決定性チェック）・行政（ワークフロー実行）。Authority Provenance Graph・Specification Provenance Graph の二グラフでルールを機械的に接続。SSoT（Single Source of Truth）と派生データの分離が統治の核心。HOTL型チームが月別PR数・トークン消費量で桁違いに突出した社内実績データ。「AI Building AI時代、競争力を決めるのはAI使用量ではなく、AI実行を統治できるかどうか」。Harness Engineering：実行環境・コンテキスト・ガードレール・検証ループ・可観測性の統合足場。"
+  },
+  {
     "url": "2026-06-19-ai-adoption-trend.html",
     "title": "生成AI導入率が前年比2.3倍に：人事・経営層が今すぐ押さえるべき最新データ",
     "description": "経産省・民間調査5本を横断分析。製造業・金融・小売での導入加速の背景と、人事戦略への具体的な影響を整理します。",
